@@ -15,7 +15,7 @@ jobs:
     env:
       HUSKY: 0
       NPM_AUTH: ${{secrets.NPM_AUTH}}
-      GH_TOKEN: ${{secrets.GH_TOKEN}}
+      GH_TOKEN: ${{ github.token }}
     strategy:
       matrix:
         node-version: [14.x]
