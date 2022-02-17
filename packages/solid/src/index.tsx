@@ -1,3 +1,3 @@
 export const Stack = () => {
-  return null;
+  return void 0;
 };
