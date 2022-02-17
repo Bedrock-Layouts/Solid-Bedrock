@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.3.0](https://github.com/Bedrock-Layouts/Solid-Bedrock/compare/@bedrock-layout/solid@0.2.2...@bedrock-layout/solid@0.3.0) (2022-02-17)
+
+
+### Features
+
+* **solid:** get a working example of stack ([b53faf2](https://github.com/Bedrock-Layouts/Solid-Bedrock/commit/b53faf221ed283a9c84bea6e614749fd439dddf1))
+
+
+
+
+
 ## [0.2.2](https://github.com/Bedrock-Layouts/Solid-Bedrock/compare/@bedrock-layout/solid@0.2.1...@bedrock-layout/solid@0.2.2) (2022-02-17)
 
 
