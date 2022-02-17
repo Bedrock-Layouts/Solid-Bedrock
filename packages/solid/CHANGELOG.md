@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# 0.2.0 (2022-02-17)
+
+
+### Features
+
+* **solid:** initial commit to repo to get it working ([1bea86d](https://github.com/Bedrock-Layouts/Solid-Bedrock/commit/1bea86d0256d2229ebd98d68bc694f1f38e2fbe7))
+
+
+
+
+
 # [1.2.0](https://github.com/Bedrock-Layouts/Bedrock/compare/@bedrock-layout/primitives@1.1.0...@bedrock-layout/primitives@1.2.0) (2022-02-16)
 
 
