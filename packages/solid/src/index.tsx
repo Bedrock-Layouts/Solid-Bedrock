@@ -1,1 +1,3 @@
-export const Stack = () => null;
+export const Stack = () => {
+  return null;
+};
