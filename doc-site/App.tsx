@@ -2,7 +2,6 @@ import { Stack } from "@bedrock-layout/solid";
 import type { Component } from "solid-js";
 import { styled } from "solid-styled-components";
 
-import logo from "../assets/Logo Only.png";
 import { Button } from "./Button";
 
 const Heading = styled("h1")`
@@ -36,7 +35,11 @@ const App: Component = () => {
           >
             <header data-bedrock-stack style="--gutter:1rem">
               <figure data-bedrock-frame style="--ratio:16/9">
-                <img src={logo} alt="" aria-labelledby="title" />
+                <img
+                  src="/assets/Logo only.png"
+                  alt=""
+                  aria-labelledby="title"
+                />
               </figure>
 
               <Stack>
