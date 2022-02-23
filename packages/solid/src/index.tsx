@@ -1,4 +1,4 @@
-import { styled } from "solid-styled-components";
+import { DefaultTheme, styled } from "solid-styled-components";
 
 type LowercaseCharacter =
   | "a"
@@ -73,8 +73,6 @@ export interface Spacing {
   xxl: CSSLength;
 }
 
-type SpacingOptions = keyof Spacing;
-
 export const spacing: Spacing = {
   none: "0px",
   xxs: "0.0625rem",
@@ -89,12 +87,110 @@ export const spacing: Spacing = {
   xxl: "4rem",
 };
 
+export type BaseTheme = Record<string, CSSLength | string | number>;
+
+type ThemeOrDefaultSpace<T> = T extends {
+  space: BaseTheme;
+}
+  ? T["space"]
+  : keyof Spacing;
+
+type SpacingOptions = ThemeOrDefaultSpace<DefaultTheme>;
+
+function fromEntries<T>(entries: [s: string, value: T][]): Record<string, T> {
+  return entries.reduce((acc, [key, value]) => {
+    return { ...acc, [key]: value };
+  }, {});
+}
+
+type MaybeValue = CSSLength | undefined;
+
+type GetSpacingValue = (
+  spacingKey: SpacingOptions,
+  theme?: Partial<BaseTheme>
+) => MaybeValue;
+
+export const getSpacingValue: GetSpacingValue = (spacingKey, theme) => {
+  const maybeSpaceingOrDefault = theme?.space ?? theme?.spacing ?? spacing;
+
+  const safeSpacings = fromEntries(
+    Object.entries(maybeSpaceingOrDefault).map(([spaceKey, value]) => [
+      spaceKey,
+      typeof value === "number" ? `${value}px` : value,
+    ])
+  );
+
+  const spacingVal = safeSpacings[spacingKey];
+
+  const isCSSLength = checkIsCSSLength(spacingVal);
+
+  return isCSSLength ? spacingVal : undefined;
+};
+
 export interface StackProps {
   gutter?: SpacingOptions;
 }
 
 export const Stack = styled("div")<StackProps>`
+  @property --gutter {
+    syntax: "<length-percentage>";
+    inherits: false;
+    initial-value: 0;
+  }
+
+  --gutter: ${(props) =>
+    props.gutter ? getSpacingValue(props.gutter, props.theme) ?? "0px" : "0px"};
+  box-sizing: border-box;
+  > * {
+    margin: 0;
+  }
   display: flex;
   flex-direction: column;
-  gap: ${(props) => spacing[props.gutter ?? "none"] ?? spacing.none};
+
+  gap: var(--gutter, 0px);
+  align-content: start;
+
+  & > [data-bedrock-column] {
+    grid-column: span 1 / auto;
+  }
+`;
+
+type MinItemWidth = number | CSSLength;
+export interface GridProps {
+  gutter?: SpacingOptions;
+  minItemWidth?: MinItemWidth;
+}
+
+export const Grid = styled("div")<GridProps>`
+  @property --gutter {
+    syntax: "<length-percentage>";
+    inherits: false;
+    initial-value: 0;
+  }
+
+  @property --minItemWidth {
+    syntax: "<length-percentage>";
+    inherits: false;
+    initial-value: 639px;
+  }
+
+  --gutter: ${(props) =>
+    props.gutter ? getSpacingValue(props.gutter, props.theme) ?? "0px" : "0px"};
+  --minItemWidth: ${(props) =>
+    typeof props.minItemWidth === "string"
+      ? props.minItemWidth
+      : `${props.minItemWidth ?? 0}px`};
+
+  box-sizing: border-box;
+  > * {
+    margin: 0;
+  }
+
+  display: grid;
+  gap: var(--gutter, 0px);
+
+  grid-template-columns: repeat(
+    auto-fit,
+    minmax(min(var(--minItemWidth, 639px), 100%), 1fr)
+  );
 `;
