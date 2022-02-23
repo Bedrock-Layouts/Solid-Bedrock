@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.4.0](https://github.com/Bedrock-Layouts/Solid-Bedrock/compare/@bedrock-layout/solid@0.3.0...@bedrock-layout/solid@0.4.0) (2022-02-23)
+
+
+### Features
+
+* **grid:** add docs and grid ([3410e01](https://github.com/Bedrock-Layouts/Solid-Bedrock/commit/3410e01709969d1cd9127d9a2b2b36c9bb878c72))
+
+
+
+
+
 # [0.3.0](https://github.com/Bedrock-Layouts/Solid-Bedrock/compare/@bedrock-layout/solid@0.2.2...@bedrock-layout/solid@0.3.0) (2022-02-17)
 
 
