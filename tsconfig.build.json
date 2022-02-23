@@ -9,7 +9,6 @@
     "esModuleInterop": true,
     "experimentalDecorators": false,
     "importHelpers": true,
-    "jsx": "react",
     "lib": ["esnext", "dom"],
     "moduleResolution": "node",
     "noFallthroughCasesInSwitch": false,
@@ -25,6 +24,10 @@
     "strictNullChecks": true,
     "strictPropertyInitialization": true,
     "stripInternal": true,
-    "target": "esnext"
+    "target": "esnext",
+    "jsx": "preserve",
+    "jsxImportSource": "solid-js",
+    "module": "ESNext",
+    "types": ["vite/client"]
   }
 }
