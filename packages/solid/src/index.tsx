@@ -1,4 +1,4 @@
-import { styled } from "solid-styled-components";
+import { DefaultTheme, styled } from "solid-styled-components";
 
 type LowercaseCharacter =
   | "a"
@@ -73,8 +73,6 @@ export interface Spacing {
   xxl: CSSLength;
 }
 
-type SpacingOptions = keyof Spacing;
-
 export const spacing: Spacing = {
   none: "0px",
   xxs: "0.0625rem",
@@ -89,6 +87,46 @@ export const spacing: Spacing = {
   xxl: "4rem",
 };
 
+export type BaseTheme = Record<string, CSSLength | string | number>;
+
+type ThemeOrDefaultSpace<T> = T extends {
+  space: BaseTheme;
+}
+  ? T["space"]
+  : keyof Spacing;
+
+type SpacingOptions = ThemeOrDefaultSpace<DefaultTheme>;
+
+function fromEntries<T>(entries: [s: string, value: T][]): Record<string, T> {
+  return entries.reduce((acc, [key, value]) => {
+    return { ...acc, [key]: value };
+  }, {});
+}
+
+type MaybeValue = CSSLength | undefined;
+
+type GetSpacingValue = (
+  spacingKey: SpacingOptions,
+  theme?: Partial<BaseTheme>
+) => MaybeValue;
+
+export const getSpacingValue: GetSpacingValue = (spacingKey, theme) => {
+  const maybeSpaceingOrDefault = theme?.space ?? theme?.spacing ?? spacing;
+
+  const safeSpacings = fromEntries(
+    Object.entries(maybeSpaceingOrDefault).map(([spaceKey, value]) => [
+      spaceKey,
+      typeof value === "number" ? `${value}px` : value,
+    ])
+  );
+
+  const spacingVal = safeSpacings[spacingKey];
+
+  const isCSSLength = checkIsCSSLength(spacingVal);
+
+  return isCSSLength ? spacingVal : undefined;
+};
+
 export interface StackProps {
   gutter?: SpacingOptions;
 }
@@ -100,11 +138,12 @@ export const Stack = styled("div")<StackProps>`
     initial-value: 0;
   }
 
+  --gutter: ${(props) =>
+    props.gutter ? getSpacingValue(props.gutter, props.theme) ?? "0px" : "0px"};
   box-sizing: border-box;
   > * {
     margin: 0;
   }
-  --gutter: ${(props) => spacing[props.gutter ?? "none"] ?? spacing.none};
   display: flex;
   flex-direction: column;
 
@@ -135,7 +174,8 @@ export const Grid = styled("div")<GridProps>`
     initial-value: 639px;
   }
 
-  --gutter: ${(props) => spacing[props.gutter ?? "none"] ?? spacing.none};
+  --gutter: ${(props) =>
+    props.gutter ? getSpacingValue(props.gutter, props.theme) ?? "0px" : "0px"};
   --minItemWidth: ${(props) =>
     typeof props.minItemWidth === "string"
       ? props.minItemWidth
