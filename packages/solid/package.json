@@ -1,6 +1,6 @@
 {
   "name": "@bedrock-layout/solid",
-  "version": "0.6.0",
+  "version": "0.7.0",
   "description": "solid.js port of bedrock-layout primitives",
   "sideEffects": false,
   "private": false,
