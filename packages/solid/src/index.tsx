@@ -152,9 +152,11 @@ export const Center = styled("div")<CenterProps>`
 
   box-sizing: content-box;
 
-  margin-inline-start: auto;
-  margin-inline-end: auto;
-  margin-inline: auto;
+  && {
+    margin-inline-start: auto;
+    margin-inline-end: auto;
+    margin-inline: auto;
+  }
 
   max-inline-size: var(--maxWidth, 100%);
 
@@ -381,7 +383,7 @@ export interface InlineProps extends InlineClusterProps {
 }
 
 function shouldUseSwitch(switchAt?: SwitchAt) {
-  if (switchAt && switchAt > -1) {
+  if (typeof switchAt === "number" && switchAt > -1) {
     return true;
   }
 
@@ -412,10 +414,12 @@ export const Inline = styled(InlineCluster)<InlineProps>`
 
   ${(props) =>
     shouldUseSwitch(props.switchAt)
-      ? css`
-          --switchAt: ${typeof props.switchAt === "string"
-            ? props.switchAt
-            : `${props.switchAt}px`};
+      ? `
+          --switchAt: ${
+            typeof props.switchAt === "string"
+              ? props.switchAt
+              : `${props.switchAt}px`
+          };
           flex-wrap: wrap;
           > * {
             min-inline-size: fit-content;
@@ -425,14 +429,6 @@ export const Inline = styled(InlineCluster)<InlineProps>`
           }
         `
       : ""}
-
-  &[style*="--switchAt"] {
-    flex-wrap: wrap;
-    > * {
-      min-inline-size: fit-content;
-      flex-basis: calc((var(--switchAt) - (100% - var(--gutter, 0px))) * 999);
-    }
-  }
 `;
 
 type PaddingObj =
