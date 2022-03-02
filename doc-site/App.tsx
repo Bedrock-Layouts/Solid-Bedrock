@@ -44,7 +44,11 @@ export default App;
 function LandingPage() {
   return (
     <Stack gutter="xxl" style="padding:var(--space-xl)">
-      <Center data-bedrock-cover style="--minHeight:50vh; --maxWidth:80vw">
+      <Center
+        as={Stack}
+        data-bedrock-cover
+        style="--minHeight:50vh; --maxWidth:80vw"
+      >
         <Stack as={Center} gutter="lg" data-bedrock-cover-centered>
           <header>
             <Inline gutter="lg" switchAt="60rem">

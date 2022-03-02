@@ -15,7 +15,7 @@ module.exports = defineConfig({
       },
     },
     rollupOptions: {
-      external: [],
+      external: ["solid-js", "solid-styled-components"],
     },
   },
 });
