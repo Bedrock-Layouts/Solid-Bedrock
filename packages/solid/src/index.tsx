@@ -8,3 +8,4 @@ export * from "./inline";
 export * from "./padbox";
 export * from "./reel";
 export * from "./stack";
+export * from "./cover";
