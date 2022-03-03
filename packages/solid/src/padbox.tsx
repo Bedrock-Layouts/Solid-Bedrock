@@ -2,6 +2,7 @@ import { styled } from "solid-styled-components";
 
 import {
   BaseTheme,
+  CSSLength,
   SpacingOptions,
   getSpacingValue,
   spacing,
@@ -52,7 +53,9 @@ const keyToProperty = (key: string, val: string) => {
   return modernMap[key];
 };
 
-function paddingOrDefault<T extends Partial<BaseTheme>>(theme?: T) {
+function paddingOrDefault<T extends Partial<BaseTheme>>(
+  theme?: T
+): (val: SpacingOptions) => CSSLength {
   return (key: SpacingOptions) => {
     const maybePadding = getSpacingValue(key, theme);
     return maybePadding ?? "0px";
@@ -95,10 +98,10 @@ function paddingToString<T extends Partial<BaseTheme>>(
           validKeys.has(key) ? acc + keyToProperty(key, getPadding(val)) : acc,
         ""
       )
-    : padding
+    : padding !== undefined
     ? `padding: ${Array.from(Array.isArray(padding) ? padding : [padding])
         .map((pad: SpacingOptions) => getPadding(pad))
-        .join(" ")}`
+        .join(" ")};`
     : "";
 }
 
@@ -108,5 +111,8 @@ export interface PadBoxProps {
 
 export const PadBox = styled.div<PadBoxProps>`
   box-sizing: border-box;
-  ${(props) => paddingToString(props.theme, props.padding)}
+  ${(props) => (
+    console.log(paddingToString(props.theme, props.padding)),
+    paddingToString(props.theme, props.padding)
+  )}
 `;

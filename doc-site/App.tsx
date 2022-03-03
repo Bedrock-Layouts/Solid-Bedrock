@@ -2,7 +2,7 @@ import { Link, Route, Routes } from "solid-app-router";
 import type { Component } from "solid-js";
 import { styled } from "solid-styled-components";
 
-import { Center, Inline, Stack } from "../packages/solid/src";
+import { Center, Cover, Inline, PadBox, Stack } from "../packages/solid/src";
 import { Button } from "./Button";
 import { LogoOnly } from "./LogoOnly";
 
@@ -43,62 +43,60 @@ export default App;
 
 function LandingPage() {
   return (
-    <Stack gutter="xxl" style="padding:var(--space-xl)">
-      <Center
-        as={Stack}
-        data-bedrock-cover
-        style="--minHeight:50vh; --maxWidth:80vw"
-      >
-        <Stack as={Center} gutter="lg" data-bedrock-cover-centered>
-          <header>
-            <Inline gutter="lg" switchAt="60rem">
-              <LogoOnly />
+    <Stack gutter="xxl">
+      <Center maxWidth="80vw">
+        <Cover as={PadBox} padding="xl" minHeight="50vh">
+          <Stack as={Center} gutter="lg">
+            <header>
+              <Inline gutter="lg" switchAt="60rem">
+                <LogoOnly />
 
-              <Stack gutter="lgXl">
-                <Heading id="title">
-                  <Stack gutter="md">
-                    SOLID BEDROCK
-                    <SubTitle>LAYOUT PRIMITIVES</SubTitle>
-                  </Stack>
-                </Heading>
-                <Center
-                  as="p"
-                  centerText
-                  style="font-size: var(--font-size-fluid-0);"
-                >
-                  <strong>
-                    Foundational layout building blocks for your Solid.js app
-                  </strong>
-                </Center>
-                <Center
-                  as="a"
-                  centerChildren
-                  href="https://github.com/Bedrock-Layouts/Solid-Bedrock/stargazers"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <img
-                    src="https://img.shields.io/github/stars/Bedrock-Layouts/Solid-Bedrock?style=social"
-                    alt="GitHub Repo stars"
-                  />
-                </Center>
-                <Inline gutter="lg" switchAt="20rem" justify="center">
-                  <Button primary as={Link} href="/getting-started">
-                    Get Started
-                  </Button>
-                  <Button
+                <Stack gutter="lgXl">
+                  <Heading id="title">
+                    <Stack gutter="md">
+                      SOLID BEDROCK
+                      <SubTitle>LAYOUT PRIMITIVES</SubTitle>
+                    </Stack>
+                  </Heading>
+                  <Center
+                    as="p"
+                    centerText
+                    style="font-size: var(--font-size-fluid-0);"
+                  >
+                    <strong>
+                      Foundational layout building blocks for your Solid.js app
+                    </strong>
+                  </Center>
+                  <Center
                     as="a"
-                    href="https://github.com/Bedrock-Layouts/Solid-Bedrock"
+                    centerChildren
+                    href="https://github.com/Bedrock-Layouts/Solid-Bedrock/stargazers"
                     target="_blank"
                     rel="noopener noreferrer"
                   >
-                    GitHub
-                  </Button>
-                </Inline>
-              </Stack>
-            </Inline>
-          </header>
-        </Stack>
+                    <img
+                      src="https://img.shields.io/github/stars/Bedrock-Layouts/Solid-Bedrock?style=social"
+                      alt="GitHub Repo stars"
+                    />
+                  </Center>
+                  <Inline gutter="lg" switchAt="20rem" justify="center">
+                    <Button primary as={Link} href="/getting-started">
+                      Get Started
+                    </Button>
+                    <Button
+                      as="a"
+                      href="https://github.com/Bedrock-Layouts/Solid-Bedrock"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      GitHub
+                    </Button>
+                  </Inline>
+                </Stack>
+              </Inline>
+            </header>
+          </Stack>
+        </Cover>
       </Center>
     </Stack>
   );
