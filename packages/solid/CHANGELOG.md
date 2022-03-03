@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.8.0](https://github.com/Bedrock-Layouts/Solid-Bedrock/compare/@bedrock-layout/solid@0.7.2...@bedrock-layout/solid@0.8.0) (2022-03-03)
+
+
+### Features
+
+* **solid:** add cover component ([62ddbc7](https://github.com/Bedrock-Layouts/Solid-Bedrock/commit/62ddbc73dc0f87d49c56b7fc375617862d2068b0))
+
+
+
+
+
 ## [0.7.2](https://github.com/Bedrock-Layouts/Solid-Bedrock/compare/@bedrock-layout/solid@0.7.1...@bedrock-layout/solid@0.7.2) (2022-03-02)
 
 **Note:** Version bump only for package @bedrock-layout/solid
