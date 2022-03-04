@@ -111,8 +111,5 @@ export interface PadBoxProps {
 
 export const PadBox = styled.div<PadBoxProps>`
   box-sizing: border-box;
-  ${(props) => (
-    console.log(paddingToString(props.theme, props.padding)),
-    paddingToString(props.theme, props.padding)
-  )}
+  ${(props) => paddingToString(props.theme, props.padding)}
 `;
