@@ -1,8 +1,15 @@
 import { Link, Route, Routes } from "solid-app-router";
-import type { Component } from "solid-js";
+import { Component } from "solid-js";
 import { styled } from "solid-styled-components";
 
-import { Center, Cover, Inline, PadBox, Stack } from "../packages/solid/src";
+import {
+  Center,
+  Cover,
+  Inline,
+  PadBox,
+  Split,
+  Stack,
+} from "../packages/solid/src";
 import { Button } from "./Button";
 import { LogoOnly } from "./LogoOnly";
 
@@ -21,7 +28,7 @@ const SubTitle = styled("span")`
 
 const App: Component = () => {
   return (
-    <div data-bedrock-split="fraction:auto-start">
+    <Split fraction="auto-start" gutter="lg" switchAt={1000}>
       <aside>
         <figure>
           <img
@@ -35,7 +42,7 @@ const App: Component = () => {
         <Route path="/" element={<LandingPage />} />
         <Route path="/*all" element={<Stack>Not Found</Stack>} />
       </Routes>
-    </div>
+    </Split>
   );
 };
 
