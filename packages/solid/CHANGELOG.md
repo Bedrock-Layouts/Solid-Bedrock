@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.10.0](https://github.com/Bedrock-Layouts/Solid-Bedrock/compare/@bedrock-layout/solid@0.9.0...@bedrock-layout/solid@0.10.0) (2022-03-04)
+
+
+### Features
+
+* **solid:** add columns layout ([9bbc265](https://github.com/Bedrock-Layouts/Solid-Bedrock/commit/9bbc265b57c3026d2098f4ff0a37dc20a054026f))
+
+
+
+
+
 # [0.9.0](https://github.com/Bedrock-Layouts/Solid-Bedrock/compare/@bedrock-layout/solid@0.8.0...@bedrock-layout/solid@0.9.0) (2022-03-04)
 
 
