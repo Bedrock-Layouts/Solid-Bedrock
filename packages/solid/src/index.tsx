@@ -11,3 +11,4 @@ export * from "./reel";
 export * from "./split";
 export * from "./stack";
 export * from "./cover";
+export * from "./columns";
