@@ -4,6 +4,8 @@ import { styled } from "solid-styled-components";
 
 import {
   Center,
+  Column,
+  Columns,
   Cover,
   Inline,
   PadBox,
