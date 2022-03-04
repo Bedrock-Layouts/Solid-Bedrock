@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.9.0](https://github.com/Bedrock-Layouts/Solid-Bedrock/compare/@bedrock-layout/solid@0.8.0...@bedrock-layout/solid@0.9.0) (2022-03-04)
+
+
+### Features
+
+* **solid:** make fully capable split ([b83ca74](https://github.com/Bedrock-Layouts/Solid-Bedrock/commit/b83ca74d29eb59a0089c2b617e905e47793f8529))
+
+
+
+
+
 # [0.8.0](https://github.com/Bedrock-Layouts/Solid-Bedrock/compare/@bedrock-layout/solid@0.7.2...@bedrock-layout/solid@0.8.0) (2022-03-03)
 
 
