@@ -32,13 +32,13 @@ const App: Component = () => {
   return (
     <Split fraction="auto-start" gutter="lg" switchAt={1000}>
       <aside>
-        <figure>
+        <Center as="figure" maxWidth="20rem">
           <img
             src="https://bedrock-layout.dev/Full%20logo.png"
             alt="Bedrock Layout"
             style="max-width: 20rem;"
           />
-        </figure>
+        </Center>
       </aside>
       <Routes>
         <Route path="/" element={<LandingPage />} />
