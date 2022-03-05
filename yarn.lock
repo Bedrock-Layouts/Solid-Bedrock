@@ -7813,9 +7813,9 @@ solid-jest@^0.2.0:
     enhanced-resolve-jest "^1.1.0"
 
 solid-js@^1.3.3, solid-js@^1.3.7:
-  version "1.3.9"
-  resolved "https://registry.yarnpkg.com/solid-js/-/solid-js-1.3.9.tgz#a4247ce6a72c82b5abcbeaaf8fe2273784daa396"
-  integrity sha512-BZyDen2oj3XA8g8xe0hhVIzGP2d+TV2dn3w90lXjNYLxveAXeN4aA5pxdO4vn7FKd0e0p4nqWtbWtG7NyaPs2A==
+  version "1.3.10"
+  resolved "https://registry.yarnpkg.com/solid-js/-/solid-js-1.3.10.tgz#7e1d4a380bbf620a1e988f09305a7f429c671dbc"
+  integrity sha512-yPo86et2J4ZPtvS0SYTAYFNYH4AZF04gYCgw8WPx8+JIdBKUCgwHhHNz/6PYUO5Ng1U3kTSrTW8hRO2T9Mdrzg==
 
 solid-refresh@^0.4.0:
   version "0.4.0"
