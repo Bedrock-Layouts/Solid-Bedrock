@@ -1,4 +1,4 @@
-import { DefaultTheme, css, styled } from "solid-styled-components";
+import type { DefaultTheme } from "solid-styled-components";
 
 type LowercaseCharacter =
   | "a"

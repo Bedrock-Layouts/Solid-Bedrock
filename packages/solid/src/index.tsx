@@ -4,6 +4,7 @@ export * from "./column-drop";
 export * from "./create-container-query";
 export * from "./frame";
 export * from "./grid";
+export * from "./masonry-grid";
 export * from "./inline-cluster";
 export * from "./inline";
 export * from "./padbox";

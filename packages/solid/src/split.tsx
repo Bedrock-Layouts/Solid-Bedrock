@@ -66,7 +66,7 @@ export const Split: Component<SplitProps> = (props) => {
     typeof props.switchAt === "string" ? toPX(props.switchAt) : props.switchAt;
 
   const widthToSwitchAt: number = maybePx && maybePx > -1 ? maybePx : 0; //zero is used to make the switchAt a noop
-  console.log(widthToSwitchAt);
+
   const [shouldSwitch, nodeRef] = createContainerQuery(widthToSwitchAt);
 
   const combineRef = (ref: HTMLElement) => {
