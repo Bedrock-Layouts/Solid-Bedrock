@@ -28,16 +28,17 @@ export const Inline = styled(InlineCluster)<InlineProps>`
     inherits: true;
     initial-value: 0;
   }
+
   flex-wrap: nowrap;
   ${(props) =>
     props.stretch === "all"
-      ? `> *  { flex: 1 }`
+      ? `& > *  { flex: 1 }`
       : props.stretch === "start"
-      ? `> :first-child { flex: 1 }`
+      ? `& > :first-child { flex: 1 }`
       : props.stretch === "end"
-      ? `> :last-child { flex: 1 }`
+      ? `& > :last-child { flex: 1 }`
       : typeof props.stretch === "number"
-      ? `> :nth-child(${props.stretch + 1}) { flex: 1 }`
+      ? `& > :nth-child(${props.stretch + 1}) { flex: 1 }`
       : ""}
 
   ${(props) =>
