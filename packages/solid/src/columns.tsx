@@ -63,15 +63,10 @@ export const Columns: Component<ColumnsProps> = (props) => {
   return (
     <Switch>
       <Match when={shouldSwitch() === false}>
-        <ColumnsBase
-          as={props.as}
-          ref={combineRef}
-          columns={props.columns}
-          {...props}
-        />
+        <ColumnsBase {...props} ref={combineRef} />
       </Match>
       <Match when={shouldSwitch() === true}>
-        <Stack as={props.as} ref={combineRef} {...props} />
+        <Stack {...props} ref={combineRef} />
       </Match>
     </Switch>
   );

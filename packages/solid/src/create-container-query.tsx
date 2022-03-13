@@ -11,15 +11,38 @@ import {
   onMount,
 } from "solid-js";
 
-export function createContainerQuery<T extends Element>(
-  width = 1,
-  maxWidth?: number
-): [Accessor<boolean>, Setter<T | undefined>] {
-  if (maxWidth !== undefined && maxWidth <= width) {
-    throw new Error(
-      `The second width value, ${maxWidth}, is not larger than ${width}. Please provide a value greater than first width value`
+function fail(msg: string) {
+  throw new Error(msg);
+}
+
+function assertIsValidWidth(width: number | [number, number]) {
+  if (typeof width !== "number" && !Array.isArray(width)) {
+    fail("width must be a number or an array of two numbers");
+  }
+
+  if (
+    Array<number>()
+      .concat(width)
+      .some((w) => w < 1)
+  ) {
+    fail("width value(s) must be greater than 0");
+  }
+
+  const isInvalidArray =
+    Array.isArray(width) && (width.length !== 2 || width[0] > width[1]);
+
+  if (isInvalidArray) {
+    fail(
+      `The second width value, ${width[1]}, is not larger than ${width[0]}. Please provide a value greater than first width value`
     );
   }
+}
+
+export function createContainerQuery<T extends Element>(
+  width: number | [number, number],
+  maybeRef?: (ref: T) => void
+): [Accessor<boolean>, Setter<T | undefined>] {
+  assertIsValidWidth(width);
 
   const [matches, setMatch] = createSignal(false);
   const [node, nodeRef] = createSignal<T>();
@@ -29,10 +52,14 @@ export function createContainerQuery<T extends Element>(
   });
 
   createEffect(() => {
-    const ref = node();
-    if (ref === undefined || ref === null) return;
+    node();
+    if (node() === undefined || node() === null) return;
 
-    const cleanup = registerCallback(ref, (entry) => {
+    if (maybeRef) {
+      maybeRef(node() as T);
+    }
+
+    const cleanup = registerCallback(node() as T, (entry) => {
       //fix typings
       const nodeWidth =
         (entry.borderBoxSize as unknown as ResizeObserverSize)?.inlineSize ??
@@ -40,10 +67,9 @@ export function createContainerQuery<T extends Element>(
 
       //nodeWidth can be zero when it is switching from one node to another.  This will ignore that.
       if (nodeWidth > 0) {
-        const newMatch =
-          maxWidth === undefined
-            ? nodeWidth <= width
-            : nodeWidth >= width && nodeWidth <= maxWidth;
+        const newMatch = Array.isArray(width)
+          ? nodeWidth >= width[0] && nodeWidth <= width[1]
+          : nodeWidth <= width;
 
         setMatch(newMatch);
       }
