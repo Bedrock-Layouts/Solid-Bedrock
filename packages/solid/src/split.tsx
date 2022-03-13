@@ -55,10 +55,11 @@ const SplitBase = styled.div<SplitBaseProps>`
       fractions[fraction] ?? fractions["1/2"]}};
   `;
 
+type RefFunction = (ref: HTMLElement) => void;
 export interface SplitProps extends StackProps, SplitBaseProps {
   switchAt?: number | CSSLength;
   as?: Component | keyof JSX.IntrinsicElements;
-  ref?: (ref: HTMLElement) => void;
+  ref?: RefFunction;
 }
 
 export const Split: Component<SplitProps> = (props) => {
@@ -67,25 +68,18 @@ export const Split: Component<SplitProps> = (props) => {
 
   const widthToSwitchAt: number = maybePx && maybePx > -1 ? maybePx : 0; //zero is used to make the switchAt a noop
 
-  const [shouldSwitch, nodeRef] = createContainerQuery(widthToSwitchAt);
-
-  const combineRef = (ref: HTMLElement) => {
-    nodeRef(ref);
-    props.ref?.(ref);
-  };
+  const [shouldSwitch, nodeRef] = createContainerQuery(
+    widthToSwitchAt,
+    props.ref as RefFunction
+  );
 
   return (
     <Switch>
       <Match when={shouldSwitch() === false}>
-        <SplitBase
-          as={props.as}
-          ref={combineRef}
-          fraction={props.fraction}
-          {...props}
-        />
+        <SplitBase fraction={props.fraction} {...props} ref={nodeRef} />
       </Match>
       <Match when={shouldSwitch() === true}>
-        <Stack as={props.as} ref={combineRef} {...props} />
+        <Stack {...props} ref={nodeRef} />
       </Match>
     </Switch>
   );
