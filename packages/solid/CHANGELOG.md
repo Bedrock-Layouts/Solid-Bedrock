@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.11.2](https://github.com/Bedrock-Layouts/Solid-Bedrock/compare/@bedrock-layout/solid@0.11.1...@bedrock-layout/solid@0.11.2) (2022-03-13)
+
+
+### Bug Fixes
+
+* **solid:** bug fix for refs ([d262f55](https://github.com/Bedrock-Layouts/Solid-Bedrock/commit/d262f55d60c4ae9fa6622520f02800e8d5bf8fd6))
+
+
+
+
+
 ## [0.11.1](https://github.com/Bedrock-Layouts/Solid-Bedrock/compare/@bedrock-layout/solid@0.11.0...@bedrock-layout/solid@0.11.1) (2022-03-11)
 
 **Note:** Version bump only for package @bedrock-layout/solid
