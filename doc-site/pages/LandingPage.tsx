@@ -32,49 +32,44 @@ const Content = styled(PadBox)`
 
 export function LandingPage(): JSXElement {
   return (
-    <Center maxWidth="80vw">
-      <PadBox padding="xl">
-        <Stack gutter="xxl">
-          <Hero />
-          <Content padding="xl">
-            <Grid minItemWidth="40ch" gutter="xl">
-              <Stack gutter="md">
-                <h2> Zero Config</h2>
-                <p>
-                  Bedrock Layout Primitives are built using{" "}
-                  <a
-                    href="https://github.com/solidjs/solid-styled-components"
-                    target="_blank"
-                  >
-                    solid-styled-components.
-                  </a>
-                  This allows Bedrock Layout Primitives to be used in any app
-                  without any extra setup. Just `yarn add` the desired
-                  package(s) and start using them.
-                </p>
-              </Stack>
-              <Stack gutter="md">
-                <h2>Composable Layouts</h2>
-                <p>
-                  Bedrock Layout Primitives are built to allow you to compose
-                  them together to create your own custom layouts. Many
-                  "complex" layouts can be created by composing Bedrock Layout
-                  Primitives.
-                </p>
-              </Stack>
-              <Stack gutter="md">
-                <h2>Use With Any Design System</h2>
-                <p>
-                  You can use Bedrock Layout Primitives with any design system.
-                  Bedrock Layout's' spacing scheme can be easily overridden to
-                  match your design system.
-                </p>
-              </Stack>
-            </Grid>
-          </Content>
-        </Stack>
-      </PadBox>
-    </Center>
+    <Stack gutter="xxl">
+      <Hero />
+      <Content padding="xl">
+        <Grid minItemWidth="40ch" gutter="xl">
+          <Stack gutter="md">
+            <h2> Zero Config</h2>
+            <p>
+              Bedrock Layout Primitives are built using{" "}
+              <a
+                href="https://github.com/solidjs/solid-styled-components"
+                target="_blank"
+              >
+                solid-styled-components.
+              </a>
+              This allows Bedrock Layout Primitives to be used in any app
+              without any extra setup. Just `yarn add` the desired package(s)
+              and start using them.
+            </p>
+          </Stack>
+          <Stack gutter="md">
+            <h2>Composable Layouts</h2>
+            <p>
+              Bedrock Layout Primitives are built to allow you to compose them
+              together to create your own custom layouts. Many "complex" layouts
+              can be created by composing Bedrock Layout Primitives.
+            </p>
+          </Stack>
+          <Stack gutter="md">
+            <h2>Use With Any Design System</h2>
+            <p>
+              You can use Bedrock Layout Primitives with any design system.
+              Bedrock Layout's' spacing scheme can be easily overridden to match
+              your design system.
+            </p>
+          </Stack>
+        </Grid>
+      </Content>
+    </Stack>
   );
 }
 
@@ -83,7 +78,7 @@ function Hero() {
     <Cover as={PadBox} padding="xl" minHeight="60vh">
       <Stack as={Center} gutter="lg">
         <header>
-          <Inline gutter="xxl" switchAt="40rem">
+          <Inline stretch="all" gutter="xxl" switchAt="40rem">
             <Center maxWidth="20rem">
               <LogoOnly />
             </Center>

@@ -7,12 +7,15 @@ import { Router } from "solid-app-router";
 /* @refresh reload */
 import { render } from "solid-js/web";
 
+import { Center } from "../packages/solid/src";
 import App from "./App";
 
 render(
   () => (
     <Router>
-      <App />
+      <Center maxWidth={Math.floor((1439 + 1920) / 2)}>
+        <App />
+      </Center>
     </Router>
   ),
   document.getElementById("root") as HTMLElement
