@@ -99,6 +99,7 @@
     }
   },
   "dependencies": {
+    "highlight.js": "^11.5.0",
     "solid-app-router": "^0.3.0"
   }
 }
