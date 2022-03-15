@@ -1,5 +1,6 @@
 import "@bedrock-layout/bedrock-layout-css/lib/bedrock-layout.min.css";
 import "open-props/style";
+import "highlight.js/styles/atom-one-dark.css";
 
 import "./global-styles.css";
 
