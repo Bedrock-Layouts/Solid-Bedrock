@@ -1,7 +1,8 @@
-import { JSX, JSXElement } from "solid-js";
+import { SpacingOptions } from "packages/solid/lib";
+import { For, JSX, JSXElement, createSignal } from "solid-js";
 import { styled } from "solid-styled-components";
 
-import { PadBox, Stack } from "../../packages/solid/src";
+import { PadBox, Stack, spacing } from "../../packages/solid/src";
 import { CodeBlock } from "../components/CodeBlock";
 import { PageSection } from "../components/PageSection";
 
@@ -10,6 +11,31 @@ const Box = styled.div`
   min-height: 50px;
   min-width: 50px;
 `;
+
+const Select = styled.select`
+  appearance: none;
+  box-sizing: border-box;
+  width: 100%;
+  border: 1px solid gray;
+  border-radius: var(--radius-2);
+  cursor: pointer;
+  background-color: #fff;
+  min-width: var(--size-content-1);
+  max-width: var(--size-content-2);
+  padding: var(--space-sm);
+`;
+
+function Story(props: JSX.DOMAttributes<"div">) {
+  return (
+    <Stack
+      as={PadBox}
+      padding="lg"
+      gutter="mdLg"
+      style="border:1px solid black"
+      {...props}
+    />
+  );
+}
 
 const Heading = styled("h1")`
   font-size: clamp(2rem, 10vw, 4.5rem);
@@ -50,6 +76,7 @@ function BodyCell(props: JSX.DOMAttributes<"td">) {
 }
 
 export function StackPage(): JSXElement {
+  const [gutter, setGutter] = createSignal<SpacingOptions>("lg");
   return (
     <Stack gutter="xxl">
       <Heading id="title">Stack</Heading>
@@ -87,13 +114,52 @@ export function StackPage(): JSXElement {
         </p>
 
         <p>Here are the possible values for gutter by default:</p>
-
-        <Stack
-          as={PadBox}
-          padding="lg"
-          gutter="xl"
-          style="border:1px solid black"
-        >
+        <Story>
+          <h3>none</h3>
+          <Stack gutter="none">
+            <Box />
+            <Box />
+          </Stack>
+          <h3>xxs</h3>
+          <Stack gutter="xxs">
+            <Box />
+            <Box />
+          </Stack>
+          <h3>xs</h3>
+          <Stack gutter="xs">
+            <Box />
+            <Box />
+          </Stack>
+          <h3>sm</h3>
+          <Stack gutter="sm">
+            <Box />
+            <Box />
+          </Stack>
+          <h3>md</h3>
+          <Stack gutter="md">
+            <Box />
+            <Box />
+          </Stack>
+          <h3>mdLg</h3>
+          <Stack gutter="mdLg">
+            <Box />
+            <Box />
+          </Stack>
+          <h3>lg</h3>
+          <Stack gutter="lg">
+            <Box />
+            <Box />
+          </Stack>
+          <h3>lgXl</h3>
+          <Stack gutter="lgXl">
+            <Box />
+            <Box />
+          </Stack>
+          <h3>xl</h3>
+          <Stack gutter="xl">
+            <Box />
+            <Box />
+          </Stack>
           <h3>xl</h3>
           <Stack gutter="xl">
             <Box />
@@ -109,13 +175,68 @@ export function StackPage(): JSXElement {
             <Box />
             <Box />
           </Stack>
-        </Stack>
+        </Story>
 
         <CodeBlock
           code={`
   function App() {
     return (
       <>
+        <h3>Custom gutter as number (20)</h3>
+        <Stack gutter={20}>
+          <Box />
+          <Box />
+        </Stack>
+        <h3>Custom gutter as string ("3ch")</h3>
+        <Stack gutter="3ch">
+          <Box />
+          <Box />
+        </Stack>
+        <h3>none</h3>
+        <Stack gutter="none">
+          <Box />
+          <Box />
+        </Stack>
+        <h3>xxs</h3>
+        <Stack gutter="xxs">
+          <Box />
+          <Box />
+        </Stack>
+        <h3>xs</h3>
+        <Stack gutter="xs">
+          <Box />
+          <Box />
+        </Stack>
+        <h3>sm</h3>
+        <Stack gutter="sm">
+          <Box />
+          <Box />
+        </Stack>
+        <h3>md</h3>
+        <Stack gutter="md">
+          <Box />
+          <Box />
+        </Stack>
+        <h3>mdLg</h3>
+        <Stack gutter="mdLg">
+          <Box />
+          <Box />
+        </Stack>
+        <h3>lg</h3>
+        <Stack gutter="lg">
+          <Box />
+          <Box />
+        </Stack>
+        <h3>lgXl</h3>
+        <Stack gutter="lgXl">
+          <Box />
+          <Box />
+        </Stack>
+        <h3>xl</h3>
+        <Stack gutter="xl">
+          <Box />
+          <Box />
+        </Stack>
         <h3>xl</h3>
         <Stack gutter="xl">
           <Box />
@@ -133,10 +254,55 @@ export function StackPage(): JSXElement {
         </Stack>
       </>
     );
-  }
+  }          
       `}
           language="javascript"
         />
+      </PageSection>
+      <PageSection title="Playground">
+        <Story>
+          <Stack gutter={gutter()}>
+            <Box />
+            <Box />
+            <Box />
+            <Box />
+          </Stack>
+        </Story>
+
+        <table>
+          <thead>
+            <HeaderRow>
+              <HeadingCell>Name</HeadingCell>
+              <HeadingCell>Description</HeadingCell>
+              <HeadingCell>Default</HeadingCell>
+              <HeadingCell>Control</HeadingCell>
+            </HeaderRow>
+          </thead>
+          <tbody>
+            <BodyRow>
+              <BodyCell>
+                <strong>gutter</strong>
+              </BodyCell>
+              <BodyCell>The space between each item.</BodyCell>
+              <BodyCell>0px</BodyCell>
+              <BodyCell>
+                <Select
+                  name="gutter"
+                  value={gutter()}
+                  onChange={(e) =>
+                    setGutter(e.currentTarget.value as SpacingOptions)
+                  }
+                >
+                  <For each={Object.keys(spacing)}>
+                    {(gutterOption) => (
+                      <option value={gutterOption}>{gutterOption}</option>
+                    )}
+                  </For>
+                </Select>
+              </BodyCell>
+            </BodyRow>
+          </tbody>
+        </table>
       </PageSection>
     </Stack>
   );
