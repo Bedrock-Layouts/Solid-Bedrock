@@ -1,8 +1,12 @@
-import { SpacingOptions } from "packages/solid/lib";
-import { For, JSX, JSXElement, createSignal } from "solid-js";
+import { For, JSX, JSXElement, Match, Switch, createSignal } from "solid-js";
 import { styled } from "solid-styled-components";
 
-import { PadBox, Stack, spacing } from "../../packages/solid/src";
+import {
+  PadBox,
+  Stack,
+  createContainerQuery,
+  spacing,
+} from "../../packages/solid/src";
 import { CodeBlock } from "../components/CodeBlock";
 import { PageSection } from "../components/PageSection";
 
@@ -30,7 +34,7 @@ function Story(props: JSX.DOMAttributes<"div">) {
     <Stack
       as={PadBox}
       padding="lg"
-      gutter="mdLg"
+      //gutter="mdLg"
       style="border:1px solid black"
       {...props}
     />
@@ -76,9 +80,10 @@ function BodyCell(props: JSX.DOMAttributes<"td">) {
 }
 
 export function StackPage(): JSXElement {
-  const [gutter, setGutter] = createSignal<SpacingOptions>("lg");
+  const [gutter, setGutter] = createSignal("lg");
+  const [shouldSwitch, ref] = createContainerQuery(600);
   return (
-    <Stack gutter="xxl">
+    <Stack ref={ref} gutter="xxl">
       <Heading id="title">Stack</Heading>
       <PageSection title="Use Case">
         <p>
@@ -87,24 +92,41 @@ export function StackPage(): JSXElement {
         </p>
       </PageSection>
       <PageSection title="API">
-        <table>
-          <thead>
-            <HeaderRow>
-              <HeadingCell>Name</HeadingCell>
-              <HeadingCell>Description</HeadingCell>
-              <HeadingCell>Default</HeadingCell>
-            </HeaderRow>
-          </thead>
-          <tbody>
-            <BodyRow>
-              <BodyCell>
+        <Switch>
+          <Match when={shouldSwitch() === true}>
+            <Stack
+              as="dl"
+              gutter="md"
+              style="border:1px solid var(--gray-3); padding:1rem;"
+            >
+              <dt>
                 <strong>gutter</strong>
-              </BodyCell>
-              <BodyCell>The space between each item.</BodyCell>
-              <BodyCell>0px</BodyCell>
-            </BodyRow>
-          </tbody>
-        </table>
+              </dt>
+              <dd>The space between each item</dd>
+              <dd>default value: 0px</dd>
+            </Stack>
+          </Match>
+          <Match when={shouldSwitch() === false}>
+            <table>
+              <thead>
+                <HeaderRow>
+                  <HeadingCell>Name</HeadingCell>
+                  <HeadingCell>Description</HeadingCell>
+                  <HeadingCell>Default</HeadingCell>
+                </HeaderRow>
+              </thead>
+              <tbody>
+                <BodyRow>
+                  <BodyCell>
+                    <strong>gutter</strong>
+                  </BodyCell>
+                  <BodyCell>The space between each item.</BodyCell>
+                  <BodyCell>0px</BodyCell>
+                </BodyRow>
+              </tbody>
+            </table>
+          </Match>
+        </Switch>
       </PageSection>
       <PageSection title="gutter">
         <p>
@@ -268,30 +290,22 @@ export function StackPage(): JSXElement {
             <Box />
           </Stack>
         </Story>
-
-        <table>
-          <thead>
-            <HeaderRow>
-              <HeadingCell>Name</HeadingCell>
-              <HeadingCell>Description</HeadingCell>
-              <HeadingCell>Default</HeadingCell>
-              <HeadingCell>Control</HeadingCell>
-            </HeaderRow>
-          </thead>
-          <tbody>
-            <BodyRow>
-              <BodyCell>
+        <Switch>
+          <Match when={shouldSwitch() === true}>
+            <Stack
+              as="dl"
+              gutter="md"
+              style="border:1px solid var(--gray-3); padding:1rem;"
+            >
+              <dt>
                 <strong>gutter</strong>
-              </BodyCell>
-              <BodyCell>The space between each item.</BodyCell>
-              <BodyCell>0px</BodyCell>
-              <BodyCell>
+              </dt>
+              <dd>The space between each item</dd>
+              <dd>
                 <Select
                   name="gutter"
                   value={gutter()}
-                  onChange={(e) =>
-                    setGutter(e.currentTarget.value as SpacingOptions)
-                  }
+                  onChange={(e) => setGutter(e.currentTarget.value)}
                 >
                   <For each={Object.keys(spacing)}>
                     {(gutterOption) => (
@@ -299,10 +313,44 @@ export function StackPage(): JSXElement {
                     )}
                   </For>
                 </Select>
-              </BodyCell>
-            </BodyRow>
-          </tbody>
-        </table>
+              </dd>
+            </Stack>
+          </Match>
+          <Match when={shouldSwitch() === false}>
+            <table>
+              <thead>
+                <HeaderRow>
+                  <HeadingCell>Name</HeadingCell>
+                  <HeadingCell>Description</HeadingCell>
+                  <HeadingCell>Default</HeadingCell>
+                  <HeadingCell>Control</HeadingCell>
+                </HeaderRow>
+              </thead>
+              <tbody>
+                <BodyRow>
+                  <BodyCell>
+                    <strong>gutter</strong>
+                  </BodyCell>
+                  <BodyCell>The space between each item.</BodyCell>
+                  <BodyCell>0px</BodyCell>
+                  <BodyCell>
+                    <Select
+                      name="gutter"
+                      value={gutter()}
+                      onChange={(e) => setGutter(e.currentTarget.value)}
+                    >
+                      <For each={Object.keys(spacing)}>
+                        {(gutterOption) => (
+                          <option value={gutterOption}>{gutterOption}</option>
+                        )}
+                      </For>
+                    </Select>
+                  </BodyCell>
+                </BodyRow>
+              </tbody>
+            </table>
+          </Match>
+        </Switch>
       </PageSection>
     </Stack>
   );

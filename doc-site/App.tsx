@@ -53,7 +53,6 @@ const App: Component = () => {
       gutter="lg"
       align="stretch"
       switchAt={WIDTH_BREAKPOINT}
-      style="background-color: white;"
     >
       <PadBox
         as="aside"
@@ -75,7 +74,7 @@ const App: Component = () => {
           <SideNavGroup />
         </Stack>
       </PadBox>
-      <PadBox padding="xl">
+      <PadBox style="width:100%; min-inline-size:unset;" padding="xl">
         <Center maxWidth="90%">
           <Routes>
             <Route path="/" element={<LandingPage />} />
