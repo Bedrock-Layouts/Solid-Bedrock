@@ -8,14 +8,20 @@ import { Router } from "solid-app-router";
 /* @refresh reload */
 import { render } from "solid-js/web";
 
-import { Center } from "../packages/solid/src";
+import { Center, Cover } from "../packages/solid/src";
 import App from "./App";
 
 render(
   () => (
     <Router>
-      <Center maxWidth={Math.floor((1439 + 1920) / 2)}>
-        <App />
+      <Center
+        data-app-boundary
+        style="background-color: white; min-inline-size:min(min-content, 100%);"
+        maxWidth={1680}
+      >
+        <Cover>
+          <App />
+        </Cover>
       </Center>
     </Router>
   ),
