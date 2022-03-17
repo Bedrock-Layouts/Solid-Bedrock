@@ -1,6 +1,6 @@
 import { JSXElement } from "solid-js";
 
-import { PadBox, Stack } from "../../packages/solid/src";
+import { Stack } from "../../packages/solid/src";
 
 export function PageSection(props: {
   title: string;
