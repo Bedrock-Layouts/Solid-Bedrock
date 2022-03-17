@@ -7,15 +7,13 @@ import {
   Stack,
   createContainerQuery,
   spacing,
-} from "../../packages/solid/src";
-import { PageSection } from "../components/PageSection";
-import { Story } from "../components/Story";
-
-const Box = styled.div`
-  background: black;
-  min-height: 50px;
-  min-width: 50px;
-`;
+} from "../../../packages/solid/src";
+import { PageSection } from "../../components/PageSection";
+import { Story } from "../../components/Story";
+import { Gutter } from "./gutters";
+import gutterCode from "./gutters?raw";
+import { Playground } from "./playground";
+import playgroundCode from "./playground?raw";
 
 const Select = styled.select`
   appearance: none;
@@ -125,77 +123,13 @@ export function StackPage(): JSXElement {
         </p>
 
         <p>Here are the possible values for gutter by default:</p>
-        <Story>
-          <h3>none</h3>
-          <Stack gutter="none">
-            <Box />
-            <Box />
-          </Stack>
-          <h3>xxs</h3>
-          <Stack gutter="xxs">
-            <Box />
-            <Box />
-          </Stack>
-          <h3>xs</h3>
-          <Stack gutter="xs">
-            <Box />
-            <Box />
-          </Stack>
-          <h3>sm</h3>
-          <Stack gutter="sm">
-            <Box />
-            <Box />
-          </Stack>
-          <h3>md</h3>
-          <Stack gutter="md">
-            <Box />
-            <Box />
-          </Stack>
-          <h3>mdLg</h3>
-          <Stack gutter="mdLg">
-            <Box />
-            <Box />
-          </Stack>
-          <h3>lg</h3>
-          <Stack gutter="lg">
-            <Box />
-            <Box />
-          </Stack>
-          <h3>lgXl</h3>
-          <Stack gutter="lgXl">
-            <Box />
-            <Box />
-          </Stack>
-          <h3>xl</h3>
-          <Stack gutter="xl">
-            <Box />
-            <Box />
-          </Stack>
-          <h3>xl</h3>
-          <Stack gutter="xl">
-            <Box />
-            <Box />
-          </Stack>
-          <h3>xlXXl</h3>
-          <Stack gutter="xlXXl">
-            <Box />
-            <Box />
-          </Stack>
-          <h3>xxl</h3>
-          <Stack gutter="xxl">
-            <Box />
-            <Box />
-          </Stack>
+        <Story code={({ dedent }) => dedent(gutterCode)}>
+          <Gutter />
         </Story>
       </PageSection>
       <PageSection title="Playground">
-        <Story>
-          <Stack gutter={gutter() as keyof Spacing}>
-            <Box />
-            <Box />
-            <Box />
-            <Box />
-          </Stack>
+        <Story code={({ dedent }) => dedent(playgroundCode)}>
+          <Playground gutter={gutter() as Spacing} />
         </Story>
         <Switch>
           <Match when={shouldSwitch() === true}>
