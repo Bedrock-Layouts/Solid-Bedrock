@@ -17,9 +17,6 @@ const Pre = styled("pre")`
   position: relative;
   overflow: hidden;
   border-radius: var(--radius-2);
-  && > code {
-    padding-block: 0px;
-  }
 `;
 
 export function CodeBlock(props: {

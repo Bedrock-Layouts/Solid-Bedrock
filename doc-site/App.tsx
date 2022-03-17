@@ -1,11 +1,14 @@
 import { Link, Route, Routes } from "solid-app-router";
-import { Component, Show } from "solid-js";
+import { Component, Show, Switch } from "solid-js";
+import { Dynamic } from "solid-js/web";
 import { styled } from "solid-styled-components";
 
 import {
   Center,
   Inline,
   PadBox,
+  Reel,
+  Split,
   Stack,
   createContainerQuery,
 } from "../packages/solid/src";
@@ -13,13 +16,19 @@ import { LogoOnly } from "./components/LogoOnly";
 import { LandingPage } from "./pages/LandingPage";
 import { StackPage } from "./pages/StackPage";
 
-const WIDTH_BREAKPOINT = 1300;
+const WIDTH_BREAKPOINT = 1000;
 
-function SideNavGroup() {
+function SideNavGroup(props: { shouldSwitch?: boolean }) {
   return (
     <Stack gutter="lg">
       <strong>Spacer Components</strong>
-      <Inline gutter="md" switchAt="10rem">
+
+      <Dynamic
+        component={props.shouldSwitch ? Reel : Stack}
+        as={PadBox}
+        padding={["lg", "sm"]}
+        gutter="md"
+      >
         <Link href="/column-drop">ColumnDrop</Link>
         <Link href="/columns">Columns</Link>
         <Link href="/grid">Grid</Link>
@@ -29,7 +38,7 @@ function SideNavGroup() {
         <Link href="/reel">Reel</Link>
         <Link href="/split">Split</Link>
         <Link href="/stack">Stack</Link>
-      </Inline>
+      </Dynamic>
     </Stack>
   );
 }
@@ -47,20 +56,13 @@ const App: Component = () => {
   const [shouldSwitch, ref] = createContainerQuery(WIDTH_BREAKPOINT);
 
   return (
-    <Inline
+    <Split
       ref={ref}
-      stretch="end"
+      fraction="auto-start"
       gutter="lg"
-      align="stretch"
       switchAt={WIDTH_BREAKPOINT}
     >
-      <PadBox
-        as="aside"
-        padding="xl"
-        style={`min-width:unset; width:${
-          shouldSwitch() ? "100%" : "clamp(10rem, 25%, 13.5rem)"
-        }; background: rgb(249, 250, 251);`}
-      >
+      <PadBox as="aside" padding="xl" style={`background: rgb(249, 250, 251);`}>
         <Stack gutter="xxl">
           <LogoLink href="/">
             <Inline align="center" gutter="xl">
@@ -71,10 +73,10 @@ const App: Component = () => {
               </Show>
             </Inline>
           </LogoLink>
-          <SideNavGroup />
+          <SideNavGroup shouldSwitch={shouldSwitch()} />
         </Stack>
       </PadBox>
-      <PadBox style="width:100%; min-inline-size:unset;" padding="xl">
+      <PadBox padding="xl">
         <Center maxWidth="90%">
           <Routes>
             <Route path="/" element={<LandingPage />} />
@@ -86,7 +88,7 @@ const App: Component = () => {
           </Routes>
         </Center>
       </PadBox>
-    </Inline>
+    </Split>
   );
 };
 

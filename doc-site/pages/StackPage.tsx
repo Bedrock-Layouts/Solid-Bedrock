@@ -3,12 +3,13 @@ import { styled } from "solid-styled-components";
 
 import {
   PadBox,
+  Spacing,
   Stack,
   createContainerQuery,
   spacing,
 } from "../../packages/solid/src";
-import { CodeBlock } from "../components/CodeBlock";
 import { PageSection } from "../components/PageSection";
+import { Story } from "../components/Story";
 
 const Box = styled.div`
   background: black;
@@ -28,18 +29,6 @@ const Select = styled.select`
   max-width: var(--size-content-2);
   padding: var(--space-sm);
 `;
-
-function Story(props: JSX.DOMAttributes<"div">) {
-  return (
-    <Stack
-      as={PadBox}
-      padding="lg"
-      //gutter="mdLg"
-      style="border:1px solid black"
-      {...props}
-    />
-  );
-}
 
 const Heading = styled("h1")`
   font-size: clamp(2rem, 10vw, 4.5rem);
@@ -198,92 +187,10 @@ export function StackPage(): JSXElement {
             <Box />
           </Stack>
         </Story>
-
-        <CodeBlock
-          code={`
-  function App() {
-    return (
-      <>
-        <h3>Custom gutter as number (20)</h3>
-        <Stack gutter={20}>
-          <Box />
-          <Box />
-        </Stack>
-        <h3>Custom gutter as string ("3ch")</h3>
-        <Stack gutter="3ch">
-          <Box />
-          <Box />
-        </Stack>
-        <h3>none</h3>
-        <Stack gutter="none">
-          <Box />
-          <Box />
-        </Stack>
-        <h3>xxs</h3>
-        <Stack gutter="xxs">
-          <Box />
-          <Box />
-        </Stack>
-        <h3>xs</h3>
-        <Stack gutter="xs">
-          <Box />
-          <Box />
-        </Stack>
-        <h3>sm</h3>
-        <Stack gutter="sm">
-          <Box />
-          <Box />
-        </Stack>
-        <h3>md</h3>
-        <Stack gutter="md">
-          <Box />
-          <Box />
-        </Stack>
-        <h3>mdLg</h3>
-        <Stack gutter="mdLg">
-          <Box />
-          <Box />
-        </Stack>
-        <h3>lg</h3>
-        <Stack gutter="lg">
-          <Box />
-          <Box />
-        </Stack>
-        <h3>lgXl</h3>
-        <Stack gutter="lgXl">
-          <Box />
-          <Box />
-        </Stack>
-        <h3>xl</h3>
-        <Stack gutter="xl">
-          <Box />
-          <Box />
-        </Stack>
-        <h3>xl</h3>
-        <Stack gutter="xl">
-          <Box />
-          <Box />
-        </Stack>
-        <h3>xlXXl</h3>
-        <Stack gutter="xlXXl">
-          <Box />
-          <Box />
-        </Stack>
-        <h3>xxl</h3>
-        <Stack gutter="xxl">
-          <Box />
-          <Box />
-        </Stack>
-      </>
-    );
-  }          
-      `}
-          language="javascript"
-        />
       </PageSection>
       <PageSection title="Playground">
         <Story>
-          <Stack gutter={gutter()}>
+          <Stack gutter={gutter() as keyof Spacing}>
             <Box />
             <Box />
             <Box />
