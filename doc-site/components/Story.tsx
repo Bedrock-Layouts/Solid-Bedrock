@@ -1,20 +1,15 @@
-import { plugins, format as prettyFormat } from "pretty-format";
+import dedent from "dedent";
 import { JSX } from "solid-js";
 
 import { PadBox, Stack } from "../../packages/solid/src";
 import { CodeBlock } from "../components/CodeBlock";
 
-export function Story(props: JSX.DOMAttributes<"div">): JSX.Element {
-  const code: string = [props.children]
-    .flat()
-    .map((child) =>
-      prettyFormat(child, {
-        plugins: [plugins.DOMElement],
-        printFunctionName: false,
-      })
-    )
-    .join("\n");
-
+export function Story(props: {
+  children: JSX.Element;
+  code: string | ((props: { dedent: (literals: string) => string }) => string);
+}): JSX.Element {
+  const finalCode =
+    typeof props.code === "string" ? props.code : props.code({ dedent });
   return (
     <Stack gutter="sm">
       <Stack
@@ -22,9 +17,10 @@ export function Story(props: JSX.DOMAttributes<"div">): JSX.Element {
         padding="lg"
         gutter="mdLg"
         style="border:1px solid black"
-        {...props}
-      />
-      <CodeBlock code={code} />
+      >
+        {props.children}
+      </Stack>
+      <CodeBlock code={finalCode} />
     </Stack>
   );
 }

@@ -43,6 +43,7 @@
     "@babel/preset-typescript": "^7.16.7",
     "@bedrock-layout/bedrock-layout-css": "^1.5.3",
     "@bedrock-layout/register-resize-callback": "^1.1.0",
+    "@types/dedent": "^0.7.0",
     "@typescript-eslint/eslint-plugin": "^4.29.3",
     "@typescript-eslint/parser": "^4.29.3",
     "babel-jest": "^27.5.1",
