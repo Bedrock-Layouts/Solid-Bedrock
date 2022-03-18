@@ -23,9 +23,9 @@ function assertIsValidWidth(width: number | [number, number]) {
   if (
     Array<number>()
       .concat(width)
-      .some((w) => w < 1)
+      .some((w) => w < 0)
   ) {
-    fail("width value(s) must be greater than 0");
+    fail("width value(s) must be 0 or greater");
   }
 
   const isInvalidArray =
