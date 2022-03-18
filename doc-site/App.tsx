@@ -1,5 +1,5 @@
 import { Link, Route, Routes } from "solid-app-router";
-import { Component, Show, Switch } from "solid-js";
+import { Component, Show } from "solid-js";
 import { Dynamic } from "solid-js/web";
 import { styled } from "solid-styled-components";
 
@@ -14,6 +14,7 @@ import {
 } from "../packages/solid/src";
 import { LogoOnly } from "./components/LogoOnly";
 import { LandingPage } from "./pages/LandingPage";
+import { SplitPage } from "./pages/SplitPage";
 import { StackPage } from "./pages/StackPage";
 
 const WIDTH_BREAKPOINT = 1000;
@@ -81,6 +82,7 @@ const App: Component = () => {
           <Routes>
             <Route path="/" element={<LandingPage />} />
             <Route path="/stack" element={<StackPage />} />
+            <Route path="/split" element={<SplitPage />} />
             <Route
               path="/*all"
               element={<PadBox padding="xl">Not Found</PadBox>}
