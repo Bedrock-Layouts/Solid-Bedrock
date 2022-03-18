@@ -80,7 +80,7 @@ function SelectInput(props: {
 
 export function ArgsTable(props: {
   args: ArgType;
-  onChange?: (params: { propName: string; value: string }) => void;
+  onChange?: (params: { propName: string; value: string | boolean }) => void;
 }): JSXElement {
   const [shouldSwitch, ref] = createContainerQuery(600);
 
@@ -106,10 +106,23 @@ export function ArgsTable(props: {
                 </dd>
                 <dd>
                   <Switch>
+                    <Match when={details.control === "boolean"}>
+                      <input
+                        type="checkbox"
+                        name={propName}
+                        checked={details.initialValue as boolean}
+                        onChange={(e) =>
+                          props.onChange?.({
+                            propName,
+                            value: e.currentTarget.checked,
+                          })
+                        }
+                      />
+                    </Match>
                     <Match when={details.control === "text"}>
                       <input
                         name={propName}
-                        value={details.initialValue}
+                        value={details.initialValue as string}
                         onChange={(e) =>
                           props.onChange?.({
                             propName,
@@ -121,7 +134,7 @@ export function ArgsTable(props: {
                     <Match when={details.control === "select"}>
                       <SelectInput
                         name={propName}
-                        initialValue={details.initialValue}
+                        initialValue={details.initialValue as string}
                         options={
                           details.control === "select" ? details.options : []
                         }
@@ -158,10 +171,23 @@ export function ArgsTable(props: {
                   <BodyCell>{details.defaultValue ?? "-"}</BodyCell>
                   <BodyCell>
                     <Switch>
+                      <Match when={details.control === "boolean"}>
+                        <input
+                          type="checkbox"
+                          name={propName}
+                          checked={details.initialValue as boolean}
+                          onChange={(e) =>
+                            props.onChange?.({
+                              propName,
+                              value: e.currentTarget.checked,
+                            })
+                          }
+                        />
+                      </Match>
                       <Match when={details.control === "text"}>
                         <input
                           name={propName}
-                          value={details.initialValue}
+                          value={details.initialValue as string}
                           onChange={(e) =>
                             props.onChange?.({
                               propName,
@@ -173,7 +199,7 @@ export function ArgsTable(props: {
                       <Match when={details.control === "select"}>
                         <SelectInput
                           name={propName}
-                          initialValue={details.initialValue}
+                          initialValue={details.initialValue as string}
                           options={
                             details.control === "select" ? details.options : []
                           }

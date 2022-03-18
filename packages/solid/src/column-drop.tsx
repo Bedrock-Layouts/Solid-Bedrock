@@ -15,7 +15,7 @@ export interface ColumnDropProps {
 }
 
 function getSafeBasis(basis?: Basis) {
-  if (basis === undefined) return "100%";
+  if (basis === undefined) return "159px";
   if (typeof basis === "number") return `${basis}px`;
   return basis;
 }
@@ -24,7 +24,7 @@ export const ColumnDrop = styled("div")<ColumnDropProps>`
   @property --basis {
     syntax: "<length-percentage>";
     inherits: true;
-    initial-value: 100%;
+    initial-value: 159px;
   }
 
   @property --gutter {
@@ -40,12 +40,13 @@ export const ColumnDrop = styled("div")<ColumnDropProps>`
   box-sizing: border-box;
   > * {
     margin: 0;
-    flex-basis: var(--basis, 100%);
+    flex-basis: var(--basis, 159px);
     flex-grow: ${(props) => (props.noStretchedColumns ? "0" : "1")};
     flex-shrink: 1;
   }
 
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
   gap: var(--gutter, 0px);
 `;

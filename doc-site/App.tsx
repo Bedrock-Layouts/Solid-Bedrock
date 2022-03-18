@@ -13,6 +13,7 @@ import {
   createContainerQuery,
 } from "../packages/solid/src";
 import { LogoOnly } from "./components/LogoOnly";
+import { ColumnDropPage } from "./pages/ColumnDropPage";
 import { LandingPage } from "./pages/LandingPage";
 import { SplitPage } from "./pages/SplitPage";
 import { StackPage } from "./pages/StackPage";
@@ -81,7 +82,7 @@ const App: Component = () => {
         <Center maxWidth="90%">
           <Routes>
             <Route path="/" element={<LandingPage />} />
-            <Route path="/stack" element={<StackPage />} />
+            <Route path="/column-drop" element={<ColumnDropPage />} />
             <Route path="/split" element={<SplitPage />} />
             <Route
               path="/*all"
