@@ -1,8 +1,8 @@
 import { JSXElement, createSignal } from "solid-js";
-import { styled } from "solid-styled-components";
 
 import { Spacing, Stack } from "../../../packages/solid/src";
 import { ArgsTable } from "../../components/ArgsTable";
+import { Heading } from "../../components/Heading";
 import { PageSection } from "../../components/PageSection";
 import { Story } from "../../components/Story";
 import { argTypes } from "./argTypes";
@@ -10,13 +10,6 @@ import { Gutter } from "./gutters";
 import gutterCode from "./gutters?raw";
 import { Playground } from "./playground";
 import playgroundCode from "./playground?raw";
-
-const Heading = styled("h1")`
-  font-size: clamp(2rem, 10vw, 4.5rem);
-  font-family: "Roboto", sans-serif;
-  font-weight: var(--font-weight-4);
-  letter-spacing: var(--font-letterspacing-1);
-`;
 
 export function StackPage(): JSXElement {
   const [gutter, setGutter] = createSignal(argTypes.gutter.initialValue);

@@ -6,16 +6,16 @@ import { Heading } from "../../components/Heading";
 import { PageSection } from "../../components/PageSection";
 import { Story } from "../../components/Story";
 import { argTypes } from "./argTypes";
-import { Fraction } from "./fractions";
-import fractionCode from "./fractions?raw";
+import { Basis } from "./basis";
+import basisCode from "./basis?raw";
 import { Gutter } from "./gutters";
 import gutterCode from "./gutters?raw";
+import { NoStretch } from "./noStretch";
+import noStretchCode from "./noStretch?raw";
 import { Playground } from "./playground";
 import playgroundCode from "./playground?raw";
-import { SwitchAt } from "./switchAt";
-import switchAtCode from "./switchAt?raw";
 
-export function SplitPage(): JSXElement {
+export function ColumnDropPage(): JSXElement {
   const initialValues = Object.fromEntries(
     Object.entries(argTypes).map(([key, { initialValue }]) => [
       key,
@@ -26,14 +26,14 @@ export function SplitPage(): JSXElement {
 
   return (
     <Stack gutter="xxl">
-      <Heading id="title">Split</Heading>
+      <Heading id="title">ColumnDrop</Heading>
       <PageSection title="Use Case">
         <p>
-          The <code>Split</code> component is designed to create a split layout
-          based on a fractional ratio. The <code>Split</code> component will
-          enforce a standard spacing scheme through the <code>gutter</code> prop
-          and will optionally switch to a stack layout when the provided
-          threshhold is reached.
+          The <code>ColumnDrop</code> component is used to create a layout of
+          columns that stretch to fit the space, and snaps to the next line at a
+          minimum size. As columns drop down to a new row, they will be laid out
+          independantly of the column layout above. This is a common layout for
+          marketing sites.
         </p>
       </PageSection>
       <PageSection title="API">
@@ -51,23 +51,38 @@ export function SplitPage(): JSXElement {
           <Gutter />
         </Story>
       </PageSection>
-      <PageSection title="fraction">
+      <PageSection title="basis">
         <p>
-          The <code>fraction</code> prop defines the fraction of the container
-          width to use for the split. You can use the following values:
+          The `basis` prop defines the width basis of each of the children. The
+          `ColumnDrop` will the optimize how many columns and rows are needed
+          based on that value.
         </p>
-        <Story code={fractionCode}>
-          <Fraction />
+
+        <p>
+          In the below example, The `basis` is set to `15rem`. As you resize the
+          window, the Grid will recalculate and potentially change the count of
+          columns and rows.
+        </p>
+        <Story code={basisCode}>
+          <Basis />
         </Story>
       </PageSection>
-      <PageSection title="switchAt">
+      <PageSection title="noStretchedColumns">
         <p>
-          The below example will switch the layout to stack when the width is
-          less than <code>45rem</code>. (Resize your window to see this in
-          action.)
+          By default, the column-drop component will stretch the columns to fit
+          the container. If you want to prevent this behavior, you can add the
+          `noStretchedColumns` prop. The `ColumnDrop` will then use the `basis`
+          prop to determine the width of each column and center the columns on
+          each row.
         </p>
-        <Story code={switchAtCode}>
-          <SwitchAt />
+
+        <p>
+          In the below example, The `basis` is set to `15rem`. As you resize the
+          window, the ColumnDrop will recalculate and potentially change the
+          count of columns and rows.
+        </p>
+        <Story code={noStretchCode}>
+          <NoStretch />
         </Story>
       </PageSection>
       <PageSection title="Playground">
