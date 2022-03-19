@@ -27,13 +27,12 @@ export function MasonaryGridPage(): JSXElement {
       <PageSection title="Use Case">
         <p>
           The `MasonryGrid` component is almost identical to the{" "}
-          <Link href="/?path=/docs/components-grid--api">Grid component</Link>{" "}
-          except that each item's vertical space will grow independant of each
-          other. The `MasonryGrid` component will then optimize the number of
-          columns based on the `minItemWidth` prop value passed in.
-          `MasonryGrid` does not create standard rows. Instead, it will optimize
-          for the most dense layout that it can achieve based on the space
-          available.
+          <Link href="/grid">Grid component</Link> except that each item's
+          vertical space will grow independant of each other. The `MasonryGrid`
+          component will then optimize the number of columns based on the
+          `minItemWidth` prop value passed in. `MasonryGrid` does not create
+          standard rows. Instead, it will optimize for the most dense layout
+          that it can achieve based on the space available.
         </p>
       </PageSection>
       <PageSection title="API">
