@@ -15,6 +15,7 @@ import {
 import { LogoOnly } from "./components/LogoOnly";
 import { ColumnDropPage } from "./pages/ColumnDropPage";
 import { ColumnsPage } from "./pages/ColumnsPage";
+import { GridPage } from "./pages/GridPage";
 import { LandingPage } from "./pages/LandingPage";
 import { SplitPage } from "./pages/SplitPage";
 import { StackPage } from "./pages/StackPage";
@@ -85,6 +86,7 @@ const App: Component = () => {
             <Route path="/" element={<LandingPage />} />
             <Route path="/column-drop" element={<ColumnDropPage />} />
             <Route path="/columns" element={<ColumnsPage />} />
+            <Route path="/grid" element={<GridPage />} />
             <Route path="/split" element={<SplitPage />} />
             <Route path="/stack" element={<StackPage />} />
             <Route
