@@ -1,3 +1,4 @@
+import { Link } from "solid-app-router";
 import { JSXElement, createSignal } from "solid-js";
 
 import { Stack } from "../../../packages/solid/src";
@@ -6,14 +7,14 @@ import { Heading } from "../../components/Heading";
 import { PageSection } from "../../components/PageSection";
 import { Story } from "../../components/Story";
 import { argTypes } from "./argTypes";
-import { Gutter } from "./gutters";
-import gutterCode from "./gutters?raw";
+import { BasicUsage } from "./basicUsage";
+import basicUsageCode from "./basicUsage?raw";
 import { MinItemWidth } from "./minItemWidth";
 import minItemWidthCode from "./minItemWidth?raw";
 import { Playground } from "./playground";
 import playgroundCode from "./playground?raw";
 
-export function GridPage(): JSXElement {
+export function MasonaryGridPage(): JSXElement {
   const initialValues = Object.fromEntries(
     Object.entries(argTypes).map(([key, { initialValue }]) => [
       key,
@@ -27,40 +28,27 @@ export function GridPage(): JSXElement {
       <Heading id="title">Grid</Heading>
       <PageSection title="Use Case">
         <p>
-          The `Grid` component is designed to create a responsive grid of items
-          that will automatically wrap based on the number of children and the
-          `minItemWidth` prop's value.
+          The `MasonryGrid` component is almost identical to the{" "}
+          <Link href="/?path=/docs/components-grid--api">Grid component</Link>{" "}
+          except that each item's vertical space will grow independant of each
+          other. The `MasonryGrid` component will then optimize the number of
+          columns based on the `minItemWidth` prop value passed in.
+          `MasonryGrid` does not create standard rows. Instead, it will optimize
+          for the most dense layout that it can achieve based on the space
+          available.
         </p>
       </PageSection>
       <PageSection title="API">
         <ArgsTable args={argTypes} />
       </PageSection>
-      <PageSection title="gutter">
+      <PageSection title="Basic usage">
         <p>
-          The gutter prop defines the gutter size between elements. Bedrock has
-          implemented a default spacing scheme, but it can be overridden using
-          the ThemeProvider provided by styled-components.
+          In the below examples, the `minItemWidth` is set to `15rem` with
+          `gutter` set to `lg`. (Resize your window to see the items update.)
         </p>
 
-        <p>Here are the possible values for gutter by default:</p>
-        <Story code={gutterCode}>
-          <Gutter />
-        </Story>
-      </PageSection>
-      <PageSection title="minItemWidth">
-        <p>
-          The `minItemWidth` prop defines the minimum width of each of the
-          children. The `Grid` will then optimize how many columns and rows are
-          needed based on that value.
-        </p>
-
-        <p>
-          In the below example, The `minItemWidth` is set to `15rem`. As you
-          resize the window, the Grid will recalculate and potentially change
-          the count of columns and rows.
-        </p>
-        <Story code={minItemWidthCode}>
-          <MinItemWidth />
+        <Story code={basicUsageCode}>
+          <BasicUsage />
         </Story>
       </PageSection>
 

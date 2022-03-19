@@ -1,11 +1,11 @@
 import { JSXElement } from "solid-js";
 
-import { ColumnDrop } from "../../../packages/solid/src";
+import { Grid } from "../../../packages/solid/src";
 import { Box } from "../../components/Box";
 
-export function NoStretch(): JSXElement {
+export function MinItemWidth(): JSXElement {
   return (
-    <ColumnDrop noStretchedColumns gutter="lg" basis="15rem">
+    <Grid gutter="lg" minItemWidth="15rem">
       <Box />
       <Box />
       <Box />
@@ -14,6 +14,6 @@ export function NoStretch(): JSXElement {
       <Box />
       <Box />
       <Box />
-    </ColumnDrop>
+    </Grid>
   );
 }
