@@ -9,8 +9,6 @@ import { Story } from "../../components/Story";
 import { argTypes } from "./argTypes";
 import { BasicUsage } from "./basicUsage";
 import basicUsageCode from "./basicUsage?raw";
-import { MinItemWidth } from "./minItemWidth";
-import minItemWidthCode from "./minItemWidth?raw";
 import { Playground } from "./playground";
 import playgroundCode from "./playground?raw";
 
