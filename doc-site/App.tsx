@@ -15,7 +15,11 @@ import {
 import { LogoOnly } from "./components/LogoOnly";
 import { ColumnDropPage } from "./pages/ColumnDropPage";
 import { ColumnsPage } from "./pages/ColumnsPage";
+import { GridPage } from "./pages/GridPage";
+import { InlineClusterPage } from "./pages/InlineClusterPage";
+import { InlinePage } from "./pages/InlinePage";
 import { LandingPage } from "./pages/LandingPage";
+import { MasonaryGridPage } from "./pages/MasonryGridPage";
 import { SplitPage } from "./pages/SplitPage";
 import { StackPage } from "./pages/StackPage";
 
@@ -85,6 +89,10 @@ const App: Component = () => {
             <Route path="/" element={<LandingPage />} />
             <Route path="/column-drop" element={<ColumnDropPage />} />
             <Route path="/columns" element={<ColumnsPage />} />
+            <Route path="/grid" element={<GridPage />} />
+            <Route path="/inline" element={<InlinePage />} />
+            <Route path="/inline-cluster" element={<InlineClusterPage />} />
+            <Route path="/masonry-grid" element={<MasonaryGridPage />} />
             <Route path="/split" element={<SplitPage />} />
             <Route path="/stack" element={<StackPage />} />
             <Route
