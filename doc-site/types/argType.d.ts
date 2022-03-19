@@ -4,6 +4,10 @@ type Controls =
       initialValue: string;
     }
   | {
+      control: "number";
+      initialValue: number;
+    }
+  | {
       control: "boolean";
       initialValue: boolean;
     }
@@ -19,6 +23,4 @@ type ArgDetails = {
   summary: string;
 } & Controls;
 
-export interface ArgType {
-  [prop: string]: ArgDetails;
-}
+export type ArgType = Record<string, ArgDetails>;

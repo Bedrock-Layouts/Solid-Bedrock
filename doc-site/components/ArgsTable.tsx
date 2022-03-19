@@ -80,7 +80,10 @@ function SelectInput(props: {
 
 export function ArgsTable(props: {
   args: ArgType;
-  onChange?: (params: { propName: string; value: string | boolean }) => void;
+  onChange?: (params: {
+    propName: string;
+    value: string | boolean | number;
+  }) => void;
 }): JSXElement {
   const [shouldSwitch, ref] = createContainerQuery(600);
 
@@ -171,6 +174,19 @@ export function ArgsTable(props: {
                   <BodyCell>{details.defaultValue ?? "-"}</BodyCell>
                   <BodyCell>
                     <Switch>
+                      <Match when={details.control === "number"}>
+                        <input
+                          type="number"
+                          name={propName}
+                          value={details.initialValue as number}
+                          onChange={(e) =>
+                            props.onChange?.({
+                              propName,
+                              value: parseInt(e.currentTarget.value),
+                            })
+                          }
+                        />
+                      </Match>
                       <Match when={details.control === "boolean"}>
                         <input
                           type="checkbox"
