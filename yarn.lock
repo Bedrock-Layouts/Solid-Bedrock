@@ -986,9 +986,9 @@
   integrity sha512-0hYQ8SB4Db5zvZB4axdMHGwEaQjkZzFjQiN9LVYvIFB2nSUHW9tYpxWriPrWDASIxiaXax83REcLxuSdnGPZtw==
 
 "@bedrock-layout/bedrock-layout-css@^1.5.3":
-  version "1.5.4"
-  resolved "https://registry.yarnpkg.com/@bedrock-layout/bedrock-layout-css/-/bedrock-layout-css-1.5.4.tgz#1e3df83e681b93b967db8aa3d205e3ee54501f33"
-  integrity sha512-agRepKqvyoAzHm9pUXRPYolBC3IO30Id4JoWw8qXwt/n3KZGwNyZxf3lQx35/MtZybrcFKwr0UX98kjYzy5UoA==
+  version "1.5.5"
+  resolved "https://registry.yarnpkg.com/@bedrock-layout/bedrock-layout-css/-/bedrock-layout-css-1.5.5.tgz#76e3395068abccba71b406492c6eab7be4619f99"
+  integrity sha512-Zo5t8X+hG2aS9ZtfYh1ZEWaig0Wu5FOCXP5I/HXTHPLbjMjWK0A682OnYhfxENujzh2u3L7ac/FcIysxPognQw==
 
 "@bedrock-layout/register-resize-callback@^1.1.0":
   version "1.1.1"
