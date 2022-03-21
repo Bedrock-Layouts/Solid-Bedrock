@@ -7,7 +7,7 @@ export function PageSection(props: {
   children: JSXElement;
 }): JSXElement {
   return (
-    <Stack gutter="lg">
+    <Stack gutter="lg" style="max-width:80vw">
       <h2>{props.title}</h2>
       {props.children}
     </Stack>

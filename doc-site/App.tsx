@@ -20,6 +20,7 @@ import { InlineClusterPage } from "./pages/InlineClusterPage";
 import { InlinePage } from "./pages/InlinePage";
 import { LandingPage } from "./pages/LandingPage";
 import { MasonaryGridPage } from "./pages/MasonryGridPage";
+import { ReelPage } from "./pages/ReelPage";
 import { SplitPage } from "./pages/SplitPage";
 import { StackPage } from "./pages/StackPage";
 
@@ -93,11 +94,19 @@ const App: Component = () => {
             <Route path="/inline" element={<InlinePage />} />
             <Route path="/inline-cluster" element={<InlineClusterPage />} />
             <Route path="/masonry-grid" element={<MasonaryGridPage />} />
+            <Route path="/reel" element={<ReelPage />} />
             <Route path="/split" element={<SplitPage />} />
             <Route path="/stack" element={<StackPage />} />
             <Route
               path="/*all"
-              element={<PadBox padding="xl">Not Found</PadBox>}
+              element={
+                <PadBox as={Stack} gutter="xl" padding="xl">
+                  <h1>Page Not Found</h1>
+                  <p>
+                    Click <Link href="/">Home</Link> to go back to the site
+                  </p>
+                </PadBox>
+              }
             />
           </Routes>
         </Center>
