@@ -10,6 +10,7 @@ export function Story(props: {
 }): JSX.Element {
   const finalCode =
     typeof props.code === "string" ? props.code : props.code({ dedent });
+
   return (
     <Stack gutter="sm">
       <Stack

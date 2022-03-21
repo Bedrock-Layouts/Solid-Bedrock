@@ -4,7 +4,7 @@ import { SpacingOptions, getSpacingValue } from "./spacing-constants";
 
 export interface ReelProps {
   snapType?: "none" | "proximity" | "mandatory";
-  gutter: SpacingOptions;
+  gutter?: SpacingOptions;
 }
 
 export const Reel = styled.div<ReelProps>`
@@ -22,8 +22,8 @@ export const Reel = styled.div<ReelProps>`
 
   overflow-x: scroll;
 
-  scroll-snap-type: ${({ snapType = "none" }) => {
-    switch (snapType) {
+  scroll-snap-type: ${(props) => {
+    switch (props.snapType) {
       case "none": {
         return "none";
       }

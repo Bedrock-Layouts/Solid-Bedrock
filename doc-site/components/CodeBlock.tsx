@@ -29,8 +29,6 @@ export function CodeBlock(props: {
     language: safeLanguage,
   }).value;
 
-  const codeString = decodeURI(highlightedCode);
-
   createEffect(() => {
     let timeout: number | undefined;
     if (textCopied()) {
@@ -48,7 +46,7 @@ export function CodeBlock(props: {
       <code
         class={`hljs language-${safeLanguage}`}
         ref={(ref) => {
-          ref.innerHTML = codeString;
+          ref.innerHTML = highlightedCode;
           hljs.highlightElement(ref);
         }}
       ></code>
