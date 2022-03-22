@@ -7821,9 +7821,9 @@ socks@^2.3.3, socks@^2.6.1:
     smart-buffer "^4.2.0"
 
 solid-app-router@^0.3.0:
-  version "0.3.1"
-  resolved "https://registry.yarnpkg.com/solid-app-router/-/solid-app-router-0.3.1.tgz#20ee62d9b0e37ed80360d5d992320cb7056d545e"
-  integrity sha512-GpDu8tpEWG8azP02PEJ0tUb3g0euWJ9rJoHNUs8qMf3/jW4P3zVBF+E5vOFRcGNkqXiSLvniawCwV5V344fHtQ==
+  version "0.3.2"
+  resolved "https://registry.yarnpkg.com/solid-app-router/-/solid-app-router-0.3.2.tgz#87c687262d2cc6267fd5f5025a6c5b12ae564bc7"
+  integrity sha512-zh6Ui87xy23JUxrH0z1xAROJPpiuxa3JRx9jP2qqjr07q2EKQOjn9BrmTFvQd/azQWzLjSMU+hN2fy6kLh5Bdw==
 
 solid-jest@^0.2.0:
   version "0.2.0"
