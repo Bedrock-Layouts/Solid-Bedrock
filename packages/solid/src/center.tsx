@@ -37,7 +37,7 @@ export const Center = styled.div<CenterProps>`
 
   ${(props) =>
     props.centerChildren
-      ? css`
+      ? `
           display: flex;
           flex-direction: column;
           align-items: center;
@@ -46,7 +46,7 @@ export const Center = styled.div<CenterProps>`
 
   ${(props) =>
     props.centerText
-      ? css`
+      ? `
           text-align: center;
         `
       : ""}

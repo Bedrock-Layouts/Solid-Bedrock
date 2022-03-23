@@ -1,5 +1,5 @@
 import { Link, Route, Routes } from "solid-app-router";
-import { Component, Show } from "solid-js";
+import { Component, For, Show } from "solid-js";
 import { Dynamic } from "solid-js/web";
 import { styled } from "solid-styled-components";
 
@@ -13,6 +13,7 @@ import {
   createContainerQuery,
 } from "../packages/solid/src";
 import { LogoOnly } from "./components/LogoOnly";
+import { CenterPage } from "./pages/CenterPage";
 import { ColumnDropPage } from "./pages/ColumnDropPage";
 import { ColumnsPage } from "./pages/ColumnsPage";
 import { GridPage } from "./pages/GridPage";
@@ -26,10 +27,14 @@ import { StackPage } from "./pages/StackPage";
 
 const WIDTH_BREAKPOINT = 1000;
 
-function SideNavGroup(props: { shouldSwitch?: boolean }) {
+function SideNavGroup(props: {
+  shouldSwitch?: boolean;
+  title: string;
+  links: { href: string; name: string }[];
+}) {
   return (
     <Stack gutter="lg">
-      <strong>Spacer Components</strong>
+      <strong>{props.title}</strong>
 
       <Dynamic
         component={props.shouldSwitch ? Reel : Stack}
@@ -37,19 +42,32 @@ function SideNavGroup(props: { shouldSwitch?: boolean }) {
         padding={["lg", "sm"]}
         gutter="md"
       >
-        <Link href="/column-drop">ColumnDrop</Link>
-        <Link href="/columns">Columns</Link>
-        <Link href="/grid">Grid</Link>
-        <Link href="/inline-cluster">InlineCluster</Link>
-        <Link href="/inline">Inline</Link>
-        <Link href="/masonry-grid">MasonryGrid</Link>
-        <Link href="/reel">Reel</Link>
-        <Link href="/split">Split</Link>
-        <Link href="/stack">Stack</Link>
+        <For each={props.links}>
+          {(link) => <Link href={link.href}>{link.name}</Link>}
+        </For>
       </Dynamic>
     </Stack>
   );
 }
+
+const spacerComponents = [
+  { href: "/column-drop", name: "ColumnDrop" },
+  { href: "/columns", name: "Columns" },
+  { href: "/grid", name: "Grid" },
+  { href: "/inline-cluster", name: "InlineCluster" },
+  { href: "/inline", name: "Inline" },
+  { href: "/masonry-grid", name: "MasonryGrid" },
+  { href: "/reel", name: "Reel" },
+  { href: "/split", name: "Split" },
+  { href: "/stack", name: "Stack" },
+];
+
+const wrapperComponents = [
+  { href: "/center", name: "Center" },
+  { href: "/cover", name: "Cover" },
+  { href: "/frame", name: "Frame" },
+  { href: "/padbox", name: "PadBox" },
+];
 
 const LogoLink = styled(Link)`
   color: inherit;
@@ -71,7 +89,7 @@ const App: Component = () => {
       switchAt={WIDTH_BREAKPOINT}
     >
       <PadBox as="aside" padding="xl" style={`background: rgb(249, 250, 251);`}>
-        <Stack gutter="xxl">
+        <Stack gutter="xl">
           <LogoLink href="/">
             <Inline align="center" gutter="xl">
               <LogoOnly style="width:100%; max-width:8rem;" />
@@ -81,7 +99,16 @@ const App: Component = () => {
               </Show>
             </Inline>
           </LogoLink>
-          <SideNavGroup shouldSwitch={shouldSwitch()} />
+          <SideNavGroup
+            title="Spacer Components"
+            links={spacerComponents}
+            shouldSwitch={shouldSwitch()}
+          />
+          <SideNavGroup
+            title="Wrapper Components"
+            links={wrapperComponents}
+            shouldSwitch={shouldSwitch()}
+          />
         </Stack>
       </PadBox>
       <PadBox padding="xl">
@@ -97,6 +124,7 @@ const App: Component = () => {
             <Route path="/reel" element={<ReelPage />} />
             <Route path="/split" element={<SplitPage />} />
             <Route path="/stack" element={<StackPage />} />
+            <Route path="/center" element={<CenterPage />} />
             <Route
               path="/*all"
               element={

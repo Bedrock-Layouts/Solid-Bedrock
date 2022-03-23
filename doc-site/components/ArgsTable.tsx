@@ -21,6 +21,12 @@ const HeaderRow = styled("tr")`
   text-align: left;
 `;
 
+const Summary = styled("code")`
+  background-color: var(--gray-2);
+  padding: var(--space-sm);
+  border-radius: var(--radius-3);
+`;
+
 const BodyRow = styled("tr")`
   --border-style: 1px solid var(--gray-3);
   > td {
@@ -102,8 +108,11 @@ export function ArgsTable(props: {
                 <dt>
                   <strong>{propName}</strong>
                 </dt>
+
                 <dd>{details.description}</dd>
-                <dd>{details.summary}</dd>
+                <dd>
+                  <Summary>{details.summary}</Summary>
+                </dd>
                 <dd>
                   <strong>default value:</strong> {details.defaultValue ?? "-"}
                 </dd>
@@ -169,7 +178,8 @@ export function ArgsTable(props: {
                     <strong>{propName}</strong>
                   </BodyCell>
                   <BodyCell>
-                    {details.description} {details.summary}
+                    <div>{details.description}</div>
+                    <Summary>{details.summary}</Summary>
                   </BodyCell>
                   <BodyCell>{details.defaultValue ?? "-"}</BodyCell>
                   <BodyCell>
