@@ -1,23 +1,23 @@
-# `@bedrock-layout/primitives`
+# `@bedrock-layout/solid`
 
-All the primitives and hooks in a single package.
+All the layout primitives and solid primitives in a single package.
 
-Full docs at: [bedrock-layout.dev](https://bedrock-layout.dev/)
+Full docs at: [solid.bedrock-layout.dev](https://solid.bedrock-layout.dev/)
 
 ## How to install
 
-`npm install @bedrock-layout/primitives`
+`npm install @bedrock-layout/solid`
 
 or
 
-`yarn add @bedrock-laylock/primitives`
+`yarn add @bedrock-laylock/solid`
 
 ---
 
 ## Usage
 
 ```javascript
-import { Stack, Inline, Split, Cover, Frame } from '@bedrock-layout/primitives';
+import { Stack, Inline, Split, Cover, Frame } from '@bedrock-layout/solid';
 
 export function Hero() {
   return (

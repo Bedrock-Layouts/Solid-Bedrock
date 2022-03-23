@@ -20,8 +20,8 @@ export function Story(props: {
         style="border:1px solid black"
       >
         {props.children}
+        <CodeBlock code={finalCode} />
       </Stack>
-      <CodeBlock code={finalCode} />
     </Stack>
   );
 }
