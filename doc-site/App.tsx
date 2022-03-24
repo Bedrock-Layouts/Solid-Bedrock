@@ -16,6 +16,7 @@ import { LogoOnly } from "./components/LogoOnly";
 import { CenterPage } from "./pages/CenterPage";
 import { ColumnDropPage } from "./pages/ColumnDropPage";
 import { ColumnsPage } from "./pages/ColumnsPage";
+import { CoverPage } from "./pages/CoverPage";
 import { GridPage } from "./pages/GridPage";
 import { InlineClusterPage } from "./pages/InlineClusterPage";
 import { InlinePage } from "./pages/InlinePage";
@@ -125,6 +126,7 @@ const App: Component = () => {
             <Route path="/split" element={<SplitPage />} />
             <Route path="/stack" element={<StackPage />} />
             <Route path="/center" element={<CenterPage />} />
+            <Route path="/cover" element={<CoverPage />} />
             <Route
               path="/*all"
               element={

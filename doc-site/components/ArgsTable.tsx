@@ -7,7 +7,7 @@ import { PadBox, Stack, createContainerQuery } from "../../packages/solid/src";
 const Select = styled.select`
   appearance: none;
   box-sizing: border-box;
-  width: 100%;
+  max-width: 100%;
   border: 1px solid gray;
   border-radius: var(--radius-2);
   cursor: pointer;
@@ -23,7 +23,7 @@ const HeaderRow = styled("tr")`
 
 const Summary = styled("code")`
   background-color: var(--gray-2);
-  padding: var(--space-sm);
+  padding: var(--space-md);
   border-radius: var(--radius-3);
 `;
 
@@ -91,7 +91,7 @@ export function ArgsTable(props: {
     value: string | boolean | number;
   }) => void;
 }): JSXElement {
-  const [shouldSwitch, ref] = createContainerQuery(600);
+  const [shouldSwitch, ref] = createContainerQuery(655);
 
   return (
     <Switch>

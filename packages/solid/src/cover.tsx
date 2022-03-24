@@ -75,10 +75,8 @@ const CoverWrapper = styled.div<CoverProps>`
 `;
 
 export const Cover: Component<CoverProps> = (props) => {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const { top, bottom, children, ...rest } = props;
   return (
-    <CoverWrapper {...rest}>
+    <CoverWrapper {...props}>
       {props.top}
       <div data-bedrock-cover-centered>{props.children}</div>
       {props.bottom}
