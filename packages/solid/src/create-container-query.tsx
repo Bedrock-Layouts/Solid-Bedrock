@@ -52,7 +52,6 @@ export function createContainerQuery<T extends Element>(
   });
 
   createEffect(() => {
-    node();
     if (node() === undefined || node() === null) return;
 
     if (maybeRef) {

@@ -5,7 +5,7 @@ import { Box } from "../../components/Box";
 
 export function Playground(props: StackProps): JSXElement {
   return (
-    <Stack gutter={props.gutter}>
+    <Stack {...props}>
       <Box />
       <Box />
       <Box />

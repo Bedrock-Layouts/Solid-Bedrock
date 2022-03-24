@@ -1,16 +1,29 @@
 {
-  "name": "root",
-  "description": "Solid Foundational Layout Primitives for your React App",
+  "name": "solid-bedrock-layout",
+  "description": "Solid Foundational Layout Primitives for your Solid-js App",
+  "info": "Solid Bedrock Layout is a Solid.js port of the Bedrock Layout primitives written for react.  Bedrock primitives are built to allow you to compose them together to create your own custom layouts. Many 'complex' layouts can be created by composing Bedrock Layout Primitives",
   "private": true,
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Bedrock-Layouts/Solid-Bedrock.git"
   },
+  "license": "MIT",
   "workspaces": [
     "packages/*"
   ],
   "author": "Jarvis1010 <travis.mair@gmail.com>",
-  "homepage": "https://github.com/Bedrock-Layouts/Solid-Bedrock",
+  "contributors": [
+    {
+      "name": "Travis Waith-Mair",
+      "email": "travis.mair@gmail.com",
+      "url": "https://github.com/Jarvis1010"
+    }
+  ],
+  "keywords": [
+    "solidhack",
+    "best_ecosystem"
+  ],
+  "homepage": "https://solid.bedrock-layout.dev",
   "scripts": {
     "start": "vite",
     "dev": "vite",

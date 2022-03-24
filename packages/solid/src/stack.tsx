@@ -14,7 +14,7 @@ export const Stack = styled("div")<StackProps>`
   }
 
   --gutter: ${(props) =>
-    props.gutter ? getSpacingValue(props.gutter, props.theme) ?? "0px" : "0px"};
+    getSpacingValue(props.gutter ?? "none", props.theme) ?? "0px"};
   box-sizing: border-box;
   > * {
     margin: 0;
