@@ -1,13 +1,16 @@
 {
   "name": "@bedrock-layout/solid",
   "version": "0.11.8",
-  "description": "solid.js port of bedrock-layout primitives",
+  "description": "Solid Foundational Layout Primitives for your Solid-js App",
+  "info": "Solid Bedrock Layout is a Solid.js port of the Bedrock Layout primitives written for react.  Bedrock primitives are built to allow you to compose them together to create your own custom layouts. Many 'complex' layouts can be created by composing Bedrock Layout Primitives",
   "sideEffects": false,
   "private": false,
   "publishConfig": {
     "access": "public"
   },
   "keywords": [
+    "solidhack",
+    "best_ecosystem",
     "primitives",
     "layout",
     "bedrock",
@@ -17,6 +20,13 @@
     "solid"
   ],
   "author": "Jarvis1010 <travis.mair@gmail.com>",
+  "contributors": [
+    {
+      "name": "Travis Waith-Mair",
+      "email": "travis.mair@gmail.com",
+      "url": "https://github.com/Jarvis1010"
+    }
+  ],
   "homepage": "https://github.com/Bedrock-Layouts/Solid-Bedrock",
   "license": "MIT",
   "unpkg": "lib/index.umd.js",

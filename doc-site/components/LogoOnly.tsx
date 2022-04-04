@@ -4,7 +4,7 @@ export function LogoOnly(props: { class?: string; style?: string }) {
     <svg
       viewBox="38, 28, 326, 200"
       class={props.class}
-      style={["display:block; height:auto; width:100%;", props.style].join(" ")}
+      style={["display:block; width:100%; height:auto;", props.style].join(" ")}
       alt="Bedrock Layout Primitives"
     >
       <g id="svgg">

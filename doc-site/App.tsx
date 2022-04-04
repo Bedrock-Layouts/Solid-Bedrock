@@ -17,6 +17,7 @@ import { CenterPage } from "./pages/CenterPage";
 import { ColumnDropPage } from "./pages/ColumnDropPage";
 import { ColumnsPage } from "./pages/ColumnsPage";
 import { CoverPage } from "./pages/CoverPage";
+import { FramePage } from "./pages/FramePage";
 import { GridPage } from "./pages/GridPage";
 import { InlineClusterPage } from "./pages/InlineClusterPage";
 import { InlinePage } from "./pages/InlinePage";
@@ -34,7 +35,7 @@ function SideNavGroup(props: {
   links: { href: string; name: string }[];
 }) {
   return (
-    <Stack gutter="lg">
+    <Stack gutter="md">
       <strong>{props.title}</strong>
 
       <Dynamic
@@ -93,7 +94,7 @@ const App: Component = () => {
         <Stack gutter="xl">
           <LogoLink href="/">
             <Inline align="center" gutter="xl">
-              <LogoOnly style="width:100%; max-width:8rem;" />
+              <LogoOnly style="max-width:8rem;" />
 
               <Show when={shouldSwitch() === true}>
                 <LogoTitle>Solid-Bedrock</LogoTitle>
@@ -126,6 +127,7 @@ const App: Component = () => {
             <Route path="/split" element={<SplitPage />} />
             <Route path="/stack" element={<StackPage />} />
             <Route path="/center" element={<CenterPage />} />
+            <Route path="/frame" element={<FramePage />} />
             <Route path="/cover" element={<CoverPage />} />
             <Route
               path="/*all"

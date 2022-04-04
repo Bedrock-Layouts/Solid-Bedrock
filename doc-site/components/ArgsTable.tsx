@@ -7,13 +7,11 @@ import { PadBox, Stack, createContainerQuery } from "../../packages/solid/src";
 const Select = styled.select`
   appearance: none;
   box-sizing: border-box;
-  max-width: 100%;
   border: 1px solid gray;
   border-radius: var(--radius-2);
   cursor: pointer;
   background-color: #fff;
-  min-width: var(--size-content-1);
-  max-width: var(--size-content-2);
+
   padding: var(--space-sm);
 `;
 
@@ -51,7 +49,13 @@ function HeadingCell(props: JSX.DOMAttributes<"th">) {
 }
 
 function BodyCell(props: JSX.DOMAttributes<"td">) {
-  return <PadBox as="td" padding={["lgXl", "lg"]} {...props} />;
+  return (
+    <PadBox as="td" padding={["lgXl", "lg"]} {...props}>
+      <Stack gutter="md" style="align-items:start">
+        {props.children}
+      </Stack>
+    </PadBox>
+  );
 }
 
 function SelectInput(props: {
