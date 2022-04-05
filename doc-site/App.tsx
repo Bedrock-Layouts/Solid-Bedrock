@@ -23,6 +23,7 @@ import { InlineClusterPage } from "./pages/InlineClusterPage";
 import { InlinePage } from "./pages/InlinePage";
 import { LandingPage } from "./pages/LandingPage";
 import { MasonaryGridPage } from "./pages/MasonryGridPage";
+import { PadBoxPage } from "./pages/PadBoxPage";
 import { ReelPage } from "./pages/ReelPage";
 import { SplitPage } from "./pages/SplitPage";
 import { StackPage } from "./pages/StackPage";
@@ -128,6 +129,7 @@ const App: Component = () => {
             <Route path="/stack" element={<StackPage />} />
             <Route path="/center" element={<CenterPage />} />
             <Route path="/frame" element={<FramePage />} />
+            <Route path="/padbox" element={<PadBoxPage />} />
             <Route path="/cover" element={<CoverPage />} />
             <Route
               path="/*all"
