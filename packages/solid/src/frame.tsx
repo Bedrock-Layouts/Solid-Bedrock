@@ -1,4 +1,4 @@
-import { css, styled } from "solid-styled-components";
+import { styled } from "solid-styled-components";
 
 type RatioString = `${number}/${number}` | `${number} / ${number}`;
 
@@ -38,7 +38,7 @@ export const Frame = styled.div<FrameProps>`
   ${(props) => {
     const maybeRatio = getSafeRatio(props.ratio);
     if (maybeRatio) {
-      return css`
+      return `
         aspect-ratio: ${maybeRatio};
       `;
     }
