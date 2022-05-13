@@ -991,9 +991,9 @@
   integrity sha512-Zo5t8X+hG2aS9ZtfYh1ZEWaig0Wu5FOCXP5I/HXTHPLbjMjWK0A682OnYhfxENujzh2u3L7ac/FcIysxPognQw==
 
 "@bedrock-layout/register-resize-callback@^1.1.0":
-  version "1.1.1"
-  resolved "https://registry.yarnpkg.com/@bedrock-layout/register-resize-callback/-/register-resize-callback-1.1.1.tgz#095e13c58b70a39ed2c83db832ffc5f57de05bc5"
-  integrity sha512-W4gefYVSyON2eB+wAycSU0bSUgKCs9qYIl/kzMvPpkAx30HPh/V+HBFEv5m3dcraw3GPLfoVYJF+xODebL7QOw==
+  version "1.1.2"
+  resolved "https://registry.yarnpkg.com/@bedrock-layout/register-resize-callback/-/register-resize-callback-1.1.2.tgz#0facce8bdc46521a8fc486226914d2455081b2ec"
+  integrity sha512-nl8YoP2inKZEL63usi/px4utk3ON5aXWamLWPVlRDaMjdGogBoTE/jz1mB2btFyq4AI6ErWuO85iywpIcXxgQQ==
 
 "@commitlint/config-validator@^16.2.1":
   version "16.2.1"
@@ -8508,9 +8508,9 @@ typescript@^3.2.4:
   integrity sha512-w6fIxVE/H1PkLKcCPsFqKE7Kv7QUwhU8qQY2MueZXWx5cPZdwFupLgKK3vntcK98BtNHZtAF4LA/yl2a7k8R6Q==
 
 typescript@^4.2.0, typescript@^4.4.3:
-  version "4.6.3"
-  resolved "https://registry.yarnpkg.com/typescript/-/typescript-4.6.3.tgz#eefeafa6afdd31d725584c67a0eaba80f6fc6c6c"
-  integrity sha512-yNIatDa5iaofVozS/uQJEl3JRWLKKGJKh6Yaiv0GLGSuhpFJe7P3SbHZ8/yjAHRQwKRoA6YZqlfjXWmVzoVSMw==
+  version "4.6.4"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-4.6.4.tgz#caa78bbc3a59e6a5c510d35703f6a09877ce45e9"
+  integrity sha512-9ia/jWHIEbo49HfjrLGfKbZSuWo9iTMwXO+Ca3pRsSpbsMbc7/IU8NKdCZVRRBafVPGnoJeFL76ZOAA84I9fEg==
 
 uglify-js@^3.1.4:
   version "3.15.3"
