@@ -1,3 +1,4 @@
+import { JSXElement } from "solid-js";
 import { styled } from "solid-styled-components";
 
 import {
@@ -109,7 +110,16 @@ export interface PadBoxProps {
   padding: PaddingTypes;
 }
 
-export const PadBox = styled.div<PadBoxProps>`
+export const PadBox = styled.div<
+  PadBoxProps & {
+    as?:
+      | string
+      | number
+      | symbol
+      | ((props: unknown) => JSXElement)
+      | undefined;
+  }
+>`
   box-sizing: border-box;
   ${(props) => paddingToString(props.theme, props.padding)}
 `;
