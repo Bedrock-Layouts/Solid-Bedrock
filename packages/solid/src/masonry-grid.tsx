@@ -34,7 +34,9 @@ const RowSpanner = styled.div`
   }
 `;
 
-const Resizer: Component<{ gutter?: SpacingOptions }> = (props) => {
+const Resizer: Component<{ gutter?: SpacingOptions; children?: JSXElement }> = (
+  props
+) => {
   const [rowSpan, setRowSpan] = createSignal(1);
   const [node, nodeRef] = createSignal<HTMLDivElement>();
 
@@ -80,7 +82,9 @@ const MasonryGridWrapper = styled(Grid)`
   grid-template-rows: 1px;
 `;
 
-export const MasonryGrid: Component<GridProps> = (props) => {
+export const MasonryGrid: Component<GridProps & { children?: JSXElement }> = (
+  props
+) => {
   const childrenMemo = children(() => props.children);
   const emptyResolvedChildren: ResolvedChildren = [];
   const wrappedChildren = emptyResolvedChildren

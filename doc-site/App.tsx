@@ -91,7 +91,7 @@ const App: Component = () => {
       gutter="lg"
       switchAt={WIDTH_BREAKPOINT}
     >
-      <PadBox as="aside" padding="xl" style={`background: rgb(249, 250, 251);`}>
+      <PadBox as="a" padding="xl" style={`background: rgb(249, 250, 251);`}>
         <Stack gutter="xl">
           <LogoLink href="/">
             <Inline align="center" gutter="xl">

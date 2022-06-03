@@ -74,7 +74,9 @@ const CoverWrapper = styled.div<CoverProps>`
   }
 `;
 
-export const Cover: Component<CoverProps> = (props) => {
+export const Cover: Component<CoverProps & { children?: JSXElement }> = (
+  props
+) => {
   return (
     <CoverWrapper {...props}>
       {props.top}
