@@ -985,10 +985,10 @@
   resolved "https://registry.yarnpkg.com/@bcoe/v8-coverage/-/v8-coverage-0.2.3.tgz#75a2e8b51cb758a7553d6804a5932d7aace75c39"
   integrity sha512-0hYQ8SB4Db5zvZB4axdMHGwEaQjkZzFjQiN9LVYvIFB2nSUHW9tYpxWriPrWDASIxiaXax83REcLxuSdnGPZtw==
 
-"@bedrock-layout/bedrock-layout-css@^1.5.3":
-  version "1.5.9"
-  resolved "https://registry.yarnpkg.com/@bedrock-layout/bedrock-layout-css/-/bedrock-layout-css-1.5.9.tgz#f3d15c2eace5a28e24816875367cf6108ee2d553"
-  integrity sha512-ubberkqhszHti9dagI7Elhr/78v0+eW3q50++VNnKJ3ocs3p4STVJmEZRCG3DiBrbapsTN+wzsH29VtaizzEsQ==
+"@bedrock-layout/bedrock-layout-css@^2.0.1":
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/@bedrock-layout/bedrock-layout-css/-/bedrock-layout-css-2.0.1.tgz#29976c9389829f4944a39a833501eee03afd11da"
+  integrity sha512-XdbjX5mW2W9ufVg9F6TEP8eQGCHJgWF5PXZJfBWgolEYYEk3PLpnfIIWKQ8EsF6mqC03G2aBrt/QxTmqy0Puww==
 
 "@bedrock-layout/register-resize-callback@^1.1.0":
   version "1.1.2"
@@ -6886,9 +6886,9 @@ onetime@^5.1.0, onetime@^5.1.2:
     mimic-fn "^2.1.0"
 
 open-props@^1.3.8:
-  version "1.3.16"
-  resolved "https://registry.yarnpkg.com/open-props/-/open-props-1.3.16.tgz#e9bf5c756595aa4cf4ed3a6253c3dc4af50793b5"
-  integrity sha512-ZAYewrlH5xuCItPa8c4RxPtqyvuC7zYpdfEzSbDFmLT6T0SZ/iQNHNIs/SgnzMGVpSszFcbChK17S5/IswN2bw==
+  version "1.4.3"
+  resolved "https://registry.yarnpkg.com/open-props/-/open-props-1.4.3.tgz#040f4c29d0672dc933d37ffc0fcf4f8c09088764"
+  integrity sha512-JlsU1aKkhbX+SMV8npuCzfqKiQn4wlJ4lGP/J1Eoum0et+H9s0Oho1G5kHgSkPCgP35ENEPrHVbT8HcUgxkU8Q==
 
 optionator@^0.8.1:
   version "0.8.3"
