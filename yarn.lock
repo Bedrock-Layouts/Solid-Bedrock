@@ -985,10 +985,10 @@
   resolved "https://registry.yarnpkg.com/@bcoe/v8-coverage/-/v8-coverage-0.2.3.tgz#75a2e8b51cb758a7553d6804a5932d7aace75c39"
   integrity sha512-0hYQ8SB4Db5zvZB4axdMHGwEaQjkZzFjQiN9LVYvIFB2nSUHW9tYpxWriPrWDASIxiaXax83REcLxuSdnGPZtw==
 
-"@bedrock-layout/bedrock-layout-css@^1.5.3":
-  version "1.5.9"
-  resolved "https://registry.yarnpkg.com/@bedrock-layout/bedrock-layout-css/-/bedrock-layout-css-1.5.9.tgz#f3d15c2eace5a28e24816875367cf6108ee2d553"
-  integrity sha512-ubberkqhszHti9dagI7Elhr/78v0+eW3q50++VNnKJ3ocs3p4STVJmEZRCG3DiBrbapsTN+wzsH29VtaizzEsQ==
+"@bedrock-layout/bedrock-layout-css@^2.0.1":
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/@bedrock-layout/bedrock-layout-css/-/bedrock-layout-css-2.0.1.tgz#29976c9389829f4944a39a833501eee03afd11da"
+  integrity sha512-XdbjX5mW2W9ufVg9F6TEP8eQGCHJgWF5PXZJfBWgolEYYEk3PLpnfIIWKQ8EsF6mqC03G2aBrt/QxTmqy0Puww==
 
 "@bedrock-layout/register-resize-callback@^1.1.0":
   version "1.1.2"
@@ -4828,9 +4828,9 @@ highlight.js@^10.7.1:
   integrity sha512-tzcUFauisWKNHaRkN4Wjl/ZA07gENAjFl3J/c480dprkGTg5EQstgaNFqBfUqCq54kZRIEcreTsAgF/m2quD7A==
 
 highlight.js@^11.5.0:
-  version "11.5.1"
-  resolved "https://registry.yarnpkg.com/highlight.js/-/highlight.js-11.5.1.tgz#027c24e4509e2f4dcd00b4a6dda542ce0a1f7aea"
-  integrity sha512-LKzHqnxr4CrD2YsNoIf/o5nJ09j4yi/GcH5BnYz9UnVpZdS4ucMgvP61TDty5xJcFGRjnH4DpujkS9bHT3hq0Q==
+  version "11.6.0"
+  resolved "https://registry.yarnpkg.com/highlight.js/-/highlight.js-11.6.0.tgz#a50e9da05763f1bb0c1322c8f4f755242cff3f5a"
+  integrity sha512-ig1eqDzJaB0pqEvlPVIpSSyMaO92bH1N2rJpLMN/nX396wTpDA4Eq0uK+7I/2XG17pFaaKE0kjV/XPeGt7Evjw==
 
 homedir-polyfill@^1.0.1:
   version "1.0.3"
