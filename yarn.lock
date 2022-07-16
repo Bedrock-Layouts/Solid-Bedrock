@@ -985,10 +985,10 @@
   resolved "https://registry.yarnpkg.com/@bcoe/v8-coverage/-/v8-coverage-0.2.3.tgz#75a2e8b51cb758a7553d6804a5932d7aace75c39"
   integrity sha512-0hYQ8SB4Db5zvZB4axdMHGwEaQjkZzFjQiN9LVYvIFB2nSUHW9tYpxWriPrWDASIxiaXax83REcLxuSdnGPZtw==
 
-"@bedrock-layout/bedrock-layout-css@^1.5.3":
-  version "1.5.9"
-  resolved "https://registry.yarnpkg.com/@bedrock-layout/bedrock-layout-css/-/bedrock-layout-css-1.5.9.tgz#f3d15c2eace5a28e24816875367cf6108ee2d553"
-  integrity sha512-ubberkqhszHti9dagI7Elhr/78v0+eW3q50++VNnKJ3ocs3p4STVJmEZRCG3DiBrbapsTN+wzsH29VtaizzEsQ==
+"@bedrock-layout/bedrock-layout-css@^2.0.1":
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/@bedrock-layout/bedrock-layout-css/-/bedrock-layout-css-2.0.1.tgz#29976c9389829f4944a39a833501eee03afd11da"
+  integrity sha512-XdbjX5mW2W9ufVg9F6TEP8eQGCHJgWF5PXZJfBWgolEYYEk3PLpnfIIWKQ8EsF6mqC03G2aBrt/QxTmqy0Puww==
 
 "@bedrock-layout/register-resize-callback@^1.1.0":
   version "1.1.2"
