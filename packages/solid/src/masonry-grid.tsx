@@ -12,10 +12,10 @@ import {
   onMount,
 } from "solid-js";
 import { ResolvedChildren } from "solid-js/types/reactive/signal";
-import { styled, useTheme } from "solid-styled-components";
 
 import { Grid, GridProps } from "./grid";
 import { SpacingOptions, getSpacingValue } from "./spacing-constants";
+import { useTheme } from "./theme-provider";
 import { toPX } from "./toPx";
 
 //Logic forked from is-in-browser npm package
@@ -24,15 +24,6 @@ const isBrowser =
   typeof window === "object" &&
   typeof document === "object" &&
   document.nodeType === 9;
-
-const RowSpanner = styled.div`
-  grid-row: span var(--rows, 1);
-
-  > * {
-    display: block;
-    height: 100%;
-  }
-`;
 
 const Resizer: Component<{ gutter?: SpacingOptions; children?: JSXElement }> = (
   props
@@ -65,26 +56,20 @@ const Resizer: Component<{ gutter?: SpacingOptions; children?: JSXElement }> = (
 
       const rowHeight = Math.ceil(height / gap);
 
-      setRowSpan(rowHeight);
+      setRowSpan(Math.max(rowHeight, 1));
     });
 
     onCleanup(cleanup);
   });
 
   return (
-    <RowSpanner style={`--rows: ${rowSpan()}`} ref={nodeRef}>
+    <div style={`grid-row: span ${rowSpan()};`} ref={nodeRef}>
       {props.children}
-    </RowSpanner>
+    </div>
   );
 };
 
-const MasonryGridWrapper = styled(Grid)`
-  grid-template-rows: 1px;
-`;
-
-export const MasonryGrid: Component<GridProps & { children?: JSXElement }> = (
-  props
-) => {
+export const MasonryGrid: Component<GridProps> = (props) => {
   const childrenMemo = children(() => props.children);
   const emptyResolvedChildren: ResolvedChildren = [];
   const wrappedChildren = emptyResolvedChildren
@@ -93,5 +78,9 @@ export const MasonryGrid: Component<GridProps & { children?: JSXElement }> = (
     .map((child) => (
       <Resizer gutter={props.gutter}>{child as JSXElement}</Resizer>
     ));
-  return <MasonryGridWrapper {...props}>{wrappedChildren}</MasonryGridWrapper>;
+  return (
+    <Grid style="grid-template-rows: 1px;" {...props}>
+      {wrappedChildren}
+    </Grid>
+  );
 };

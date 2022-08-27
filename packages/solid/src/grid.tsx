@@ -1,3 +1,4 @@
+import { JSX, createMemo, mergeProps } from "solid-js";
 import { styled } from "solid-styled-components";
 
 import {
@@ -5,43 +6,56 @@ import {
   SpacingOptions,
   getSpacingValue,
 } from "./spacing-constants";
+import { useTheme } from "./theme-provider";
+import createDynamic, {
+  DynamicProps,
+  HeadlessPropsWithRef,
+  ValidConstructor,
+  omitProps,
+} from "./typeUtils";
 
 type MinItemWidth = number | CSSLength;
-export interface GridProps {
+export interface GridBaseProps {
   gutter?: SpacingOptions;
   minItemWidth?: MinItemWidth;
 }
 
-export const Grid = styled("div")<GridProps>`
-  @property --gutter {
-    syntax: "<length-percentage>";
-    inherits: false;
-    initial-value: 0;
-  }
+export type GridProps<T extends ValidConstructor = "div"> =
+  HeadlessPropsWithRef<T, GridBaseProps>;
 
-  @property --minItemWidth {
-    syntax: "<length-percentage>";
-    inherits: false;
-    initial-value: 639px;
-  }
+export function Grid<T extends ValidConstructor = "div">(
+  props: GridProps<T>
+): JSX.Element {
+  const theme = useTheme();
 
-  --gutter: ${(props) =>
-    props.gutter ? getSpacingValue(props.gutter, props.theme) ?? "0px" : "0px"};
-  --minItemWidth: ${(props) =>
-    typeof props.minItemWidth === "string"
-      ? props.minItemWidth
-      : `${props.minItemWidth ?? 0}px`};
-
-  box-sizing: border-box;
-  > * {
-    margin: 0;
-  }
-
-  display: grid;
-  gap: var(--gutter, 0px);
-
-  grid-template-columns: repeat(
-    auto-fit,
-    minmax(min(var(--minItemWidth, 639px), 100%), 1fr)
+  const style = createMemo(() =>
+    typeof props.style === "string"
+      ? props.style
+      : Object.entries(props.style ?? ({} as JSX.CSSProperties)).reduce(
+          (str, [key, value]) => str + `${key}:${value};`,
+          ""
+        )
   );
-`;
+
+  const gutter = createMemo(
+    () =>
+      `--gutter: ${getSpacingValue(props.gutter ?? "none", theme) ?? "0px"};`
+  );
+
+  const minItemWidth = createMemo(
+    () =>
+      `--minItemWidth: ${
+        typeof props.minItemWidth === "string"
+          ? props.minItemWidth
+          : `${props.minItemWidth ?? 0}px`
+      };`
+  );
+
+  return createDynamic(
+    () => props.as ?? ("div" as T),
+    mergeProps(omitProps(props, ["as", "gutter", "minItemWidth"]), {
+      style: `${style()}; ${gutter()} ${minItemWidth()}`,
+      "data-bedrock-grid": "",
+    }) as DynamicProps<T>
+  );
+}
