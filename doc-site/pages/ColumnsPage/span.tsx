@@ -8,10 +8,10 @@ export function Span(): JSXElement {
     <Columns gutter="lg" columns={4}>
       <Box />
       <Box />
-      <Column colSpan={3}>
+      <Column span={3}>
         <Box style={{ background: "blue" }} />
       </Column>
-      <Column colSpan={2}>
+      <Column span={2}>
         <Box style={{ background: "green" }} />
       </Column>
       <Box />

@@ -1,4 +1,4 @@
-import type { DefaultTheme } from "solid-styled-components";
+import type { DefaultTheme } from "./theme-provider";
 
 type LowercaseCharacter =
   | "a"
@@ -92,7 +92,7 @@ export type BaseTheme = Record<string, CSSLength | string | number>;
 type ThemeOrDefaultSpace<T> = T extends {
   space: BaseTheme;
 }
-  ? T["space"]
+  ? keyof T["space"]
   : keyof Spacing;
 
 export type SpacingOptions = ThemeOrDefaultSpace<DefaultTheme>;

@@ -46,7 +46,7 @@ export const argTypes: ArgType = {
 };
 
 export const columnArgTypes: ArgType = {
-  colSpan: {
+  span: {
     description: "Sets the number of columns the element will span",
     summary: "number",
     defaultValue: "1",

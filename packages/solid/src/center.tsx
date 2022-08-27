@@ -1,4 +1,4 @@
-import { css, styled } from "solid-styled-components";
+import { styled } from "solid-styled-components";
 
 import { CSSLength } from "./spacing-constants";
 

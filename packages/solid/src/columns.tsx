@@ -1,55 +1,76 @@
-import { Component, JSX, Match, Switch } from "solid-js";
-import { styled } from "solid-styled-components";
+import {
+  Component,
+  JSX,
+  Match,
+  Switch,
+  createMemo,
+  mergeProps,
+  splitProps,
+} from "solid-js";
 
 import { createContainerQuery } from "./create-container-query";
 import { SpacingOptions, getSpacingValue } from "./spacing-constants";
 import { Stack, StackProps } from "./stack";
+import { useTheme } from "./theme-provider";
 import { toPX } from "./toPx";
+import createDynamic, {
+  DynamicProps,
+  HeadlessPropsWithRef,
+  ValidConstructor,
+  omitProps,
+} from "./typeUtils";
 
-interface ColumnsBaseProps {
+interface ColumnsBase {
   gutter?: SpacingOptions;
   columns?: number;
   dense?: boolean;
 }
 
-const ColumnsBase = styled.div<ColumnsBaseProps>`
-  @property --gutter {
-    syntax: "<length-percentage>";
-    inherits: false;
-    initial-value: 0;
-  }
+export type ColumnsBaseProps<T extends ValidConstructor = "div"> =
+  HeadlessPropsWithRef<T, ColumnsBase>;
 
-  @property --columns {
-    syntax: "<number>";
-    inherits: true;
-    initial-value: 1;
-  }
-  --gutter: ${(props) =>
-    props.gutter ? getSpacingValue(props.gutter, props.theme) ?? "0px" : "0px"};
+export function ColumnsBase<T extends ValidConstructor = "div">(
+  props: ColumnsBaseProps<T>
+): JSX.Element {
+  const theme = useTheme();
+  const style = createMemo(() =>
+    typeof props.style === "string"
+      ? props.style
+      : Object.entries(props.style ?? ({} as JSX.CSSProperties)).reduce(
+          (str, [key, value]) => str + `${key}:${value};`,
+          ""
+        )
+  );
 
-  --columns: ${(props) =>
-    props.columns && props.columns > 0 ? props.columns : 1};
+  const gutter = createMemo(
+    () =>
+      `--gutter: ${getSpacingValue(props.gutter ?? "none", theme) ?? "0px"};`
+  );
 
-  box-sizing: border-box;
-  > * {
-    margin: 0;
-  }
+  const columns = createMemo(
+    () =>
+      `--columns: ${props.columns && props.columns > 0 ? props.columns : 1};`
+  );
 
-  display: grid;
-  grid-template-columns: repeat(var(--columns, 1), 1fr);
-  gap: var(--gutter, 0px);
-  grid-auto-flow: row ${({ dense = false }) => (dense === true ? "dense" : "")};
-`;
+  const dense = createMemo(() => (props.dense ? "dense" : ""));
+
+  return createDynamic(
+    () => props.as ?? ("div" as T),
+    mergeProps(omitProps(props, ["as", "gutter", "columns", "dense"]), {
+      style: `${style()}; ${gutter()} ${columns()}`,
+      "data-bedrock-columns": dense(),
+    }) as DynamicProps<T>
+  );
+}
 
 export interface ColumnsProps extends StackProps, ColumnsBaseProps {
   switchAt?: number | string;
-  as?: Component | keyof JSX.IntrinsicElements;
-  ref?: (ref: HTMLElement) => void;
 }
 
 export const Columns: Component<ColumnsProps> = (props) => {
+  const [local, rest] = splitProps(props, ["switchAt", "columns", "dense"]);
   const maybePx =
-    typeof props.switchAt === "string" ? toPX(props.switchAt) : props.switchAt;
+    typeof local.switchAt === "string" ? toPX(local.switchAt) : local.switchAt;
 
   const widthToSwitchAt: number = maybePx && maybePx > -1 ? maybePx : 0; //zero is used to make the switchAt a noop
 
@@ -57,23 +78,28 @@ export const Columns: Component<ColumnsProps> = (props) => {
 
   const combineRef = (ref: HTMLElement) => {
     nodeRef(ref);
-    props.ref?.(ref);
+    (rest.ref as (e: Element) => void | undefined)?.(ref);
   };
 
   return (
     <Switch>
       <Match when={shouldSwitch() === false}>
-        <ColumnsBase {...props} ref={combineRef} />
+        <ColumnsBase
+          columns={local.columns}
+          dense={local.dense}
+          {...rest}
+          ref={combineRef}
+        />
       </Match>
       <Match when={shouldSwitch() === true}>
-        <Stack {...props} ref={combineRef} />
+        <Stack {...rest} ref={combineRef} />
       </Match>
     </Switch>
   );
 };
 
-export interface ColumnProps {
-  colSpan?: number;
+export interface ColumnBaseProps {
+  span?: number;
   offsetStart?: number;
   offsetEnd?: number;
 }
@@ -82,52 +108,40 @@ const safeSpan = (span: unknown) => {
   return typeof span === "number" ? span : 1;
 };
 
-/**
- * ColumnsProps passed twice to make propTypes work.
- *
- * span is remaped to colSpan due to span being an attribute that gets
- * passed to the underlying element.  This can cause issues with Grid layout.
- *
- * In a future breaking change, colSpan should be the public API.
- * */
-export const Column = styled.div<ColumnProps>`
-  @property --span {
-    syntax: "<number>";
-    inherits: true;
-    initial-value: 1;
-  }
+export type ColumnProps<T extends ValidConstructor = "div"> =
+  HeadlessPropsWithRef<T, ColumnBaseProps>;
 
-  --span: ${(props) => safeSpan(props.colSpan)};
+export function Column<T extends ValidConstructor = "div">(
+  props: ColumnProps<T>
+): JSX.Element {
+  const style = createMemo(() =>
+    typeof props.style === "string"
+      ? props.style
+      : Object.entries(props.style ?? ({} as JSX.CSSProperties)).reduce(
+          (str, [key, value]) => str + `${key}:${value};`,
+          ""
+        )
+  );
 
-  grid-column: span min(var(--span, 1), var(--columns, 1));
+  const span = createMemo(() => `--span: ${safeSpan(props.span)};`);
 
-  ${(props) =>
-    props.offsetStart || props.offsetEnd
-      ? `
-    display: contents; 
-    > * {
-        grid-column: span min(var(--span, 1), var(--columns, 1));
-    }
-    `
-      : ""}
-
-  ${(props) =>
+  const offsetStart = createMemo(() =>
     props.offsetStart && props.offsetStart > 0
-      ? `
-  &::before {
-    content: "";
-    grid-column: span min(${props.offsetStart}, var(--columns, 1));
-  }
-  `
-      : ""}
+      ? `--offsetStart: ${props.offsetStart};`
+      : ""
+  );
 
-${(props) =>
+  const offsetEnd = createMemo(() =>
     props.offsetEnd && props.offsetEnd > 0
-      ? `
-  &::after {
-    content: "";
-    grid-column: span min(${props.offsetEnd}, var(--columns, 1));
-  }
-  `
-      : ""}
-`;
+      ? `--offsetEnd: ${props.offsetEnd};`
+      : ""
+  );
+
+  return createDynamic(
+    () => props.as ?? ("div" as T),
+    mergeProps(omitProps(props, ["as", "span", "offsetStart", "offsetEnd"]), {
+      style: `${style()}; ${span()} ${offsetStart()} ${offsetEnd()}`,
+      "data-bedrock-column": "",
+    }) as DynamicProps<T>
+  );
+}

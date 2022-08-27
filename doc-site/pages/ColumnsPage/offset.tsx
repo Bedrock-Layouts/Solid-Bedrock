@@ -8,10 +8,10 @@ export function Offset(): JSXElement {
     <Columns gutter="lg" columns={5}>
       <Box />
       <Box />
-      <Column colSpan={2} offsetStart={1}>
+      <Column span={2} offsetStart={1}>
         <Box style={{ background: "blue" }} />
       </Column>
-      <Column colSpan={2} offsetEnd={2}>
+      <Column span={2} offsetEnd={2}>
         <Box style={{ background: "green" }} />
       </Column>
       <Box />
