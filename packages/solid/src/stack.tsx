@@ -33,11 +33,25 @@ export function Stack<T extends ValidConstructor = "div">(
     () =>
       `--gutter: ${getSpacingValue(props.gutter ?? "none", theme) ?? "0px"};`
   );
+
+  const fullStyle = createMemo(() => `${style()}; ${gutter()}`);
+
+  const restProps = {
+    get style() {
+      return fullStyle();
+    },
+  };
+
+  Object.defineProperty(restProps, "data-bedrock-stack", {
+    get() {
+      return "";
+    },
+    configurable: true,
+    enumerable: true,
+  });
+
   return createDynamic(
     () => props.as ?? ("div" as T),
-    mergeProps(omitProps(props, ["as", "gutter"]), {
-      style: `${style()}; ${gutter()}`,
-      "data-bedrock-stack": "",
-    }) as DynamicProps<T>
+    mergeProps(omitProps(props, ["as", "gutter"]), restProps) as DynamicProps<T>
   );
 }

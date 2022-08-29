@@ -1,4 +1,4 @@
-import { JSX, createMemo, mergeProps } from "solid-js";
+import { JSX, createEffect, createMemo, mergeProps } from "solid-js";
 
 import {
   CSSLength,
@@ -35,36 +35,51 @@ export function ColumnDrop<T extends ValidConstructor = "div">(
 ): JSX.Element {
   const theme = useTheme();
 
-  const style = createMemo(() =>
+  const style = () =>
     typeof props.style === "string"
       ? props.style
       : Object.entries(props.style ?? ({} as JSX.CSSProperties)).reduce(
           (str, [key, value]) => str + `${key}:${value};`,
           ""
-        )
-  );
+        );
 
-  const gutter = createMemo(
-    () =>
-      `--gutter: ${getSpacingValue(props.gutter ?? "none", theme) ?? "0px"};`
-  );
+  const gutter = createMemo(() => {
+    return `--gutter: ${
+      getSpacingValue(props.gutter ?? "none", theme) ?? "0px"
+    };`;
+  });
 
   const minItemWidth = createMemo(
     () => `--minItemWidth: ${getSafeMinItemWidth(props.minItemWidth)};`
   );
 
   const noStretchedColumns = createMemo(() =>
-    props.noStretchedColumns === true ? "no-stretched-columns" : "false"
+    props.noStretchedColumns === true ? "no-stretched-columns" : ""
   );
+
+  const fullStyle = createMemo(
+    () => `${style()}; ${gutter()} ${minItemWidth()}`
+  );
+
+  const restProps = {
+    get style() {
+      return fullStyle();
+    },
+  };
+
+  Object.defineProperty(restProps, "data-bedrock-column-drop", {
+    get() {
+      return noStretchedColumns();
+    },
+    configurable: true,
+    enumerable: true,
+  });
 
   return createDynamic(
     () => props.as ?? ("div" as T),
     mergeProps(
       omitProps(props, ["as", "gutter", "minItemWidth", "noStretchedColumns"]),
-      {
-        style: `${style()}; ${gutter()} ${minItemWidth()}`,
-        "data-bedrock-column-drop": noStretchedColumns(),
-      }
+      restProps
     ) as DynamicProps<T>
   );
 }

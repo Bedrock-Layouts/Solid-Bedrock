@@ -54,12 +54,28 @@ export function ColumnsBase<T extends ValidConstructor = "div">(
 
   const dense = createMemo(() => (props.dense ? "dense" : ""));
 
+  const fullStyle = createMemo(() => `${style()}; ${gutter()} ${columns()}`);
+
+  const restProps = {
+    get style() {
+      return fullStyle();
+    },
+  };
+
+  Object.defineProperty(restProps, "data-bedrock-columns", {
+    get() {
+      return dense();
+    },
+    configurable: true,
+    enumerable: true,
+  });
+
   return createDynamic(
     () => props.as ?? ("div" as T),
-    mergeProps(omitProps(props, ["as", "gutter", "columns", "dense"]), {
-      style: `${style()}; ${gutter()} ${columns()}`,
-      "data-bedrock-columns": dense(),
-    }) as DynamicProps<T>
+    mergeProps(
+      omitProps(props, ["as", "gutter", "columns", "dense"]),
+      restProps
+    ) as DynamicProps<T>
   );
 }
 
@@ -137,11 +153,29 @@ export function Column<T extends ValidConstructor = "div">(
       : ""
   );
 
+  const fullStyle = createMemo(
+    () => `${style()}; ${span()} ${offsetStart()} ${offsetEnd()}`
+  );
+
+  const restProps = {
+    get style() {
+      return fullStyle();
+    },
+  };
+
+  Object.defineProperty(restProps, "data-bedrock-column", {
+    get() {
+      return "";
+    },
+    configurable: true,
+    enumerable: true,
+  });
+
   return createDynamic(
     () => props.as ?? ("div" as T),
-    mergeProps(omitProps(props, ["as", "span", "offsetStart", "offsetEnd"]), {
-      style: `${style()}; ${span()} ${offsetStart()} ${offsetEnd()}`,
-      "data-bedrock-column": "",
-    }) as DynamicProps<T>
+    mergeProps(
+      omitProps(props, ["as", "span", "offsetStart", "offsetEnd"]),
+      restProps
+    ) as DynamicProps<T>
   );
 }

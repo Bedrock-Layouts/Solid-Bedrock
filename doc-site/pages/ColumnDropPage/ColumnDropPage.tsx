@@ -22,6 +22,7 @@ export function ColumnDropPage(): JSXElement {
       initialValue,
     ])
   );
+
   const [props, setProps] = createSignal(initialValues);
 
   return (
@@ -91,9 +92,9 @@ export function ColumnDropPage(): JSXElement {
         </Story>
         <ArgsTable
           args={argTypes}
-          onChange={({ propName, value }) =>
-            setProps((prev) => ({ ...prev, [propName]: value }))
-          }
+          onChange={({ propName, value }) => {
+            setProps({ ...props(), [propName]: value });
+          }}
         />
       </PageSection>
     </Stack>

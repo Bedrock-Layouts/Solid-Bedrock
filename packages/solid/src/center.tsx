@@ -51,14 +51,27 @@ export function Center<T extends ValidConstructor = "div">(
     [centerText(), centerChildren()].filter(Boolean).join(" ")
   );
 
+  const fullStyle = createMemo(() => `${style()}; ${maxWidth()}`);
+
+  const restProps = {
+    get style() {
+      return fullStyle();
+    },
+  };
+
+  Object.defineProperty(restProps, "data-bedrock-center", {
+    get() {
+      return attrString();
+    },
+    configurable: true,
+    enumerable: true,
+  });
+
   return createDynamic(
     () => props.as ?? ("div" as T),
     mergeProps(
       omitProps(props, ["as", "maxWidth", "centerText", "centerChildren"]),
-      {
-        style: `${style()}; ${maxWidth()}`,
-        "data-bedrock-center": attrString(),
-      }
+      restProps
     ) as DynamicProps<T>
   );
 }

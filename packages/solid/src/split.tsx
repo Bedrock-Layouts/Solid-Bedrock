@@ -78,12 +78,28 @@ export function SplitBase<T extends ValidConstructor = "div">(
     () => fractions[props.fraction ?? "1/2"] ?? fractions["1/2"]
   );
 
+  const fullStyle = createMemo(() => `${style()}; ${gutter()}`);
+
+  const restProps = {
+    get style() {
+      return fullStyle();
+    },
+  };
+
+  Object.defineProperty(restProps, "data-bedrock-split", {
+    get() {
+      return fraction();
+    },
+    configurable: true,
+    enumerable: true,
+  });
+
   return createDynamic(
     () => props.as ?? ("div" as T),
-    mergeProps(omitProps(props, ["as", "gutter", "fraction"]), {
-      style: `${style()}; ${gutter()}`,
-      "data-bedrock-split": fraction(),
-    }) as DynamicProps<T>
+    mergeProps(
+      omitProps(props, ["as", "gutter", "fraction"]),
+      restProps
+    ) as DynamicProps<T>
   );
 }
 

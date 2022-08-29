@@ -3,7 +3,7 @@
  * These utility types and function were taken directly from solid-headless
  * https://github.com/lxsmnsyc/solid-headless
  */
-import { JSX, createComponent, mergeProps } from "solid-js";
+import { JSX, createComponent, createEffect, mergeProps } from "solid-js";
 import { Dynamic } from "solid-js/web";
 export type OmitAndMerge<A, B> = A & Omit<B, keyof A>;
 
@@ -84,24 +84,18 @@ export function omitProps<T extends Record<string, any>, K extends keyof T>(
   value: T,
   keys: K[]
 ): Omit<T, K> {
-  const newObject = {};
-
-  const currentKeys = Object.keys(value);
-
-  for (let i = 0, len = currentKeys.length; i < len; i += 1) {
-    const key = currentKeys[i];
-    if (!keys.includes(key as K)) {
-      Object.defineProperty(newObject, key, {
+  return Object.keys(value)
+    .filter((k) => !keys.includes(k as K))
+    .reduce((newObject, k) => {
+      Object.defineProperty(newObject, k, {
         get() {
-          return value[key];
+          return value[k];
         },
         configurable: true,
         enumerable: true,
       });
-    }
-  }
-
-  return newObject as Omit<T, K>;
+      return newObject;
+    }, {}) as Omit<T, K>;
 }
 
 export default function createDynamic<T extends ValidConstructor>(
