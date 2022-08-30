@@ -2,6 +2,8 @@
  * This module is adapted from https://github.com/mikolalysenko/to-px/blob/master/browser.js
  */
 
+import type { Maybe } from "./typeUtils";
+
 const PIXELS_PER_INCH = 96;
 
 /* istanbul ignore next */
@@ -15,8 +17,8 @@ function parseUnit(str: string): [number, string] {
 }
 
 /* istanbul ignore next */
-export function toPX(str: string, element?: Element): number | null {
-  if (!str) return null;
+export function toPX(str: string, element?: Element): Maybe<number> {
+  if (!str) return undefined;
 
   const elementOrBody = element ?? document.body;
   const safeStr = (str ?? "px").trim().toLowerCase();
@@ -27,7 +29,7 @@ export function toPX(str: string, element?: Element): number | null {
     case "vh":
     case "vw":
     case "%":
-      return null;
+      return undefined;
     case "ch":
     case "ex":
       return getSizeBrutal(safeStr, elementOrBody);
@@ -50,12 +52,12 @@ export function toPX(str: string, element?: Element): number | null {
     default: {
       const [value, units] = parseUnit(safeStr);
 
-      if (isNaN(value)) return null;
+      if (isNaN(value)) return undefined;
 
       if (!units) return value;
 
       const px = toPX(units, element);
-      return typeof px === "number" ? value * px : null;
+      return typeof px === "number" ? value * px : undefined;
     }
   }
 }

@@ -96,7 +96,10 @@ export const Split: Component<SplitProps> = (props) => {
   const maybePx =
     typeof local.switchAt === "string" ? toPX(local.switchAt) : local.switchAt;
 
-  const widthToSwitchAt: number = maybePx && maybePx > -1 ? maybePx : 0; //zero is used to make the switchAt a noop
+  /**
+   * zero is used to make the switchAt a noop
+   */
+  const widthToSwitchAt = Math.max(maybePx ?? 0, 0);
 
   const [shouldSwitch, nodeRef] = createContainerQuery(
     widthToSwitchAt,

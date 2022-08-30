@@ -17,6 +17,9 @@ import { Grid, GridProps } from "./grid";
 import { SpacingOptions, getSpacingValue } from "./spacing-constants";
 import { useTheme } from "./theme-provider";
 import { toPX } from "./toPx";
+import { convertToMaybe } from "./typeUtils";
+
+const MIN_HEIGHT = 1;
 
 //Logic forked from is-in-browser npm package
 /* istanbul ignore next */
@@ -29,7 +32,7 @@ const Resizer: Component<{ gutter?: SpacingOptions; children?: JSXElement }> = (
   props
 ) => {
   const [rowSpan, setRowSpan] = createSignal(1);
-  const [node, nodeRef] = createSignal<HTMLDivElement>();
+  const [node, nodeRef] = createSignal<HTMLElement>();
 
   const theme = useTheme();
 
@@ -38,8 +41,8 @@ const Resizer: Component<{ gutter?: SpacingOptions; children?: JSXElement }> = (
   });
 
   createEffect(() => {
-    const ref = node();
-    if (ref === undefined || ref === null) return;
+    const ref = convertToMaybe(node());
+    if (ref === undefined) return;
 
     const cleanup = registerCallback(ref, ({ target }) => {
       setRowSpan(1);
@@ -47,16 +50,16 @@ const Resizer: Component<{ gutter?: SpacingOptions; children?: JSXElement }> = (
         ? getSpacingValue(props.gutter, theme) ?? "1px"
         : "1px";
 
-      const maybeGap = isBrowser ? toPX(gapString, target) : null;
+      const maybeGap = isBrowser ? toPX(gapString, target) : undefined;
 
-      const gap: number = Math.max(maybeGap ?? 1, 1);
+      const gap = Math.max(maybeGap ?? MIN_HEIGHT, MIN_HEIGHT);
 
       const [child] = Array.from(target.children);
       const height = 1 + Math.min(target.scrollHeight, child.scrollHeight);
 
-      const rowHeight = Math.ceil(height / gap);
+      const rowHeight = Math.max(Math.ceil(height / gap), MIN_HEIGHT);
 
-      setRowSpan(Math.max(rowHeight, 1));
+      setRowSpan(rowHeight);
     });
 
     onCleanup(cleanup);

@@ -1,5 +1,4 @@
-import { Component, JSX, JSXElement } from "solid-js";
-import { styled } from "solid-styled-components";
+import { Component, JSX, JSXElement, mergeProps } from "solid-js";
 
 import {
   CSSLength,
@@ -7,19 +6,28 @@ import {
   checkIsCSSLength,
   getSpacingValue,
 } from "./spacing-constants";
+import { useTheme } from "./theme-provider";
+import createDynamic, {
+  DynamicProps,
+  HeadlessPropsWithRef,
+  ValidConstructor,
+  createPropsFromAccessors,
+  omitProps,
+} from "./typeUtils";
 
 type MinHeight = CSSLength | number;
 
-interface CoverWrapperProps {
+interface CoverWrapperBaseProps {
   gutter?: SpacingOptions;
   minHeight?: MinHeight;
   stretchContent?: boolean;
 }
 
+export type CoverWrapperProps<T extends ValidConstructor = "div"> =
+  HeadlessPropsWithRef<T, CoverWrapperBaseProps>;
 export interface CoverProps extends CoverWrapperProps {
   top?: JSXElement;
   bottom?: JSXElement;
-  as?: Component | keyof JSX.IntrinsicElements;
 }
 
 function getSafeMinHeight(minHeight?: MinHeight) {
@@ -28,51 +36,40 @@ function getSafeMinHeight(minHeight?: MinHeight) {
   return minHeight && checkIsCSSLength(minHeight) ? minHeight : "100vh";
 }
 
-const CoverWrapper = styled.div<CoverProps>`
-  @property --gutter {
-    syntax: "<length-percentage>";
-    inherits: false;
-    initial-value: 0;
-  }
+function CoverWrapper<T extends ValidConstructor = "div">(
+  props: CoverWrapperProps<T>
+): JSX.Element {
+  const theme = useTheme();
 
-  @property --minHeight {
-    syntax: "<length-percentage>";
-    inherits: false;
-    initial-value: 100vh;
-  }
+  const propsStyle = () =>
+    typeof props.style === "string"
+      ? props.style
+      : Object.entries(props.style ?? ({} as JSX.CSSProperties)).reduce(
+          (str, [key, value]) => str + `${key}:${value};`,
+          ""
+        );
 
-  --gutter: ${(props) =>
-    props.gutter ? getSpacingValue(props.gutter, props.theme) ?? "0px" : "0px"};
+  const gutter = () =>
+    `--gutter: ${getSpacingValue(props.gutter ?? "none", theme) ?? "0px"};`;
 
-  --minHeight: ${(props) => getSafeMinHeight(props.minHeight)};
+  const minHeight = () => `--minHeight: ${getSafeMinHeight(props.minHeight)};`;
 
-  > * {
-    margin: 0;
-  }
+  const stretchContent = () =>
+    props.stretchContent === true ? "stretch-content" : "";
 
-  display: flex;
-  flex-direction: column;
-  gap: var(--gutter, 0px);
+  const style = () => [propsStyle(), gutter(), minHeight()].join("; ");
 
-  min-block-size: var(--minHeight, 100vh);
-
-  > [data-bedrock-cover-centered] {
-    margin-block-start: auto;
-    margin-block-end: auto;
-
-    ${({ stretchContent }) =>
-      stretchContent === true
-        ? `
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            > * {
-              flex: 1;
-            }
-          `
-        : ""};
-  }
-`;
+  return createDynamic(
+    () => props.as ?? ("div" as T),
+    mergeProps(
+      omitProps(props, ["as", "minHeight", "stretchContent"]),
+      createPropsFromAccessors({
+        style,
+        "data-bedrock-cover": stretchContent,
+      })
+    ) as DynamicProps<T>
+  );
+}
 
 export const Cover: Component<CoverProps & { children?: JSXElement }> = (
   props
