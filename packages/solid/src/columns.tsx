@@ -3,7 +3,6 @@ import {
   JSX,
   Match,
   Switch,
-  createMemo,
   mergeProps,
   splitProps,
 } from "solid-js";
@@ -17,6 +16,7 @@ import createDynamic, {
   DynamicProps,
   HeadlessPropsWithRef,
   ValidConstructor,
+  createPropsFromAccessors,
   omitProps,
 } from "./typeUtils";
 
@@ -33,48 +33,32 @@ export function ColumnsBase<T extends ValidConstructor = "div">(
   props: ColumnsBaseProps<T>
 ): JSX.Element {
   const theme = useTheme();
-  const style = createMemo(() =>
+  const propsStyle = () =>
     typeof props.style === "string"
       ? props.style
       : Object.entries(props.style ?? ({} as JSX.CSSProperties)).reduce(
           (str, [key, value]) => str + `${key}:${value};`,
           ""
-        )
-  );
+        );
 
-  const gutter = createMemo(
-    () =>
-      `--gutter: ${getSpacingValue(props.gutter ?? "none", theme) ?? "0px"};`
-  );
+  const gutter = () =>
+    `--gutter: ${getSpacingValue(props.gutter ?? "none", theme) ?? "0px"};`;
 
-  const columns = createMemo(
-    () =>
-      `--columns: ${props.columns && props.columns > 0 ? props.columns : 1};`
-  );
+  const columns = () =>
+    `--columns: ${props.columns && props.columns > 0 ? props.columns : 1};`;
 
-  const dense = createMemo(() => (props.dense ? "dense" : ""));
+  const dense = () => (props.dense ? "dense" : "");
 
-  const fullStyle = createMemo(() => `${style()}; ${gutter()} ${columns()}`);
-
-  const restProps = {
-    get style() {
-      return fullStyle();
-    },
-  };
-
-  Object.defineProperty(restProps, "data-bedrock-columns", {
-    get() {
-      return dense();
-    },
-    configurable: true,
-    enumerable: true,
-  });
+  const style = () => [propsStyle(), gutter(), columns()].join("; ");
 
   return createDynamic(
     () => props.as ?? ("div" as T),
     mergeProps(
       omitProps(props, ["as", "gutter", "columns", "dense"]),
-      restProps
+      createPropsFromAccessors({
+        style,
+        "data-bedrock-columns": dense,
+      })
     ) as DynamicProps<T>
   );
 }
@@ -130,52 +114,37 @@ export type ColumnProps<T extends ValidConstructor = "div"> =
 export function Column<T extends ValidConstructor = "div">(
   props: ColumnProps<T>
 ): JSX.Element {
-  const style = createMemo(() =>
+  const propsStyle = () =>
     typeof props.style === "string"
       ? props.style
       : Object.entries(props.style ?? ({} as JSX.CSSProperties)).reduce(
           (str, [key, value]) => str + `${key}:${value};`,
           ""
-        )
-  );
+        );
 
-  const span = createMemo(() => `--span: ${safeSpan(props.span)};`);
+  const span = () => `--span: ${safeSpan(props.span)};`;
 
-  const offsetStart = createMemo(() =>
+  const offsetStart = () =>
     props.offsetStart && props.offsetStart > 0
       ? `--offsetStart: ${props.offsetStart};`
-      : ""
-  );
+      : "";
 
-  const offsetEnd = createMemo(() =>
+  const offsetEnd = () =>
     props.offsetEnd && props.offsetEnd > 0
       ? `--offsetEnd: ${props.offsetEnd};`
-      : ""
-  );
+      : "";
 
-  const fullStyle = createMemo(
-    () => `${style()}; ${span()} ${offsetStart()} ${offsetEnd()}`
-  );
-
-  const restProps = {
-    get style() {
-      return fullStyle();
-    },
-  };
-
-  Object.defineProperty(restProps, "data-bedrock-column", {
-    get() {
-      return "";
-    },
-    configurable: true,
-    enumerable: true,
-  });
+  const style = () =>
+    [propsStyle(), span(), offsetStart(), offsetEnd()].join("; ");
 
   return createDynamic(
     () => props.as ?? ("div" as T),
     mergeProps(
       omitProps(props, ["as", "span", "offsetStart", "offsetEnd"]),
-      restProps
+      createPropsFromAccessors({
+        style,
+        "data-bedrock-column": () => "",
+      })
     ) as DynamicProps<T>
   );
 }

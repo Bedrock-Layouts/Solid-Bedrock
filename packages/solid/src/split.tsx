@@ -3,7 +3,6 @@ import {
   JSX,
   Match,
   Switch,
-  createMemo,
   mergeProps,
   splitProps,
 } from "solid-js";
@@ -21,6 +20,7 @@ import createDynamic, {
   DynamicProps,
   HeadlessPropsWithRef,
   ValidConstructor,
+  createPropsFromAccessors,
   omitProps,
 } from "./typeUtils";
 
@@ -60,45 +60,29 @@ export function SplitBase<T extends ValidConstructor = "div">(
 ): JSX.Element {
   const theme = useTheme();
 
-  const style = createMemo(() =>
+  const propsStyle = () =>
     typeof props.style === "string"
       ? props.style
       : Object.entries(props.style ?? ({} as JSX.CSSProperties)).reduce(
           (str, [key, value]) => str + `${key}:${value};`,
           ""
-        )
-  );
+        );
 
-  const gutter = createMemo(
-    () =>
-      `--gutter: ${getSpacingValue(props.gutter ?? "none", theme) ?? "0px"};`
-  );
+  const gutter = () =>
+    `--gutter: ${getSpacingValue(props.gutter ?? "none", theme) ?? "0px"};`;
 
-  const fraction = createMemo(
-    () => fractions[props.fraction ?? "1/2"] ?? fractions["1/2"]
-  );
+  const fraction = () => fractions[props.fraction ?? "1/2"] ?? fractions["1/2"];
 
-  const fullStyle = createMemo(() => `${style()}; ${gutter()}`);
-
-  const restProps = {
-    get style() {
-      return fullStyle();
-    },
-  };
-
-  Object.defineProperty(restProps, "data-bedrock-split", {
-    get() {
-      return fraction();
-    },
-    configurable: true,
-    enumerable: true,
-  });
+  const style = () => [propsStyle(), gutter()].join("; ");
 
   return createDynamic(
     () => props.as ?? ("div" as T),
     mergeProps(
       omitProps(props, ["as", "gutter", "fraction"]),
-      restProps
+      createPropsFromAccessors({
+        style,
+        "data-bedrock-split": fraction,
+      })
     ) as DynamicProps<T>
   );
 }

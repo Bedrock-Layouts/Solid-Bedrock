@@ -1,4 +1,4 @@
-import { JSX, createEffect, createMemo, mergeProps } from "solid-js";
+import { JSX, mergeProps } from "solid-js";
 
 import {
   CSSLength,
@@ -10,6 +10,7 @@ import createDynamic, {
   DynamicProps,
   HeadlessPropsWithRef,
   ValidConstructor,
+  createPropsFromAccessors,
   omitProps,
 } from "./typeUtils";
 
@@ -35,7 +36,7 @@ export function ColumnDrop<T extends ValidConstructor = "div">(
 ): JSX.Element {
   const theme = useTheme();
 
-  const style = () =>
+  const propsStyle = () =>
     typeof props.style === "string"
       ? props.style
       : Object.entries(props.style ?? ({} as JSX.CSSProperties)).reduce(
@@ -43,43 +44,25 @@ export function ColumnDrop<T extends ValidConstructor = "div">(
           ""
         );
 
-  const gutter = createMemo(() => {
-    return `--gutter: ${
-      getSpacingValue(props.gutter ?? "none", theme) ?? "0px"
-    };`;
-  });
+  const gutter = () =>
+    `--gutter: ${getSpacingValue(props.gutter ?? "none", theme) ?? "0px"}`;
 
-  const minItemWidth = createMemo(
-    () => `--minItemWidth: ${getSafeMinItemWidth(props.minItemWidth)};`
-  );
+  const minItemWidth = () =>
+    `--minItemWidth: ${getSafeMinItemWidth(props.minItemWidth)}`;
 
-  const noStretchedColumns = createMemo(() =>
-    props.noStretchedColumns === true ? "no-stretched-columns" : ""
-  );
+  const noStretchedColumns = () =>
+    props.noStretchedColumns === true ? "no-stretched-columns" : "";
 
-  const fullStyle = createMemo(
-    () => `${style()}; ${gutter()} ${minItemWidth()}`
-  );
-
-  const restProps = {
-    get style() {
-      return fullStyle();
-    },
-  };
-
-  Object.defineProperty(restProps, "data-bedrock-column-drop", {
-    get() {
-      return noStretchedColumns();
-    },
-    configurable: true,
-    enumerable: true,
-  });
+  const style = () => [propsStyle(), gutter(), minItemWidth()].join("; ");
 
   return createDynamic(
     () => props.as ?? ("div" as T),
     mergeProps(
       omitProps(props, ["as", "gutter", "minItemWidth", "noStretchedColumns"]),
-      restProps
+      createPropsFromAccessors({
+        style,
+        "data-bedrock-column-drop": noStretchedColumns,
+      })
     ) as DynamicProps<T>
   );
 }

@@ -1,11 +1,17 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /**
- * These utility types and function were taken directly from solid-headless
+ * Many of these utility types and functions were taken directly from solid-headless
  * https://github.com/lxsmnsyc/solid-headless
+ *
+ * Some have since been changed but it's important to
+ * attribute where its appropriate.
  */
-import { JSX, createComponent, createEffect, mergeProps } from "solid-js";
+import { JSX, createComponent, mergeProps } from "solid-js";
 import { Dynamic } from "solid-js/web";
 export type OmitAndMerge<A, B> = A & Omit<B, keyof A>;
+export type Accessor<T = unknown> = () => T;
+
+export type Maybe<T> = NonNullable<T> | undefined;
 
 export type ValidElements = keyof JSX.IntrinsicElements;
 export type ValidComponent<P> = (props: P) => JSX.Element;
@@ -40,20 +46,10 @@ export interface WithRef<T extends ValidConstructor> {
   ref?: RefField<DynamicNode<T>>;
 }
 
-export interface DynamicComponent<T extends ValidConstructor> {
-  as?: T;
-}
-
 export interface DynamicComponentWithRef<T extends ValidConstructor>
   extends WithRef<T> {
   as?: T;
 }
-
-// eslint-disable-next-line @typescript-eslint/ban-types
-export type HeadlessProps<T extends ValidConstructor, V = {}> = OmitAndMerge<
-  V & DynamicComponent<T>,
-  DynamicProps<T>
->;
 
 // eslint-disable-next-line @typescript-eslint/ban-types
 export type HeadlessPropsWithRef<
@@ -62,22 +58,8 @@ export type HeadlessPropsWithRef<
   V = {}
 > = OmitAndMerge<V & DynamicComponentWithRef<T>, DynamicProps<T>>;
 
-function isRefFunction<U extends ValidConstructor>(
-  callback?: RefField<DynamicNode<U>>
-): callback is RefCallback<DynamicNode<U>> {
-  return typeof callback === "function";
-}
-
-export function createRef<U extends ValidConstructor>(
-  props: WithRef<U>,
-  callback: RefCallback<DynamicNode<U>>
-): RefCallback<DynamicNode<U>> {
-  return (e) => {
-    if ("ref" in props && isRefFunction(props.ref)) {
-      props.ref(e);
-    }
-    callback(e);
-  };
+export function convertToMaybe<T extends unknown>(value: T): Maybe<T> {
+  return value ?? undefined;
 }
 
 export function omitProps<T extends Record<string, any>, K extends keyof T>(
@@ -113,4 +95,24 @@ export default function createDynamic<T extends ValidConstructor>(
       props
     ) as any
   );
+}
+
+export function createPropsFromAccessors<T extends Record<string, Accessor>>(
+  props: T
+): { [P in keyof T]: ReturnType<T[P]> } {
+  if (!Object.values(props).every((x) => typeof x === "function"))
+    throw new Error("Please provide an object with accessor values only.");
+
+  return Object.keys(props).reduce((getterObj, key) => {
+    const accessor = props[key];
+    Object.defineProperty(getterObj, key, {
+      get() {
+        return accessor();
+      },
+      configurable: true,
+      enumerable: true,
+    });
+
+    return getterObj;
+  }, {}) as { [P in keyof T]: ReturnType<T[P]> };
 }

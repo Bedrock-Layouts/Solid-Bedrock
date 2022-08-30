@@ -1,4 +1,4 @@
-import { JSX, createMemo, mergeProps } from "solid-js";
+import { JSX, mergeProps } from "solid-js";
 
 import {
   CSSLength,
@@ -10,6 +10,7 @@ import createDynamic, {
   DynamicProps,
   HeadlessPropsWithRef,
   ValidConstructor,
+  createPropsFromAccessors,
   omitProps,
 } from "./typeUtils";
 
@@ -27,34 +28,34 @@ export function Grid<T extends ValidConstructor = "div">(
 ): JSX.Element {
   const theme = useTheme();
 
-  const style = createMemo(() =>
+  const propsStyle = () =>
     typeof props.style === "string"
       ? props.style
       : Object.entries(props.style ?? ({} as JSX.CSSProperties)).reduce(
           (str, [key, value]) => str + `${key}:${value};`,
           ""
-        )
-  );
+        );
 
-  const gutter = createMemo(
-    () =>
-      `--gutter: ${getSpacingValue(props.gutter ?? "none", theme) ?? "0px"};`
-  );
+  const gutter = () =>
+    `--gutter: ${getSpacingValue(props.gutter ?? "none", theme) ?? "0px"};`;
 
-  const minItemWidth = createMemo(
-    () =>
-      `--minItemWidth: ${
-        typeof props.minItemWidth === "string"
-          ? props.minItemWidth
-          : `${props.minItemWidth ?? 0}px`
-      };`
-  );
+  const minItemWidth = () =>
+    `--minItemWidth: ${
+      typeof props.minItemWidth === "string"
+        ? props.minItemWidth
+        : `${props.minItemWidth ?? 0}px`
+    };`;
+
+  const style = () => [propsStyle(), gutter(), minItemWidth()].join("; ");
 
   return createDynamic(
     () => props.as ?? ("div" as T),
-    mergeProps(omitProps(props, ["as", "gutter", "minItemWidth"]), {
-      style: `${style()}; ${gutter()} ${minItemWidth()}`,
-      "data-bedrock-grid": "",
-    }) as DynamicProps<T>
+    mergeProps(
+      omitProps(props, ["as", "gutter", "minItemWidth"]),
+      createPropsFromAccessors({
+        style,
+        "data-bedrock-grid": () => "",
+      })
+    ) as DynamicProps<T>
   );
 }

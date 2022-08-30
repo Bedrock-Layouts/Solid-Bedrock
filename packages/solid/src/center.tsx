@@ -1,10 +1,11 @@
-import { JSX, createMemo, mergeProps } from "solid-js";
+import { JSX, mergeProps } from "solid-js";
 
 import { CSSLength } from "./spacing-constants";
 import createDynamic, {
   DynamicProps,
   HeadlessPropsWithRef,
   ValidConstructor,
+  createPropsFromAccessors,
   omitProps,
 } from "./typeUtils";
 
@@ -28,50 +29,33 @@ export type CenterProps<T extends ValidConstructor = "div"> =
 export function Center<T extends ValidConstructor = "div">(
   props: CenterProps<T>
 ): JSX.Element {
-  const style = createMemo(() =>
+  const propsStyle = () =>
     typeof props.style === "string"
       ? props.style
       : Object.entries(props.style ?? ({} as JSX.CSSProperties)).reduce(
           (str, [key, value]) => str + `${key}:${value};`,
           ""
-        )
-  );
+        );
 
-  const maxWidth = createMemo(
-    () => `--maxWidth: ${getSafeMaxWidth(props.maxWidth)};`
-  );
+  const maxWidth = () => `--maxWidth: ${getSafeMaxWidth(props.maxWidth)};`;
 
-  const centerText = createMemo(() => (props.centerText ? "center-text" : ""));
+  const centerText = () => (props.centerText ? "center-text" : "");
 
-  const centerChildren = createMemo(() =>
-    props.centerChildren ? "center-children" : ""
-  );
+  const centerChildren = () => (props.centerChildren ? "center-children" : "");
 
-  const attrString = createMemo(() =>
-    [centerText(), centerChildren()].filter(Boolean).join(" ")
-  );
+  const attrString = () =>
+    [centerText(), centerChildren()].filter(Boolean).join(" ");
 
-  const fullStyle = createMemo(() => `${style()}; ${maxWidth()}`);
-
-  const restProps = {
-    get style() {
-      return fullStyle();
-    },
-  };
-
-  Object.defineProperty(restProps, "data-bedrock-center", {
-    get() {
-      return attrString();
-    },
-    configurable: true,
-    enumerable: true,
-  });
+  const style = () => [propsStyle(), maxWidth()].join("; ");
 
   return createDynamic(
     () => props.as ?? ("div" as T),
     mergeProps(
       omitProps(props, ["as", "maxWidth", "centerText", "centerChildren"]),
-      restProps
+      createPropsFromAccessors({
+        style,
+        "data-bedrock-center": attrString,
+      })
     ) as DynamicProps<T>
   );
 }
