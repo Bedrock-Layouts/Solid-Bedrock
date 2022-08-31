@@ -22,7 +22,7 @@ function shouldUseSwitch(switchAt?: SwitchAt) {
   return false;
 }
 
-export const Inline = styled(InlineCluster)<InlineProps>`
+export const Inline = styled(InlineCluster as any)<InlineProps>`
   @property --switchAt {
     syntax: "<length-percentage>";
     inherits: true;
