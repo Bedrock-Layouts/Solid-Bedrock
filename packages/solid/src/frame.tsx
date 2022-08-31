@@ -1,12 +1,24 @@
-import { styled } from "solid-styled-components";
+import { JSX, mergeProps } from "solid-js";
+
+import createDynamic, {
+  DynamicProps,
+  HeadlessPropsWithRef,
+  Maybe,
+  ValidConstructor,
+  createPropsFromAccessors,
+  omitProps,
+} from "./typeUtils";
 
 type RatioString = `${number}/${number}` | `${number} / ${number}`;
 
 type Ratio = [number, number] | RatioString;
-export interface FrameProps {
+export interface FrameBaseProps {
   ratio?: Ratio;
   position?: string;
 }
+
+export type FrameProps<T extends ValidConstructor = "div"> =
+  HeadlessPropsWithRef<T, FrameBaseProps>;
 
 function checkIsRatio(ratio: unknown): ratio is Ratio {
   const isCorrectArray =
@@ -22,52 +34,43 @@ function getRatioString(ratio: Ratio): RatioString {
   return Array.isArray(ratio) ? (ratio.join("/") as RatioString) : ratio;
 }
 
-function getSafeRatio(ratio: unknown): RatioString | undefined {
+function getSafeRatio(ratio: unknown): Maybe<RatioString> {
   const isRatio = checkIsRatio(ratio);
 
   return isRatio ? getRatioString(ratio) : undefined;
 }
 
-export const Frame = styled.div<FrameProps>`
-  box-sizing: border-box;
-  display: block;
-  inline-size: 100%;
-  position: relative;
-  overflow: hidden;
+export function Frame<T extends ValidConstructor = "div">(
+  props: FrameProps<T>
+): JSX.Element {
+  const propsStyle = () =>
+    typeof props.style === "string"
+      ? props.style
+      : Object.entries(props.style ?? ({} as JSX.CSSProperties)).reduce(
+          (str, [key, value]) => str + `${key}:${value};`,
+          ""
+        );
 
-  ${(props) => {
-    const maybeRatio = getSafeRatio(props.ratio);
-    if (maybeRatio) {
-      return `
-        aspect-ratio: ${maybeRatio};
-      `;
-    }
-    return "";
-  }};
+  const maybeRatioAssesor = () => getSafeRatio(props.ratio);
 
-  > * {
-    position: absolute;
+  const ratio = () =>
+    maybeRatioAssesor() ? `--ratio: ${maybeRatioAssesor()}` : "";
 
-    inset-block-start: 0;
-    inset-block-end: 0;
-    inset-inline-start: 0;
-    inset-inline-end: 0;
+  const position = () =>
+    typeof props.position === "string"
+      ? `--position: ${props.position}`
+      : "50%";
 
-    inset-block: 0;
-    inset-inline: 0;
+  const style = () => [propsStyle(), ratio(), position()].join("; ");
 
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-
-  > :is(img, video) {
-    inline-size: 100%;
-    block-size: 100%;
-    size: 100%;
-
-    object-fit: cover;
-    object-position: ${(props) =>
-      typeof props.position === "string" ? props.position : "50%"};
-  }
-`;
+  return createDynamic(
+    () => props.as ?? ("div" as T),
+    mergeProps(
+      omitProps(props, ["as", "ratio", "position"]),
+      createPropsFromAccessors({
+        style,
+        "data-bedrock-frame": () => "",
+      })
+    ) as DynamicProps<T>
+  );
+}
