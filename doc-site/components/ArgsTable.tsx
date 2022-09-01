@@ -44,11 +44,11 @@ const BodyRow = styled("tr")`
   }
 `;
 
-function HeadingCell(props: JSX.DOMAttributes<"th">) {
+function HeadingCell(props: JSX.HTMLAttributes<HTMLTableCellElement>) {
   return <PadBox as="th" padding="lg" {...props} />;
 }
 
-function BodyCell(props: JSX.DOMAttributes<"td">) {
+function BodyCell(props: JSX.HTMLAttributes<HTMLTableCellElement>) {
   return (
     <PadBox as="td" padding={["lgXl", "lg"]} {...props}>
       <Stack gutter="md" style="align-items:start">
