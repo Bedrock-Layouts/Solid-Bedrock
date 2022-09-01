@@ -10,6 +10,8 @@ import { Story } from "../../components/Story";
 import { argTypes } from "./argTypes";
 import { ICProps } from "./inlineClusterProps";
 import inlineClusterPropsCode from "./inlineClusterProps?raw";
+import { MinItemWidth } from "./minItemWidth";
+import minItemWidth from "./minItemWidth?raw";
 import { Playground } from "./playground";
 import playgroundCode from "./playground?raw";
 import { Stretch } from "./stretch";
@@ -67,6 +69,22 @@ export function InlinePage(): JSXElement {
 
         <Story code={stretchCode}>
           <Stretch />
+        </Story>
+      </PageSection>
+      <PageSection title="minItemWidth">
+        <p>
+          Some times you want all the items to have a minimum width. By setting
+          the `minItemWidth` prop, you will set the minimum width of each of the
+          children.
+        </p>
+        <p>This is especially useful with the `switchAt` prop (see below).</p>
+        <p>
+          In the below example, each of the boxes has an intrinsic width of
+          50px. The `minItemWidth` will make them `150px` each.
+        </p>
+
+        <Story code={minItemWidth}>
+          <MinItemWidth />
         </Story>
       </PageSection>
       <PageSection title="switchAt">

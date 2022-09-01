@@ -5,11 +5,11 @@ import { Box } from "../../components/Box";
 
 export function SwitchAt(): JSXElement {
   return (
-    <Inline gutter="lg" switchAt="45rem">
-      <Box style="min-width: 100px" />
-      <Box style="min-width: 100px" />
-      <Box style="min-width: 100px" />
-      <Box style="min-width: 100px" />
+    <Inline gutter="lg" minItemWidth={100} switchAt="45rem">
+      <Box />
+      <Box />
+      <Box />
+      <Box />
     </Inline>
   );
 }

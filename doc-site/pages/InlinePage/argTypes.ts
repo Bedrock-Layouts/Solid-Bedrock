@@ -21,6 +21,13 @@ export const argTypes: ArgType = {
       "xxl",
     ],
   },
+  minItemWidth: {
+    description: "Sets the basis of each of the children",
+    summary: "CSSLength",
+    defaultValue: "0px",
+    initialValue: "100px",
+    control: "text",
+  },
   justify: {
     description: "Sets the inline justification of the children",
     summary: "start | end | center",
