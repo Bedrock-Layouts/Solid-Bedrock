@@ -1,6 +1,13 @@
-import { css, styled } from "solid-styled-components";
+import { JSX, mergeProps } from "solid-js";
 
 import { CSSLength } from "./spacing-constants";
+import createDynamic, {
+  DynamicProps,
+  HeadlessPropsWithRef,
+  ValidConstructor,
+  createPropsFromAccessors,
+  omitProps,
+} from "./typeUtils";
 
 function getSafeMaxWidth(maxWidth?: MaxWidth) {
   if (maxWidth === undefined) return "100%";
@@ -10,44 +17,45 @@ function getSafeMaxWidth(maxWidth?: MaxWidth) {
 
 type MaxWidth = number | CSSLength;
 
-export interface CenterProps {
+export interface CenterBaseProps {
   maxWidth?: MaxWidth;
   centerText?: boolean;
   centerChildren?: boolean;
 }
 
-export const Center = styled.div<CenterProps>`
-  @property --maxWidth {
-    syntax: "<length-percentage>";
-    inherits: false;
-    initial-value: 100%;
-  }
+export type CenterProps<T extends ValidConstructor = "div"> =
+  HeadlessPropsWithRef<T, CenterBaseProps>;
 
-  --maxWidth: ${(props) => getSafeMaxWidth(props.maxWidth)};
+export function Center<T extends ValidConstructor = "div">(
+  props: CenterProps<T>
+): JSX.Element {
+  const propsStyle = () =>
+    typeof props.style === "string"
+      ? props.style
+      : Object.entries(props.style ?? ({} as JSX.CSSProperties)).reduce(
+          (str, [key, value]) => str + `${key}:${value};`,
+          ""
+        );
 
-  box-sizing: content-box;
+  const maxWidth = () => `--maxWidth: ${getSafeMaxWidth(props.maxWidth)};`;
 
-  && {
-    margin-inline-start: auto;
-    margin-inline-end: auto;
-    margin-inline: auto;
-  }
+  const centerText = () => (props.centerText ? "center-text" : "");
 
-  max-inline-size: var(--maxWidth, 100%);
+  const centerChildren = () => (props.centerChildren ? "center-children" : "");
 
-  ${(props) =>
-    props.centerChildren
-      ? `
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-        `
-      : ""}
+  const attrString = () =>
+    [centerText(), centerChildren()].filter(Boolean).join(" ");
 
-  ${(props) =>
-    props.centerText
-      ? `
-          text-align: center;
-        `
-      : ""}
-`;
+  const style = () => [propsStyle(), maxWidth()].join("; ");
+
+  return createDynamic(
+    () => props.as ?? ("div" as T),
+    mergeProps(
+      omitProps(props, ["as", "maxWidth", "centerText", "centerChildren"]),
+      createPropsFromAccessors({
+        style,
+        "data-bedrock-center": attrString,
+      })
+    ) as DynamicProps<T>
+  );
+}

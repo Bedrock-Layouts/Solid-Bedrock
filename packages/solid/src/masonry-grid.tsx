@@ -12,11 +12,14 @@ import {
   onMount,
 } from "solid-js";
 import { ResolvedChildren } from "solid-js/types/reactive/signal";
-import { styled, useTheme } from "solid-styled-components";
 
 import { Grid, GridProps } from "./grid";
 import { SpacingOptions, getSpacingValue } from "./spacing-constants";
+import { useTheme } from "./theme-provider";
 import { toPX } from "./toPx";
+import { convertToMaybe } from "./typeUtils";
+
+const MIN_HEIGHT = 1;
 
 //Logic forked from is-in-browser npm package
 /* istanbul ignore next */
@@ -25,20 +28,11 @@ const isBrowser =
   typeof document === "object" &&
   document.nodeType === 9;
 
-const RowSpanner = styled.div`
-  grid-row: span var(--rows, 1);
-
-  > * {
-    display: block;
-    height: 100%;
-  }
-`;
-
 const Resizer: Component<{ gutter?: SpacingOptions; children?: JSXElement }> = (
   props
 ) => {
   const [rowSpan, setRowSpan] = createSignal(1);
-  const [node, nodeRef] = createSignal<HTMLDivElement>();
+  const [node, nodeRef] = createSignal<HTMLElement>();
 
   const theme = useTheme();
 
@@ -47,8 +41,8 @@ const Resizer: Component<{ gutter?: SpacingOptions; children?: JSXElement }> = (
   });
 
   createEffect(() => {
-    const ref = node();
-    if (ref === undefined || ref === null) return;
+    const ref = convertToMaybe(node());
+    if (ref === undefined) return;
 
     const cleanup = registerCallback(ref, ({ target }) => {
       setRowSpan(1);
@@ -56,14 +50,14 @@ const Resizer: Component<{ gutter?: SpacingOptions; children?: JSXElement }> = (
         ? getSpacingValue(props.gutter, theme) ?? "1px"
         : "1px";
 
-      const maybeGap = isBrowser ? toPX(gapString, target) : null;
+      const maybeGap = isBrowser ? toPX(gapString, target) : undefined;
 
-      const gap: number = Math.max(maybeGap ?? 1, 1);
+      const gap = Math.max(maybeGap ?? MIN_HEIGHT, MIN_HEIGHT);
 
       const [child] = Array.from(target.children);
       const height = 1 + Math.min(target.scrollHeight, child.scrollHeight);
 
-      const rowHeight = Math.ceil(height / gap);
+      const rowHeight = Math.max(Math.ceil(height / gap), MIN_HEIGHT);
 
       setRowSpan(rowHeight);
     });
@@ -72,19 +66,13 @@ const Resizer: Component<{ gutter?: SpacingOptions; children?: JSXElement }> = (
   });
 
   return (
-    <RowSpanner style={`--rows: ${rowSpan()}`} ref={nodeRef}>
+    <div style={`grid-row: span ${rowSpan()};`} ref={nodeRef}>
       {props.children}
-    </RowSpanner>
+    </div>
   );
 };
 
-const MasonryGridWrapper = styled(Grid)`
-  grid-template-rows: 1px;
-`;
-
-export const MasonryGrid: Component<GridProps & { children?: JSXElement }> = (
-  props
-) => {
+export const MasonryGrid: Component<GridProps> = (props) => {
   const childrenMemo = children(() => props.children);
   const emptyResolvedChildren: ResolvedChildren = [];
   const wrappedChildren = emptyResolvedChildren
@@ -93,5 +81,9 @@ export const MasonryGrid: Component<GridProps & { children?: JSXElement }> = (
     .map((child) => (
       <Resizer gutter={props.gutter}>{child as JSXElement}</Resizer>
     ));
-  return <MasonryGridWrapper {...props}>{wrappedChildren}</MasonryGridWrapper>;
+  return (
+    <Grid style="grid-template-rows: 1px;" {...props}>
+      {wrappedChildren}
+    </Grid>
+  );
 };

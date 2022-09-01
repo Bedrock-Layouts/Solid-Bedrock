@@ -9,7 +9,7 @@ export function SwitchAt(): JSXElement {
       <Box />
       <Box />
       <Box />
-      <Column colSpan={3}>
+      <Column span={3}>
         <Box />
       </Column>
     </Columns>

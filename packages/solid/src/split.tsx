@@ -1,5 +1,11 @@
-import { Component, JSX, Match, Switch } from "solid-js";
-import { styled } from "solid-styled-components";
+import {
+  Component,
+  JSX,
+  Match,
+  Switch,
+  mergeProps,
+  splitProps,
+} from "solid-js";
 
 import { createContainerQuery } from "./create-container-query";
 import {
@@ -8,7 +14,15 @@ import {
   getSpacingValue,
 } from "./spacing-constants";
 import { Stack, StackProps } from "./stack";
+import { useTheme } from "./theme-provider";
 import { toPX } from "./toPx";
+import createDynamic, {
+  DynamicProps,
+  HeadlessPropsWithRef,
+  ValidConstructor,
+  createPropsFromAccessors,
+  omitProps,
+} from "./typeUtils";
 
 type FractionTypes =
   | "auto-start"
@@ -24,62 +38,81 @@ type Fractions = {
 };
 
 const fractions: Fractions = {
-  "1/4": "1fr 3fr",
-  "1/3": "1fr 2fr",
-  "1/2": "1fr 1fr",
-  "2/3": "2fr 1fr",
-  "3/4": "3fr 1fr",
-  "auto-start": `auto 1fr`,
-  "auto-end": `1fr auto`,
+  "1/4": "fraction:1/4",
+  "1/3": "fraction:1/3",
+  "1/2": "fraction:1/2",
+  "2/3": "fraction:2/3",
+  "3/4": "fraction:3/4",
+  "auto-start": `fraction:auto-start`,
+  "auto-end": `fraction:auto-end`,
 };
 
-interface SplitBaseProps {
+interface SplitBase {
   gutter?: SpacingOptions;
   fraction?: FractionTypes;
 }
 
-const SplitBase = styled.div<SplitBaseProps>`
-    box-sizing: border-box;
-    > * {
-      margin: 0;
-    }
-    
-    --gutter: ${(props) =>
-      props.gutter
-        ? getSpacingValue(props.gutter, props.theme) ?? "0px"
-        : "0px"};
-  
-    display: grid;
-    gap: var(--gutter, 0px);
-    grid-template-columns: ${({ fraction = "1/2" }) =>
-      fractions[fraction] ?? fractions["1/2"]}};
-  `;
+export type SplitBaseProps<T extends ValidConstructor = "div"> =
+  HeadlessPropsWithRef<T, SplitBase>;
 
-type RefFunction = (ref: HTMLElement) => void;
+export function SplitBase<T extends ValidConstructor = "div">(
+  props: SplitBaseProps<T>
+): JSX.Element {
+  const theme = useTheme();
+
+  const propsStyle = () =>
+    typeof props.style === "string"
+      ? props.style
+      : Object.entries(props.style ?? ({} as JSX.CSSProperties)).reduce(
+          (str, [key, value]) => str + `${key}:${value};`,
+          ""
+        );
+
+  const gutter = () =>
+    `--gutter: ${getSpacingValue(props.gutter ?? "none", theme) ?? "0px"};`;
+
+  const fraction = () => fractions[props.fraction ?? "1/2"] ?? fractions["1/2"];
+
+  const style = () => [propsStyle(), gutter()].join("; ");
+
+  return createDynamic(
+    () => props.as ?? ("div" as T),
+    mergeProps(
+      omitProps(props, ["as", "gutter", "fraction"]),
+      createPropsFromAccessors({
+        style,
+        "data-bedrock-split": fraction,
+      })
+    ) as DynamicProps<T>
+  );
+}
+
 export interface SplitProps extends StackProps, SplitBaseProps {
   switchAt?: number | CSSLength;
-  as?: Component | keyof JSX.IntrinsicElements;
-  ref?: RefFunction;
 }
 
 export const Split: Component<SplitProps> = (props) => {
+  const [local, rest] = splitProps(props, ["switchAt", "fraction"]);
   const maybePx =
-    typeof props.switchAt === "string" ? toPX(props.switchAt) : props.switchAt;
+    typeof local.switchAt === "string" ? toPX(local.switchAt) : local.switchAt;
 
-  const widthToSwitchAt: number = maybePx && maybePx > -1 ? maybePx : 0; //zero is used to make the switchAt a noop
+  /**
+   * zero is used to make the switchAt a noop
+   */
+  const widthToSwitchAt = Math.max(maybePx ?? 0, 0);
 
   const [shouldSwitch, nodeRef] = createContainerQuery(
     widthToSwitchAt,
-    props.ref as RefFunction
+    props.ref as (e: Element) => void
   );
 
   return (
     <Switch>
       <Match when={shouldSwitch() === false}>
-        <SplitBase fraction={props.fraction} {...props} ref={nodeRef} />
+        <SplitBase fraction={local.fraction} {...rest} ref={nodeRef} />
       </Match>
       <Match when={shouldSwitch() === true}>
-        <Stack {...props} ref={nodeRef} />
+        <Stack {...rest} ref={nodeRef} />
       </Match>
     </Switch>
   );

@@ -1,44 +1,71 @@
-import { styled } from "solid-styled-components";
+import { JSX, mergeProps } from "solid-js";
 
 import { SpacingOptions, getSpacingValue } from "./spacing-constants";
+import { useTheme } from "./theme-provider";
+import createDynamic, {
+  DynamicProps,
+  HeadlessPropsWithRef,
+  ValidConstructor,
+  createPropsFromAccessors,
+  omitProps,
+} from "./typeUtils";
 
 const justifyMap = {
-  start: "flex-start",
-  end: "flex-end",
-  center: "center",
+  start: "justify:start",
+  end: "justify:end",
+  center: "justify:center",
 } as const;
 
 const alignMap = {
-  ...justifyMap,
-  stretch: "stretch",
+  start: "align:start",
+  end: "align:end",
+  center: "align:center",
+  stretch: "align:stretch",
 } as const;
 
-export interface InlineClusterProps {
+export interface InlineClusterBaseProps {
   justify?: keyof typeof justifyMap;
   align?: keyof typeof alignMap;
   gutter: SpacingOptions;
 }
 
-export const InlineCluster = styled.div<InlineClusterProps>`
-  --gutter: ${(props) =>
-    props.gutter ? getSpacingValue(props.gutter, props.theme) ?? "0px" : "0px"};
+export type InlineClusterProps<T extends ValidConstructor = "div"> =
+  HeadlessPropsWithRef<T, InlineClusterBaseProps>;
 
-  box-sizing: border-box;
-  > * {
-    margin: 0;
-  }
+export function InlineCluster<T extends ValidConstructor = "div">(
+  props: InlineClusterProps<T>
+): JSX.Element {
+  const theme = useTheme();
 
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--gutter, 0px);
+  const propsStyle = () =>
+    typeof props.style === "string"
+      ? props.style
+      : Object.entries(props.style ?? ({} as JSX.CSSProperties)).reduce(
+          (str, [key, value]) => str + `${key}:${value};`,
+          ""
+        );
 
-  justify-content: ${(props) =>
-    typeof props.justify !== "undefined" && justifyMap[props.justify]
-      ? justifyMap[props.justify]
-      : justifyMap.start};
+  const gutter = () =>
+    `--gutter: ${getSpacingValue(props.gutter ?? "none", theme) ?? "0px"};`;
 
-  align-items: ${(props) =>
-    typeof props.align !== "undefined" && alignMap[props.align]
-      ? alignMap[props.align]
-      : alignMap.start};
-`;
+  const justify = () =>
+    props.justify !== undefined ? justifyMap[props.justify] : undefined;
+
+  const align = () =>
+    props.align !== undefined ? alignMap[props.align] : undefined;
+
+  const style = () => [propsStyle(), gutter()].join("; ");
+
+  const attrAssesor = () => [justify(), align()].filter(Boolean).join(" ");
+
+  return createDynamic(
+    () => props.as ?? ("div" as T),
+    mergeProps(
+      omitProps(props, ["as", "gutter", "justify", "align"]),
+      createPropsFromAccessors({
+        style,
+        "data-bedrock-inline-cluster": attrAssesor,
+      })
+    ) as DynamicProps<T>
+  );
+}

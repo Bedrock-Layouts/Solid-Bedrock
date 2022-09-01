@@ -21,8 +21,8 @@ export const argTypes: ArgType = {
       "xxl",
     ],
   },
-  basis: {
-    description: "Sets the basis of each of the children",
+  minItemWidth: {
+    description: "Sets the minItemWidth of each of the children",
     summary: "CSSLength",
     defaultValue: "159px",
     initialValue: "15rem",

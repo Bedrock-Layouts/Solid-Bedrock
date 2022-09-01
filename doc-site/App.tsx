@@ -91,7 +91,7 @@ const App: Component = () => {
       gutter="lg"
       switchAt={WIDTH_BREAKPOINT}
     >
-      <PadBox as="a" padding="xl" style={`background: rgb(249, 250, 251);`}>
+      <PadBox padding="xl" style={`background: rgb(249, 250, 251);`}>
         <Stack gutter="xl">
           <LogoLink href="/">
             <Inline align="center" gutter="xl">
@@ -114,37 +114,36 @@ const App: Component = () => {
           />
         </Stack>
       </PadBox>
-      <PadBox padding="xl">
-        <Center maxWidth="90%">
-          <Routes>
-            <Route path="/" element={<LandingPage />} />
-            <Route path="/column-drop" element={<ColumnDropPage />} />
-            <Route path="/columns" element={<ColumnsPage />} />
-            <Route path="/grid" element={<GridPage />} />
-            <Route path="/inline" element={<InlinePage />} />
-            <Route path="/inline-cluster" element={<InlineClusterPage />} />
-            <Route path="/masonry-grid" element={<MasonaryGridPage />} />
-            <Route path="/reel" element={<ReelPage />} />
-            <Route path="/split" element={<SplitPage />} />
-            <Route path="/stack" element={<StackPage />} />
-            <Route path="/center" element={<CenterPage />} />
-            <Route path="/frame" element={<FramePage />} />
-            <Route path="/padbox" element={<PadBoxPage />} />
-            <Route path="/cover" element={<CoverPage />} />
-            <Route
-              path="/*all"
-              element={
-                <PadBox as={Stack} gutter="xl" padding="xl">
-                  <h1>Page Not Found</h1>
-                  <p>
-                    Click <Link href="/">Home</Link> to go back to the site
-                  </p>
-                </PadBox>
-              }
-            />
-          </Routes>
-        </Center>
-      </PadBox>
+
+      <Center as={PadBox} padding="xl" maxWidth="90%">
+        <Routes>
+          <Route path="/" element={<LandingPage />} />
+          <Route path="/column-drop" element={<ColumnDropPage />} />
+          <Route path="/columns" element={<ColumnsPage />} />
+          <Route path="/grid" element={<GridPage />} />
+          <Route path="/inline" element={<InlinePage />} />
+          <Route path="/inline-cluster" element={<InlineClusterPage />} />
+          <Route path="/masonry-grid" element={<MasonaryGridPage />} />
+          <Route path="/reel" element={<ReelPage />} />
+          <Route path="/split" element={<SplitPage />} />
+          <Route path="/stack" element={<StackPage />} />
+          <Route path="/center" element={<CenterPage />} />
+          <Route path="/frame" element={<FramePage />} />
+          <Route path="/padbox" element={<PadBoxPage />} />
+          <Route path="/cover" element={<CoverPage />} />
+          <Route
+            path="/*all"
+            element={
+              <PadBox as={Stack} gutter="xl" padding="xl">
+                <h1>Page Not Found</h1>
+                <p>
+                  Click <Link href="/">Home</Link> to go back to the site
+                </p>
+              </PadBox>
+            }
+          />
+        </Routes>
+      </Center>
     </Split>
   );
 };

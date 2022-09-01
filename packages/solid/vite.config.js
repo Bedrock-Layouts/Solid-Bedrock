@@ -15,11 +15,7 @@ module.exports = defineConfig({
       },
     },
     rollupOptions: {
-      external: [
-        "solid-js",
-        "solid-styled-components",
-        "@bedrock-layout/register-resize-callback",
-      ],
+      external: ["solid-js", "@bedrock-layout/register-resize-callback"],
     },
   },
 });

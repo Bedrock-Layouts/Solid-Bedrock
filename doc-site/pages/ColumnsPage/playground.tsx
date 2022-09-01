@@ -8,10 +8,10 @@ export function Playground(props: ColumnsProps): JSXElement {
     <Columns {...props}>
       <Box />
       <Box />
-      <Column colSpan={3}>
+      <Column span={3}>
         <Box />
       </Column>
-      <Column colSpan={2}>
+      <Column span={2}>
         <Box />
       </Column>
       <Box />

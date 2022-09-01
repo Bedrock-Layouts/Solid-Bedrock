@@ -1,4 +1,5 @@
-import type { DefaultTheme } from "solid-styled-components";
+import type { DefaultTheme } from "./theme-provider";
+import { Maybe } from "./typeUtils";
 
 type LowercaseCharacter =
   | "a"
@@ -92,7 +93,7 @@ export type BaseTheme = Record<string, CSSLength | string | number>;
 type ThemeOrDefaultSpace<T> = T extends {
   space: BaseTheme;
 }
-  ? T["space"]
+  ? keyof T["space"]
   : keyof Spacing;
 
 export type SpacingOptions = ThemeOrDefaultSpace<DefaultTheme>;
@@ -103,12 +104,10 @@ function fromEntries<T>(entries: [s: string, value: T][]): Record<string, T> {
   }, {});
 }
 
-type MaybeValue = CSSLength | undefined;
-
 type GetSpacingValue = (
   spacingKey: SpacingOptions,
   theme?: Partial<BaseTheme>
-) => MaybeValue;
+) => Maybe<CSSLength>;
 
 export const getSpacingValue: GetSpacingValue = (spacingKey, theme) => {
   const maybeSpaceingOrDefault = theme?.space ?? theme?.spacing ?? spacing;

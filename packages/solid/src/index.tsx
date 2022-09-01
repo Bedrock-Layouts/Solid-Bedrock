@@ -13,3 +13,4 @@ export * from "./split";
 export * from "./stack";
 export * from "./cover";
 export * from "./columns";
+export * from "./theme-provider";

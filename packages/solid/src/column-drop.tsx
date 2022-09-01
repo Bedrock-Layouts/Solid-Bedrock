@@ -1,52 +1,68 @@
-import { styled } from "solid-styled-components";
+import { JSX, mergeProps } from "solid-js";
 
 import {
   CSSLength,
   SpacingOptions,
   getSpacingValue,
 } from "./spacing-constants";
+import { useTheme } from "./theme-provider";
+import createDynamic, {
+  DynamicProps,
+  HeadlessPropsWithRef,
+  ValidConstructor,
+  createPropsFromAccessors,
+  omitProps,
+} from "./typeUtils";
 
-type Basis = CSSLength | number;
+type MinItemWidth = CSSLength | number;
 
-export interface ColumnDropProps {
+export interface ColumnDropBaseProps {
   gutter?: SpacingOptions;
-  basis?: Basis;
+  minItemWidth?: MinItemWidth;
   noStretchedColumns?: boolean;
 }
 
-function getSafeBasis(basis?: Basis) {
-  if (basis === undefined) return "159px";
-  if (typeof basis === "number") return `${basis}px`;
-  return basis;
+function getSafeMinItemWidth(minItemWidth?: MinItemWidth) {
+  if (minItemWidth === undefined) return "159px";
+  if (typeof minItemWidth === "number") return `${minItemWidth}px`;
+  return minItemWidth;
 }
 
-export const ColumnDrop = styled("div")<ColumnDropProps>`
-  @property --basis {
-    syntax: "<length-percentage>";
-    inherits: true;
-    initial-value: 159px;
-  }
+export type ColumnDropProps<T extends ValidConstructor = "div"> =
+  HeadlessPropsWithRef<T, ColumnDropBaseProps>;
 
-  @property --gutter {
-    syntax: "<length-percentage>";
-    inherits: false;
-    initial-value: 0px;
-  }
+export function ColumnDrop<T extends ValidConstructor = "div">(
+  props: ColumnDropProps<T>
+): JSX.Element {
+  const theme = useTheme();
 
-  --basis: ${(props) => getSafeBasis(props.basis)};
-  --gutter: ${(props) =>
-    props.gutter ? getSpacingValue(props.gutter, props.theme) ?? "0px" : "0px"};
+  const propsStyle = () =>
+    typeof props.style === "string"
+      ? props.style
+      : Object.entries(props.style ?? ({} as JSX.CSSProperties)).reduce(
+          (str, [key, value]) => str + `${key}:${value};`,
+          ""
+        );
 
-  box-sizing: border-box;
-  > * {
-    margin: 0;
-    flex-basis: var(--basis, 159px);
-    flex-grow: ${(props) => (props.noStretchedColumns ? "0" : "1")};
-    flex-shrink: 1;
-  }
+  const gutter = () =>
+    `--gutter: ${getSpacingValue(props.gutter ?? "none", theme) ?? "0px"}`;
 
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: var(--gutter, 0px);
-`;
+  const minItemWidth = () =>
+    `--minItemWidth: ${getSafeMinItemWidth(props.minItemWidth)}`;
+
+  const noStretchedColumns = () =>
+    props.noStretchedColumns === true ? "no-stretched-columns" : "";
+
+  const style = () => [propsStyle(), gutter(), minItemWidth()].join("; ");
+
+  return createDynamic(
+    () => props.as ?? ("div" as T),
+    mergeProps(
+      omitProps(props, ["as", "gutter", "minItemWidth", "noStretchedColumns"]),
+      createPropsFromAccessors({
+        style,
+        "data-bedrock-column-drop": noStretchedColumns,
+      })
+    ) as DynamicProps<T>
+  );
+}

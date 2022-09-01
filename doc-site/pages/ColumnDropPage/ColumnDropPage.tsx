@@ -7,7 +7,7 @@ import { PageSection } from "../../components/PageSection";
 import { Story } from "../../components/Story";
 import { argTypes } from "./argTypes";
 import { Basis } from "./basis";
-import basisCode from "./basis?raw";
+import minItemWidth from "./basis?raw";
 import { Gutter } from "./gutters";
 import gutterCode from "./gutters?raw";
 import { NoStretch } from "./noStretch";
@@ -22,6 +22,7 @@ export function ColumnDropPage(): JSXElement {
       initialValue,
     ])
   );
+
   const [props, setProps] = createSignal(initialValues);
 
   return (
@@ -51,19 +52,19 @@ export function ColumnDropPage(): JSXElement {
           <Gutter />
         </Story>
       </PageSection>
-      <PageSection title="basis">
+      <PageSection title="minItemWidth">
         <p>
-          The `basis` prop defines the width basis of each of the children. The
-          `ColumnDrop` will the optimize how many columns and rows are needed
-          based on that value.
+          The `minItemWidth` prop defines the minItemWidth of each of the
+          children. The `ColumnDrop` will the optimize how many columns and rows
+          are needed based on that value.
         </p>
 
         <p>
-          In the below example, The `basis` is set to `15rem`. As you resize the
-          window, the Grid will recalculate and potentially change the count of
-          columns and rows.
+          In the below example, The `minItemWidth` is set to `15rem`. As you
+          resize the window, the Grid will recalculate and potentially change
+          the count of columns and rows.
         </p>
-        <Story code={basisCode}>
+        <Story code={minItemWidth}>
           <Basis />
         </Story>
       </PageSection>
@@ -91,9 +92,9 @@ export function ColumnDropPage(): JSXElement {
         </Story>
         <ArgsTable
           args={argTypes}
-          onChange={({ propName, value }) =>
-            setProps((prev) => ({ ...prev, [propName]: value }))
-          }
+          onChange={({ propName, value }) => {
+            setProps({ ...props(), [propName]: value });
+          }}
         />
       </PageSection>
     </Stack>

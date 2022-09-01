@@ -1,14 +1,35 @@
-import { styled } from "solid-styled-components";
+import { JSX, mergeProps } from "solid-js";
 
-import { InlineCluster, InlineClusterProps } from "./inline-cluster";
+import {
+  CSSLength,
+  SpacingOptions,
+  getSpacingValue,
+} from "./spacing-constants";
+import { useTheme } from "./theme-provider";
+import createDynamic, {
+  DynamicProps,
+  HeadlessPropsWithRef,
+  ValidConstructor,
+  createPropsFromAccessors,
+  omitProps,
+} from "./typeUtils";
 
-type Stretch = "all" | "start" | "end" | number;
+type Stretch = "all" | "start" | "end" | 0 | 1 | 2 | 3 | 4;
 type SwitchAt = string | number;
+type MinItemWidth = number | CSSLength;
 
-export interface InlineProps extends InlineClusterProps {
-  stretch?: Stretch;
-  switchAt?: SwitchAt;
-}
+const justifyMap = {
+  start: "justify:start",
+  end: "justify:end",
+  center: "justify:center",
+} as const;
+
+const alignMap = {
+  start: "align:start",
+  end: "align:end",
+  center: "align:center",
+  stretch: "align:stretch",
+} as const;
 
 function shouldUseSwitch(switchAt?: SwitchAt) {
   if (typeof switchAt === "number" && switchAt > -1) {
@@ -22,48 +43,82 @@ function shouldUseSwitch(switchAt?: SwitchAt) {
   return false;
 }
 
-export const Inline = styled(InlineCluster)<InlineProps>`
-  @property --switchAt {
-    syntax: "<length-percentage>";
-    inherits: true;
-    initial-value: 0;
-  }
+export interface InlineBaseProps {
+  stretch?: Stretch;
+  switchAt?: SwitchAt;
+  justify?: keyof typeof justifyMap;
+  align?: keyof typeof alignMap;
+  gutter?: SpacingOptions;
+  minItemWidth?: MinItemWidth;
+}
 
-  flex-wrap: nowrap;
-  ${(props) =>
-    props.stretch === "all"
-      ? `& > *  { 
-        flex: 1;
-      }`
-      : props.stretch === "start"
-      ? `& > :first-child { 
-        flex: 1;
-      }`
-      : props.stretch === "end"
-      ? `& > :last-child { 
-        flex: 1;
-      }`
-      : typeof props.stretch === "number"
-      ? `& > :nth-child(${props.stretch + 1}) { 
-        flex: 1;
-      }`
-      : ""}
+export type InlineProps<T extends ValidConstructor = "div"> =
+  HeadlessPropsWithRef<T, InlineBaseProps>;
 
-  ${(props) =>
+export function Inline<T extends ValidConstructor = "div">(
+  props: InlineProps<T>
+): JSX.Element {
+  const theme = useTheme();
+
+  const propsStyle = () =>
+    typeof props.style === "string"
+      ? props.style
+      : Object.entries(props.style ?? ({} as JSX.CSSProperties)).reduce(
+          (str, [key, value]) => str + `${key}:${value};`,
+          ""
+        );
+
+  const gutter = () =>
+    `--gutter: ${getSpacingValue(props.gutter ?? "none", theme) ?? "0px"};`;
+
+  const minItemWidth = () =>
+    props.minItemWidth
+      ? `--minItemWidth: ${
+          typeof props.minItemWidth === "string"
+            ? props.minItemWidth
+            : `${props.minItemWidth}px`
+        };`
+      : undefined;
+
+  const switchAt = () =>
     shouldUseSwitch(props.switchAt)
-      ? `
-          --switchAt: ${
-            typeof props.switchAt === "string"
-              ? props.switchAt
-              : `${props.switchAt}px`
-          };
-          flex-wrap: wrap;
-          > * {
-            min-inline-size: fit-content;
-            flex-basis: calc(
-              (var(--switchAt) - (100% - var(--gutter, 0px))) * 999
-            );
-          }
-        `
-      : ""}
-`;
+      ? `--switchAt: ${
+          typeof props.switchAt === "string"
+            ? props.switchAt
+            : `${props.switchAt}px`
+        };`
+      : undefined;
+
+  const justify = () =>
+    props.justify !== undefined ? justifyMap[props.justify] : undefined;
+
+  const align = () =>
+    props.align !== undefined ? alignMap[props.align] : undefined;
+
+  const stretch = () =>
+    props.stretch ? `stretch:${props.stretch}` : undefined;
+
+  const style = () =>
+    [propsStyle(), gutter(), switchAt(), minItemWidth()].join("; ");
+
+  const attrAssesor = () =>
+    [justify(), align(), stretch()].filter(Boolean).join(" ");
+
+  return createDynamic(
+    () => props.as ?? ("div" as T),
+    mergeProps(
+      omitProps(props, [
+        "as",
+        "gutter",
+        "justify",
+        "align",
+        "stretch",
+        "switchAt",
+      ]),
+      createPropsFromAccessors({
+        style,
+        "data-bedrock-inline": attrAssesor,
+      })
+    ) as DynamicProps<T>
+  );
+}

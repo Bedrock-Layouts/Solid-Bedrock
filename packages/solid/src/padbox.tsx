@@ -1,5 +1,4 @@
-import { JSXElement } from "solid-js";
-import { styled } from "solid-styled-components";
+import { JSX, mergeProps } from "solid-js";
 
 import {
   BaseTheme,
@@ -8,6 +7,14 @@ import {
   getSpacingValue,
   spacing,
 } from "./spacing-constants";
+import { useTheme } from "./theme-provider";
+import createDynamic, {
+  DynamicProps,
+  HeadlessPropsWithRef,
+  ValidConstructor,
+  createPropsFromAccessors,
+  omitProps,
+} from "./typeUtils";
 
 type PaddingObj =
   | { left: SpacingOptions }
@@ -106,20 +113,38 @@ function paddingToString<T extends Partial<BaseTheme>>(
     : "";
 }
 
-export interface PadBoxProps {
+export interface PadBoxBaseProps {
   padding: PaddingTypes;
 }
 
-export const PadBox = styled.div<
-  PadBoxProps & {
-    as?:
-      | string
-      | number
-      | symbol
-      | ((props: unknown) => JSXElement)
-      | undefined;
-  }
->`
-  box-sizing: border-box;
-  ${(props) => paddingToString(props.theme, props.padding)}
-`;
+export type PadBoxProps<T extends ValidConstructor = "div"> =
+  HeadlessPropsWithRef<T, PadBoxBaseProps>;
+
+export function PadBox<T extends ValidConstructor = "div">(
+  props: PadBoxProps<T>
+): JSX.Element {
+  const theme = useTheme();
+
+  const propsStyle = () =>
+    typeof props.style === "string"
+      ? props.style
+      : Object.entries(props.style ?? ({} as JSX.CSSProperties)).reduce(
+          (str, [key, value]) => str + `${key}:${value};`,
+          ""
+        );
+
+  const padding = () => paddingToString(theme, props.padding);
+
+  const style = () => [propsStyle(), padding()].join("; ");
+
+  return createDynamic(
+    () => props.as ?? ("div" as T),
+    mergeProps(
+      omitProps(props, ["as", "padding"]),
+      createPropsFromAccessors({
+        style,
+        "data-bedrock-padbox": () => "",
+      })
+    ) as DynamicProps<T>
+  );
+}

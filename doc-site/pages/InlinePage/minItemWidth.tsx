@@ -1,11 +1,11 @@
 import { JSXElement } from "solid-js";
 
-import { Inline, InlineProps } from "../../../packages/solid/src";
+import { Inline } from "../../../packages/solid/src";
 import { Box } from "../../components/Box";
 
-export function Playground(props: InlineProps): JSXElement {
+export function MinItemWidth(): JSXElement {
   return (
-    <Inline {...props}>
+    <Inline gutter="lg" minItemWidth={150}>
       <Box />
       <Box />
       <Box />
