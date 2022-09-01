@@ -2960,9 +2960,9 @@ babel-preset-jest@^27.5.1:
     babel-preset-current-node-syntax "^1.0.0"
 
 babel-preset-solid@^1.3.6, babel-preset-solid@^1.4.6:
-  version "1.5.2"
-  resolved "https://registry.yarnpkg.com/babel-preset-solid/-/babel-preset-solid-1.5.2.tgz#fd091586210c306608ca020b75f233f1494ac44a"
-  integrity sha512-T6cEWWAmLpTlQTgWiW0PUSd2Bji+QH8eP7S5oVfDDqWiv7FdwcXnwr4xjYO/Hj5k6p7UsM9dVtxkzqalM6FF4Q==
+  version "1.5.3"
+  resolved "https://registry.yarnpkg.com/babel-preset-solid/-/babel-preset-solid-1.5.3.tgz#e01f97778657f9db14113a80598f1065aa896e65"
+  integrity sha512-I9nw4sbe8uKiPFCaFT70rKaI6KQwsqXQ9f/cZV9NPLN1sRhQEyohdXQYYJk1zFPzT2htZws8koKD41+R63qmZg==
   dependencies:
     babel-plugin-jsx-dom-expressions "^0.34.2"
 
