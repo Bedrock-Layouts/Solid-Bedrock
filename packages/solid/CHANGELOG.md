@@ -3,6 +3,36 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.12.0](https://github.com/Bedrock-Layouts/Solid-Bedrock/compare/@bedrock-layout/solid@0.11.10...@bedrock-layout/solid@0.12.0) (2022-09-01)
+
+
+### Features
+
+* **center:** refact center to css ([a68ab9a](https://github.com/Bedrock-Layouts/Solid-Bedrock/commit/a68ab9ae4065a46eceae8de80ab2096681fbd11a))
+* **column-drop:** refactor column-drop to use css ([9ccd1be](https://github.com/Bedrock-Layouts/Solid-Bedrock/commit/9ccd1be28548ec48ffd840fa55d7196ec4e6781c))
+* **cover:** remove solid-style-dependency ([899f2a9](https://github.com/Bedrock-Layouts/Solid-Bedrock/commit/899f2a9035c277249203070036a5726b54016bbc))
+* **frame:** switch to CSS ([d6a6425](https://github.com/Bedrock-Layouts/Solid-Bedrock/commit/d6a6425ceaa0709d26e06dd949264e4365521bb6))
+* **inline:** refactor inline ([3500f35](https://github.com/Bedrock-Layouts/Solid-Bedrock/commit/3500f35ab66c475b77109d91cf1f21ef8a7af2cf))
+* **reel:** remove solid-styled components dependencies ([0b0ba15](https://github.com/Bedrock-Layouts/Solid-Bedrock/commit/0b0ba157272c03e1a39fc4ee5cf3d32bd4aad9fc))
+* **refactor from stolid-styled-components:** refactor grid from solid-styled-components ([7013276](https://github.com/Bedrock-Layouts/Solid-Bedrock/commit/7013276b59f41e688efa405bfa398d9e02e7f968))
+* **stack:** refactor stack, split, and columns to css ([d3bfb13](https://github.com/Bedrock-Layouts/Solid-Bedrock/commit/d3bfb137824b17ccdb63e3ad02d3d08af6a391ea))
+
+
+### BREAKING CHANGES
+
+* **reel:** Remove peer dependency of solid-styled-components
+* **inline:** no longer dependant on solid-styled-components
+* **frame:** Remove Styled-components dependency
+* **cover:** No longer dependant on solid-styled-components
+* **column-drop:** solid-styled-components is no longer required
+* **center:** Styled components are no longer a dependency
+* **refactor from stolid-styled-components:** Solid-styled-components will no longer be a dependency
+* **stack:** solid styled components no longer being used
+
+
+
+
+
 ## [0.11.10](https://github.com/Bedrock-Layouts/Solid-Bedrock/compare/@bedrock-layout/solid@0.11.9...@bedrock-layout/solid@0.11.10) (2022-06-03)
 
 **Note:** Version bump only for package @bedrock-layout/solid
