@@ -1,5 +1,4 @@
 import { JSX, mergeProps } from "solid-js";
-import { styled } from "solid-styled-components";
 
 import {
   CSSLength,

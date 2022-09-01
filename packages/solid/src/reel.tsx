@@ -1,41 +1,62 @@
-import { styled } from "solid-styled-components";
+import { JSX, mergeProps } from "solid-js";
 
 import { SpacingOptions, getSpacingValue } from "./spacing-constants";
+import { useTheme } from "./theme-provider";
+import createDynamic, {
+  DynamicProps,
+  HeadlessPropsWithRef,
+  ValidConstructor,
+  createPropsFromAccessors,
+  omitProps,
+} from "./typeUtils";
 
-export interface ReelProps {
+export interface ReelBaseProps {
   snapType?: "none" | "proximity" | "mandatory";
   gutter?: SpacingOptions;
 }
 
-export const Reel = styled.div<ReelProps>`
-  box-sizing: border-box;
-  > * {
-    margin: 0;
-    scroll-snap-align: start;
-  }
+export type ReelProps<T extends ValidConstructor = "div"> =
+  HeadlessPropsWithRef<T, ReelBaseProps>;
 
-  --gutter: ${(props) =>
-    props.gutter ? getSpacingValue(props.gutter, props.theme) ?? "0px" : "0px"};
+export function Reel<T extends ValidConstructor = "div">(
+  props: ReelProps<T>
+): JSX.Element {
+  const theme = useTheme();
+  const propsStyle = () =>
+    typeof props.style === "string"
+      ? props.style
+      : Object.entries(props.style ?? ({} as JSX.CSSProperties)).reduce(
+          (str, [key, value]) => str + `${key}:${value};`,
+          ""
+        );
 
-  display: flex;
-  gap: var(--gutter, 0px);
+  const gutter = () =>
+    `--gutter: ${getSpacingValue(props.gutter ?? "none", theme) ?? "0px"};`;
 
-  overflow-x: scroll;
-
-  scroll-snap-type: ${(props) => {
+  const snapType = () => {
     switch (props.snapType) {
       case "none": {
-        return "none";
+        return "snapType:none";
       }
       case "proximity": {
-        return "x proximity";
+        return "snapType:proximity";
       }
       case "mandatory": {
-        return "x mandatory";
+        return "snapType:mandatory";
       }
       default: {
-        return "none";
+        return "snapType:none";
       }
     }
-  }};
-`;
+  };
+
+  const style = () => [propsStyle(), gutter()].join("; ");
+
+  return createDynamic(
+    () => props.as ?? ("div" as T),
+    mergeProps(
+      omitProps(props, ["as", "gutter"]),
+      createPropsFromAccessors({ style, "data-bedrock-reel": snapType })
+    ) as DynamicProps<T>
+  );
+}
