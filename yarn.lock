@@ -996,10 +996,10 @@
   resolved "https://registry.yarnpkg.com/@bedrock-layout/bedrock-layout-css/-/bedrock-layout-css-2.0.3.tgz#599dd4d49ba80fc9bc3a553bd01151c5828f7fb7"
   integrity sha512-6Bvn8dUf5GLijRYDpJtCyrbZvYQj1JfMXt3Qsd+xMhFCgOrjgSUMOZhYCZt5TnGUuWqOz3oltCreeMuVwL3jUA==
 
-"@bedrock-layout/register-resize-callback@^1.1.0":
-  version "1.1.2"
-  resolved "https://registry.yarnpkg.com/@bedrock-layout/register-resize-callback/-/register-resize-callback-1.1.2.tgz#0facce8bdc46521a8fc486226914d2455081b2ec"
-  integrity sha512-nl8YoP2inKZEL63usi/px4utk3ON5aXWamLWPVlRDaMjdGogBoTE/jz1mB2btFyq4AI6ErWuO85iywpIcXxgQQ==
+"@bedrock-layout/register-resize-callback@^2.0.0":
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/@bedrock-layout/register-resize-callback/-/register-resize-callback-2.0.0.tgz#fe5c22ca67cd95ac49f9c9ff8147f6949e630a2c"
+  integrity sha512-kQT/oHcrklrVwmaMJwp7ASsJjeqH5313z6HEjgMvU6Mx1x6Z4190v+gJ/jHvr0lUs8x2AZbY4K1WHnrEEyI9Dw==
 
 "@commitlint/config-validator@^17.1.0":
   version "17.1.0"
