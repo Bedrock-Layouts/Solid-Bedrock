@@ -57,7 +57,7 @@
   },
   "dependencies": {
     "@bedrock-layout/bedrock-layout-css": "^2.0.3",
-    "@bedrock-layout/register-resize-callback": "^1.1.0"
+    "@bedrock-layout/register-resize-callback": "^2.0.0"
   },
   "scripts": {
     "test": "echo \"Error: run tests from root\" && exit 1",
