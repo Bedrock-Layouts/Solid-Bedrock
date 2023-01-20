@@ -1,25 +1,14 @@
 import { ArgType } from "doc-site/types/argType";
+import { spacing } from "../../../packages/solid/src/spacing-constants";
 
 export const argTypes: ArgType = {
   gutter: {
     description: "Sets space between each element",
     summary: "Space",
     defaultValue: "0px",
-    initialValue: "lg",
+    initialValue: "size3",
     control: "select",
-    options: [
-      "none",
-      "xxs",
-      "xs",
-      "sm",
-      "md",
-      "mdLg",
-      "lg",
-      "lgXl",
-      "xl",
-      "xlXXl",
-      "xxl",
-    ],
+    options: Object.keys(spacing),
   },
   columns: {
     description: "Sets the number of columns",
@@ -28,13 +17,7 @@ export const argTypes: ArgType = {
     summary: "number",
     control: "number",
   },
-  dense: {
-    description: "Toggle for is the layout should use a dense layout or not",
-    summary: "boolean",
-    defaultValue: "false",
-    initialValue: false,
-    control: "boolean",
-  },
+
   switchAt: {
     description:
       "Sets the width threshold that the split will switch to a Stack layout",

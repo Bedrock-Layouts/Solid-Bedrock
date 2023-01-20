@@ -1,13 +1,11 @@
 import { Link, Route, Routes } from "solid-app-router";
 import { Component, For, Show } from "solid-js";
-import { Dynamic } from "solid-js/web";
 import { styled } from "solid-styled-components";
 
 import {
   Center,
   Inline,
   PadBox,
-  Reel,
   Split,
   Stack,
   createContainerQuery,
@@ -31,24 +29,23 @@ import { StackPage } from "./pages/StackPage";
 const WIDTH_BREAKPOINT = 1000;
 
 function SideNavGroup(props: {
-  shouldSwitch?: boolean;
   title: string;
   links: { href: string; name: string }[];
 }) {
   return (
-    <Stack gutter="md">
+    <Stack gutter="size2">
       <strong>{props.title}</strong>
 
-      <Dynamic
-        component={props.shouldSwitch ? Reel : Stack}
+      <Inline
         as={PadBox}
         padding={["lg", "sm"]}
-        gutter="md"
+        gutter="size2"
+        switchAt="sizeSm"
       >
         <For each={props.links}>
           {(link) => <Link href={link.href}>{link.name}</Link>}
         </For>
-      </Dynamic>
+      </Inline>
     </Stack>
   );
 }
@@ -88,13 +85,13 @@ const App: Component = () => {
     <Split
       ref={ref}
       fraction="auto-start"
-      gutter="lg"
+      gutter="size3"
       switchAt={WIDTH_BREAKPOINT}
     >
-      <PadBox padding="xl" style={`background: rgb(249, 250, 251);`}>
-        <Stack gutter="xl">
+      <PadBox padding="size7" style={`background: var(--stone-1);`}>
+        <Stack gutter="size7">
           <LogoLink href="/">
-            <Inline align="center" gutter="xl">
+            <Inline align="center" gutter="size7">
               <LogoOnly style="max-width:8rem;" />
 
               <Show when={shouldSwitch() === true}>
@@ -102,20 +99,12 @@ const App: Component = () => {
               </Show>
             </Inline>
           </LogoLink>
-          <SideNavGroup
-            title="Spacer Components"
-            links={spacerComponents}
-            shouldSwitch={shouldSwitch()}
-          />
-          <SideNavGroup
-            title="Wrapper Components"
-            links={wrapperComponents}
-            shouldSwitch={shouldSwitch()}
-          />
+          <SideNavGroup title="Spacer Components" links={spacerComponents} />
+          <SideNavGroup title="Wrapper Components" links={wrapperComponents} />
         </Stack>
       </PadBox>
 
-      <Center as={PadBox} padding="xl" maxWidth="90%">
+      <Center as={PadBox} padding="size7" maxWidth="90%">
         <Routes>
           <Route path="/" element={<LandingPage />} />
           <Route path="/column-drop" element={<ColumnDropPage />} />
@@ -134,7 +123,7 @@ const App: Component = () => {
           <Route
             path="/*all"
             element={
-              <PadBox as={Stack} gutter="xl" padding="xl">
+              <PadBox as={Stack} gutter="size7" padding="size7">
                 <h1>Page Not Found</h1>
                 <p>
                   Click <Link href="/">Home</Link> to go back to the site

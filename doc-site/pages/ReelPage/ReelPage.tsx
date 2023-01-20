@@ -24,7 +24,7 @@ export function ReelPage(): JSXElement {
   const [props, setProps] = createSignal(initialValues);
 
   return (
-    <Stack gutter="xxl">
+    <Stack gutter="size9">
       <Heading id="title">Reel</Heading>
       <PageSection title="Use Case">
         <p>

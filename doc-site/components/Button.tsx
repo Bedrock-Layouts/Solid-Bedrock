@@ -3,7 +3,7 @@ import { styled } from "solid-styled-components";
 export const Button = styled("button")<{
   primary?: boolean;
 }>`
-  padding: var(--space-lg) var(--space-xl);
+  padding: var(--size-3) var(--size-7);
   border-radius: 0.5rem;
   border-width: 1px;
   border-style: solid;

@@ -4,8 +4,8 @@ import { styled } from "solid-styled-components";
 
 import {
   Center,
+  ColumnDrop,
   Cover,
-  Grid,
   Inline,
   PadBox,
   Stack,
@@ -26,32 +26,31 @@ const SubTitle = styled("span")`
   line-height: 2rem;
 `;
 
-const Content = styled(PadBox)`
-  background: rgb(249, 250, 251);
-`;
-
 export function LandingPage(): JSXElement {
   return (
-    <Stack gutter="xxl">
+    <Stack gutter="size9">
       <Hero />
-      <Content padding="xl">
-        <Grid minItemWidth="40ch" gutter="xl">
-          <Stack gutter="md">
-            <h2> Zero Config</h2>
+      <PadBox style="background: var(--stone-1)" padding="size7">
+        <ColumnDrop
+          noStretchedColumns
+          minItemWidth="sizeContent3"
+          gutter="size7"
+        >
+          <Stack gutter="size2">
+            <h2>Bedrock Layout CSS</h2>
             <p>
               Bedrock Layout Primitives are built using{" "}
               <a
-                href="https://github.com/solidjs/solid-styled-components"
+                href="https://www.bedrock-layout.dev/?path=/docs/bedrock-layout-css-a-css-only-version--docs"
                 target="_blank"
               >
-                solid-styled-components.
-              </a>
-              This allows Bedrock Layout Primitives to be used in any app
-              without any extra setup. Just `yarn add` the desired package(s)
-              and start using them.
+                Bedrock Layout CSS.
+              </a>{" "}
+              Just simply import the Bedrock Layout CSS into your app and you're
+              ready to go.
             </p>
           </Stack>
-          <Stack gutter="md">
+          <Stack gutter="size2">
             <h2>Composable Layouts</h2>
             <p>
               Bedrock Layout Primitives are built to allow you to compose them
@@ -59,7 +58,7 @@ export function LandingPage(): JSXElement {
               can be created by composing Bedrock Layout Primitives.
             </p>
           </Stack>
-          <Stack gutter="md">
+          <Stack gutter="size2">
             <h2>Use With Any Design System</h2>
             <p>
               You can use Bedrock Layout Primitives with any design system.
@@ -67,25 +66,25 @@ export function LandingPage(): JSXElement {
               your design system.
             </p>
           </Stack>
-        </Grid>
-      </Content>
+        </ColumnDrop>
+      </PadBox>
     </Stack>
   );
 }
 
 function Hero() {
   return (
-    <Cover as={PadBox} padding="xl" minHeight="60vh">
-      <Stack as={Center} gutter="lg">
+    <Cover as={PadBox} padding="size7" minHeight="60vh">
+      <Stack as={Center} gutter="size3">
         <header>
-          <Inline stretch="all" gutter="xxl" switchAt="40rem">
+          <Inline stretch="all" gutter="size9" switchAt="40rem">
             <Center maxWidth="20rem">
               <LogoOnly />
             </Center>
             <Center maxWidth="60rem">
-              <Stack gutter="lgXl">
+              <Stack gutter="size8">
                 <Heading id="title">
-                  <Stack gutter="md">
+                  <Stack gutter="size2">
                     SOLID BEDROCK
                     <SubTitle>LAYOUT PRIMITIVES</SubTitle>
                   </Stack>
@@ -111,7 +110,12 @@ function Hero() {
                     alt="GitHub Repo stars"
                   />
                 </Center>
-                <Inline gutter="lg" switchAt="20rem" justify="center">
+                <Inline
+                  minItemWidth="fit-content"
+                  gutter="size3"
+                  switchAt="20rem"
+                  justify="center"
+                >
                   <Button primary as={Link} href="/getting-started">
                     Get Started
                   </Button>

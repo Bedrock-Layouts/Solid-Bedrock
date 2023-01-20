@@ -14,6 +14,8 @@ import { Playground } from "./playground";
 import playgroundCode from "./playground?raw";
 import { SwitchAt } from "./switchAt";
 import switchAtCode from "./switchAt?raw";
+import { MinItemWidth } from "./minItemWidth";
+import minItemWidthCode from "./minItemWidth?raw";
 
 export function SplitPage(): JSXElement {
   const initialValues = Object.fromEntries(
@@ -25,7 +27,7 @@ export function SplitPage(): JSXElement {
   const [props, setProps] = createSignal(initialValues);
 
   return (
-    <Stack gutter="xxl">
+    <Stack gutter="size9">
       <Heading id="title">Split</Heading>
       <PageSection title="Use Case">
         <p>
@@ -58,6 +60,20 @@ export function SplitPage(): JSXElement {
         </p>
         <Story code={fractionCode}>
           <Fraction />
+        </Story>
+      </PageSection>
+      <PageSection title="minItemWidth">
+        <p>
+          The <code>minItemWidth</code> prop defines the minimum inline size of
+          each child.
+        </p>
+
+        <p>
+          If the minimum inline size can not be maintained, it will move to a
+          stacking layout. (Resize window to observe the changes)
+        </p>
+        <Story code={minItemWidthCode}>
+          <MinItemWidth />
         </Story>
       </PageSection>
       <PageSection title="switchAt">

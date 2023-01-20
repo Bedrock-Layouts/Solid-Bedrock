@@ -55,7 +55,7 @@
     "@babel/plugin-proposal-class-properties": "^7.16.7",
     "@babel/preset-env": "^7.16.11",
     "@babel/preset-typescript": "^7.16.7",
-    "@bedrock-layout/bedrock-layout-css": "^2.0.1",
+    "@bedrock-layout/css": "^2.2.4",
     "@bedrock-layout/register-resize-callback": "^2.0.0",
     "@types/dedent": "^0.7.0",
     "@typescript-eslint/eslint-plugin": "^4.29.3",

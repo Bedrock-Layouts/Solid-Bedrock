@@ -9,7 +9,7 @@ export function PaddingObject(): JSXElement {
       <pre>
         <code>
           {JSON.stringify(
-            { top: "lg", inlineEnd: "xl", blockEnd: "sm" },
+            { top: "size3", inlineEnd: "size7", blockEnd: "size1" },
             null,
             3
           )}
@@ -17,7 +17,7 @@ export function PaddingObject(): JSXElement {
       </pre>
       <PadBox
         style="border: 1px solid black"
-        padding={{ top: "lg", inlineEnd: "xl", blockEnd: "sm" }}
+        padding={{ top: "size3", inlineEnd: "size7", blockEnd: "size1" }}
       >
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Fuga
         consequuntur corrupti beatae commodi vitae, perspiciatis totam provident

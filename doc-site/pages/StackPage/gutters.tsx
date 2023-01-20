@@ -1,70 +1,95 @@
 import { JSXElement } from "solid-js";
 
 import { Stack } from "../../../packages/solid/src";
-import { Box } from "../../components/Box";
+import { Box as Component } from "../../components/Box";
 
 export function Gutter(): JSXElement {
   return (
     <>
-      <h3>none</h3>
-      <Stack gutter="none">
-        <Box />
-        <Box />
+      <h3>{"size000"}</h3>
+      <Stack gutter="size000">
+        <Component />
+        <Component />
       </Stack>
-      <h3>xxs</h3>
-      <Stack gutter="xxs">
-        <Box />
-        <Box />
+      <h3>{"size00"}</h3>
+      <Stack gutter="size00">
+        <Component />
+        <Component />
       </Stack>
-      <h3>xs</h3>
-      <Stack gutter="xs">
-        <Box />
-        <Box />
+      <h3>{"size1"}</h3>
+      <Stack gutter="size1">
+        <Component />
+        <Component />
       </Stack>
-      <h3>sm</h3>
-      <Stack gutter="sm">
-        <Box />
-        <Box />
+      <h3>{"size2"}</h3>
+      <Stack gutter="size2">
+        <Component />
+        <Component />
       </Stack>
-      <h3>md</h3>
-      <Stack gutter="md">
-        <Box />
-        <Box />
+      <h3>{"size3"}</h3>
+      <Stack gutter="size3">
+        <Component />
+        <Component />
       </Stack>
-      <h3>mdLg</h3>
-      <Stack gutter="mdLg">
-        <Box />
-        <Box />
+      <h3>{"size4"}</h3>
+      <Stack gutter="size4">
+        <Component />
+        <Component />
       </Stack>
-      <h3>lg</h3>
-      <Stack gutter="lg">
-        <Box />
-        <Box />
+      <h3>{"size5"}</h3>
+      <Stack gutter="size5">
+        <Component />
+        <Component />
       </Stack>
-      <h3>lgXl</h3>
-      <Stack gutter="lgXl">
-        <Box />
-        <Box />
+      <h3>{"size6"}</h3>
+      <Stack gutter="size6">
+        <Component />
+        <Component />
       </Stack>
-      <h3>xl</h3>
-      <Stack gutter="xl">
-        <Box />
-        <Box />
+      <h3>{"size7"}</h3>
+      <Stack gutter="size7">
+        <Component />
+        <Component />
       </Stack>
-      <h3>xl</h3>
-      <Stack gutter="xl">
-        <Box />
-        <Box />
+      <h3>{"size8"}</h3>
+      <Stack gutter="size8">
+        <Component />
+        <Component />
       </Stack>
-      <h3>xlXXl</h3>
-      <Stack gutter="xlXXl">
-        <Box />
-        <Box />
+      <h3>{"size9"}</h3>
+      <Stack gutter="size9">
+        <Component />
+        <Component />
       </Stack>
-      <h3>xxl</h3>
-      <Stack gutter="xxl">
-        <Box />
-        <Box />
+      <h3>{"size10"}</h3>
+      <Stack gutter="size10">
+        <Component />
+        <Component />
+      </Stack>
+      <h3>{"size11"}</h3>
+      <Stack gutter="size11">
+        <Component />
+        <Component />
+      </Stack>
+      <h3>{"size12"}</h3>
+      <Stack gutter="size12">
+        <Component />
+        <Component />
+      </Stack>
+      <h3>{"size13"}</h3>
+      <Stack gutter="size13">
+        <Component />
+        <Component />
+      </Stack>
+      <h3>{"size14"}</h3>
+      <Stack gutter="size14">
+        <Component />
+        <Component />
+      </Stack>
+      <h3>{"size15"}</h3>
+      <Stack gutter="size15">
+        <Component />
+        <Component />
       </Stack>
     </>
   );

@@ -12,11 +12,11 @@ export function Story(props: {
     typeof props.code === "string" ? props.code : props.code({ dedent });
 
   return (
-    <Stack gutter="sm">
+    <Stack gutter="size1">
       <Stack
         as={PadBox}
-        padding="lg"
-        gutter="mdLg"
+        padding="size7"
+        gutter="size4"
         style="border:1px solid black"
       >
         {props.children}

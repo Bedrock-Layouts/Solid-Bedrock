@@ -27,7 +27,7 @@ export function CoverPage(): JSXElement {
   const [props, setProps] = createSignal(initialValues);
 
   return (
-    <Stack gutter="xxl">
+    <Stack gutter="size9">
       <Heading id="title">Cover</Heading>
       <PageSection title="Use Case">
         <p>

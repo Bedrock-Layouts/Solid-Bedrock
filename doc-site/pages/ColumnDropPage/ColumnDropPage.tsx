@@ -26,7 +26,7 @@ export function ColumnDropPage(): JSXElement {
   const [props, setProps] = createSignal(initialValues);
 
   return (
-    <Stack gutter="xxl">
+    <Stack gutter="size9">
       <Heading id="title">ColumnDrop</Heading>
       <PageSection title="Use Case">
         <p>

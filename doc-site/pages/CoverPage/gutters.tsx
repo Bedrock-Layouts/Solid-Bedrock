@@ -5,104 +5,158 @@ import { Cover } from "../../../packages/solid/src";
 export function Gutter(): JSXElement {
   return (
     <>
-      <h3>none</h3>
+      <h3>{"size000"}</h3>
       <Cover
         minHeight={0}
-        gutter="none"
+        gutter="size000"
         top={<span>I am on top.</span>}
         bottom={<span>I am on bottom.</span>}
       >
-        <div style="border: 1px solid black">I am a child.</div>
+        <div>{"I am a child."}</div>
       </Cover>
-      <h3>xxs</h3>
+      <h3>{"size00"}</h3>
       <Cover
         minHeight={0}
-        gutter="xxs"
+        gutter="size00"
         top={<span>I am on top.</span>}
         bottom={<span>I am on bottom.</span>}
       >
-        <div style="border: 1px solid black">I am a child.</div>
+        <div>{"I am a child."}</div>
       </Cover>
-      <h3>xs</h3>
+      <h3>{"size1"}</h3>
       <Cover
         minHeight={0}
-        gutter="xs"
+        gutter="size1"
         top={<span>I am on top.</span>}
         bottom={<span>I am on bottom.</span>}
       >
-        <div style="border: 1px solid black">I am a child.</div>
+        <div>{"I am a child."}</div>
       </Cover>
-      <h3>sm</h3>
+      <h3>{"size2"}</h3>
       <Cover
         minHeight={0}
-        gutter="sm"
+        gutter="size2"
         top={<span>I am on top.</span>}
         bottom={<span>I am on bottom.</span>}
       >
-        <div style="border: 1px solid black">I am a child.</div>
+        <div>{"I am a child."}</div>
       </Cover>
-      <h3>md</h3>
+      <h3>{"size3"}</h3>
       <Cover
         minHeight={0}
-        gutter="md"
+        gutter="size3"
         top={<span>I am on top.</span>}
         bottom={<span>I am on bottom.</span>}
       >
-        <div style="border: 1px solid black">I am a child.</div>
+        <div>{"I am a child."}</div>
       </Cover>
-      <h3>mdLg</h3>
+      <h3>{"size4"}</h3>
       <Cover
         minHeight={0}
-        gutter="mdLg"
+        gutter="size4"
         top={<span>I am on top.</span>}
         bottom={<span>I am on bottom.</span>}
       >
-        <div style="border: 1px solid black">I am a child.</div>
+        <div>{"I am a child."}</div>
       </Cover>
-      <h3>lg</h3>
+      <h3>{"size5"}</h3>
       <Cover
         minHeight={0}
-        gutter="lg"
+        gutter="size5"
         top={<span>I am on top.</span>}
         bottom={<span>I am on bottom.</span>}
       >
-        <div style="border: 1px solid black">I am a child.</div>
+        <div>{"I am a child."}</div>
       </Cover>
-      <h3>lgXl</h3>
+      <h3>{"size6"}</h3>
       <Cover
         minHeight={0}
-        gutter="lgXl"
+        gutter="size6"
         top={<span>I am on top.</span>}
         bottom={<span>I am on bottom.</span>}
       >
-        <div style="border: 1px solid black">I am a child.</div>
+        <div>{"I am a child."}</div>
       </Cover>
-      <h3>xl</h3>
+      <h3>{"size7"}</h3>
       <Cover
         minHeight={0}
-        gutter="xl"
+        gutter="size7"
         top={<span>I am on top.</span>}
         bottom={<span>I am on bottom.</span>}
       >
-        <div style="border: 1px solid black">I am a child.</div>
+        <div>{"I am a child."}</div>
       </Cover>
-      <h3>xlXXl</h3>
+      <h3>{"size8"}</h3>
       <Cover
         minHeight={0}
-        gutter="xlXXl"
+        gutter="size8"
         top={<span>I am on top.</span>}
         bottom={<span>I am on bottom.</span>}
       >
-        <div style="border: 1px solid black">I am a child.</div>
+        <div>{"I am a child."}</div>
       </Cover>
-      <h3>xxl</h3>
+      <h3>{"size9"}</h3>
       <Cover
         minHeight={0}
-        gutter="xxl"
+        gutter="size9"
         top={<span>I am on top.</span>}
         bottom={<span>I am on bottom.</span>}
       >
-        <div style="border: 1px solid black">I am a child.</div>
+        <div>{"I am a child."}</div>
+      </Cover>
+      <h3>{"size10"}</h3>
+      <Cover
+        minHeight={0}
+        gutter="size10"
+        top={<span>I am on top.</span>}
+        bottom={<span>I am on bottom.</span>}
+      >
+        <div>{"I am a child."}</div>
+      </Cover>
+      <h3>{"size11"}</h3>
+      <Cover
+        minHeight={0}
+        gutter="size11"
+        top={<span>I am on top.</span>}
+        bottom={<span>I am on bottom.</span>}
+      >
+        <div>{"I am a child."}</div>
+      </Cover>
+      <h3>{"size12"}</h3>
+      <Cover
+        minHeight={0}
+        gutter="size12"
+        top={<span>I am on top.</span>}
+        bottom={<span>I am on bottom.</span>}
+      >
+        <div>{"I am a child."}</div>
+      </Cover>
+      <h3>{"size13"}</h3>
+      <Cover
+        minHeight={0}
+        gutter="size13"
+        top={<span>I am on top.</span>}
+        bottom={<span>I am on bottom.</span>}
+      >
+        <div>{"I am a child."}</div>
+      </Cover>
+      <h3>{"size14"}</h3>
+      <Cover
+        minHeight={0}
+        gutter="size14"
+        top={<span>I am on top.</span>}
+        bottom={<span>I am on bottom.</span>}
+      >
+        <div>{"I am a child."}</div>
+      </Cover>
+      <h3>{"size15"}</h3>
+      <Cover
+        minHeight={0}
+        gutter="size15"
+        top={<span>I am on top.</span>}
+        bottom={<span>I am on bottom.</span>}
+      >
+        <div>{"I am a child."}</div>
       </Cover>
     </>
   );

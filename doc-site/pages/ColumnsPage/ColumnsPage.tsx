@@ -10,8 +10,6 @@ import { ColumnPlayground } from "./column-playground";
 import columnPlaygroundCode from "./column-playground?raw";
 import { ColumnsExample } from "./columns";
 import columnsCode from "./columns?raw";
-import { Dense } from "./dense";
-import denseCode from "./dense?raw";
 import { Gutter } from "./gutters";
 import gutterCode from "./gutters?raw";
 import { Offset } from "./offset";
@@ -42,7 +40,7 @@ export function ColumnsPage(): JSXElement {
   const [colProps, setColProps] = createSignal(columnInitial);
 
   return (
-    <Stack gutter="xxl">
+    <Stack gutter="size9">
       <Heading id="title">Columns</Heading>
       <PageSection title="Use Case">
         <p>
@@ -83,7 +81,7 @@ export function ColumnsPage(): JSXElement {
         </Story>
       </PageSection>
 
-      <PageSection title="colSpan">
+      <PageSection title="span">
         <p>
           Here, the `Column` component is wrapping the blue and green boxes. It
           is then setting the blue box to span 3 columns and the green to span 2
@@ -91,17 +89,6 @@ export function ColumnsPage(): JSXElement {
 
         <Story code={spanCode}>
           <Span />
-        </Story>
-      </PageSection>
-
-      <PageSection title="dense">
-        <p>
-          Setting the `dense` prop will layout the children so that the items
-          will fill any blank space.
-        </p>
-
-        <Story code={denseCode}>
-          <Dense />
         </Story>
       </PageSection>
 

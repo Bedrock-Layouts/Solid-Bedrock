@@ -4,15 +4,47 @@ import { styled } from "solid-styled-components";
 
 import { PadBox, Stack, createContainerQuery } from "../../packages/solid/src";
 
+const SelectWrapper = styled.div`
+  --size: 91px;
+  position: relative;
+  width: 100%;
+  &:after {
+    content: "";
+    clip-path: path(
+      "M 90 24.25 c 0 -0.896 -0.342 -1.792 -1.025 -2.475 c -1.366 -1.367 -3.583 -1.367 -4.949 0 L 45 60.8 L 5.975 21.775 c -1.367 -1.367 -3.583 -1.367 -4.95 0 c -1.366 1.367 -1.366 3.583 0 4.95 l 41.5 41.5 c 1.366 1.367 3.583 1.367 4.949 0 l 41.5 -41.5 C 89.658 26.042 90 25.146 90 24.25 z"
+    );
+
+    background: var(--gray-7);
+    width: var(--size);
+    height: var(--size);
+    position: absolute;
+    transform: scale(0.15);
+    right: calc(var(--size-6) * -1);
+    top: calc(var(--size-6) * -1);
+  }
+`;
+
 const Select = styled.select`
   appearance: none;
   box-sizing: border-box;
-  border: 1px solid gray;
+  border: 1px solid var(--gray-7);
   border-radius: var(--radius-2);
   cursor: pointer;
   background-color: #fff;
 
-  padding: var(--space-sm);
+  padding: var(--size-2) var(--size-1);
+  width: 100%;
+`;
+
+const TextBox = styled.input`
+  box-sizing: border-box;
+  border: 1px solid var(--gray-7);
+  border-radius: var(--radius-2);
+  cursor: pointer;
+  background-color: #fff;
+
+  padding: var(--size-2) var(--size-1);
+  width: 100%;
 `;
 
 const HeaderRow = styled("tr")`
@@ -21,7 +53,7 @@ const HeaderRow = styled("tr")`
 
 const Summary = styled("code")`
   background-color: var(--gray-2);
-  padding: var(--space-md);
+  padding: var(--size-2);
   border-radius: var(--radius-3);
 `;
 
@@ -45,13 +77,13 @@ const BodyRow = styled("tr")`
 `;
 
 function HeadingCell(props: JSX.HTMLAttributes<HTMLTableCellElement>) {
-  return <PadBox as="th" padding="lg" {...props} />;
+  return <PadBox as="th" padding="size7" {...props} />;
 }
 
 function BodyCell(props: JSX.HTMLAttributes<HTMLTableCellElement>) {
   return (
-    <PadBox as="td" padding={["lgXl", "lg"]} {...props}>
-      <Stack gutter="md" style="align-items:start">
+    <PadBox as="td" padding={["size5", "size7"]} {...props}>
+      <Stack gutter="size2" style="align-items:start">
         {props.children}
       </Stack>
     </PadBox>
@@ -65,26 +97,28 @@ function SelectInput(props: {
   onChange?: (params: { propName: string; value: string }) => void;
 }) {
   return (
-    <Select
-      name={props.name}
-      onChange={(e) =>
-        props.onChange?.({
-          propName: props.name,
-          value: e.currentTarget?.value,
-        })
-      }
-    >
-      <For each={props.options}>
-        {(optionValue) => (
-          <option
-            selected={optionValue === props.initialValue}
-            value={optionValue}
-          >
-            {optionValue}
-          </option>
-        )}
-      </For>
-    </Select>
+    <SelectWrapper>
+      <Select
+        name={props.name}
+        onChange={(e) =>
+          props.onChange?.({
+            propName: props.name,
+            value: e.currentTarget?.value,
+          })
+        }
+      >
+        <For each={props.options}>
+          {(optionValue) => (
+            <option
+              selected={optionValue === props.initialValue}
+              value={optionValue}
+            >
+              {optionValue}
+            </option>
+          )}
+        </For>
+      </Select>
+    </SelectWrapper>
   );
 }
 
@@ -103,7 +137,7 @@ export function ArgsTable(props: {
         <Stack
           ref={ref}
           as="dl"
-          gutter="md"
+          gutter="size2"
           style="border:1px solid var(--gray-3); padding:1rem;"
         >
           <For each={Object.entries(props.args)}>
@@ -136,7 +170,7 @@ export function ArgsTable(props: {
                       />
                     </Match>
                     <Match when={details.control === "text"}>
-                      <input
+                      <TextBox
                         name={propName}
                         value={details.initialValue as string}
                         onChange={(e) =>
@@ -215,7 +249,7 @@ export function ArgsTable(props: {
                         />
                       </Match>
                       <Match when={details.control === "text"}>
-                        <input
+                        <TextBox
                           name={propName}
                           value={details.initialValue as string}
                           onChange={(e) =>

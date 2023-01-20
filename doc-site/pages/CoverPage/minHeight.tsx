@@ -4,7 +4,7 @@ import { Cover } from "../../../packages/solid/src";
 
 export function MinHeight(): JSXElement {
   return (
-    <Cover minHeight="500px" gutter="sm">
+    <Cover minHeight="500px" gutter="size1">
       <div>
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Fuga
         consequuntur corrupti beatae commodi vitae, perspiciatis totam provident
