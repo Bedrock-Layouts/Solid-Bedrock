@@ -21,7 +21,7 @@ export function StackPage(): JSXElement {
   const [props, setProps] = createSignal(initialValues);
 
   return (
-    <Stack gutter="xxl">
+    <Stack gutter="size9">
       <Heading id="title">Stack</Heading>
       <PageSection title="Use Case">
         <p>

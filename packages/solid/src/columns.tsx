@@ -1,17 +1,13 @@
-import {
-  Component,
-  JSX,
-  Match,
-  Switch,
-  mergeProps,
-  splitProps,
-} from "solid-js";
+import { JSX, mergeProps } from "solid-js";
 
-import { createContainerQuery } from "./create-container-query";
-import { SpacingOptions, getSpacingValue } from "./spacing-constants";
-import { Stack, StackProps } from "./stack";
+import {
+  CSSLength,
+  SizesOptions,
+  SpacingOptions,
+  getSizeValue,
+  getSpacingValue,
+} from "./spacing-constants";
 import { useTheme } from "./theme-provider";
-import { toPX } from "./toPx";
 import createDynamic, {
   DynamicProps,
   HeadlessPropsWithRef,
@@ -20,17 +16,17 @@ import createDynamic, {
   omitProps,
 } from "./typeUtils";
 
-interface ColumnsBase {
+interface ColumnsBaseProps {
   gutter?: SpacingOptions;
   columns?: number;
-  dense?: boolean;
+  switchAt?: number | CSSLength | SizesOptions;
 }
 
-export type ColumnsBaseProps<T extends ValidConstructor = "div"> =
-  HeadlessPropsWithRef<T, ColumnsBase>;
+export type ColumnsProps<T extends ValidConstructor = "div"> =
+  HeadlessPropsWithRef<T, ColumnsBaseProps>;
 
-export function ColumnsBase<T extends ValidConstructor = "div">(
-  props: ColumnsBaseProps<T>
+export function Columns<T extends ValidConstructor = "div">(
+  props: ColumnsProps<T>
 ): JSX.Element {
   const theme = useTheme();
   const propsStyle = () =>
@@ -42,64 +38,30 @@ export function ColumnsBase<T extends ValidConstructor = "div">(
         );
 
   const gutter = () =>
-    `--gutter: ${getSpacingValue(props.gutter ?? "none", theme) ?? "0px"};`;
+    `--gutter: ${getSpacingValue(theme, props.gutter ?? "size00") ?? "0px"};`;
 
   const columns = () =>
     `--columns: ${props.columns && props.columns > 0 ? props.columns : 1};`;
 
-  const dense = () => (props.dense ? "dense" : "");
+  const switchAt = () =>
+    props.switchAt
+      ? `--switchAt: ${getSizeValue(theme, props.switchAt) ?? "0px"};`
+      : "";
 
-  const style = () => [propsStyle(), gutter(), columns()].join("; ");
+  const style = () =>
+    [propsStyle(), gutter(), columns(), switchAt()].join("; ");
 
   return createDynamic(
     () => props.as ?? ("div" as T),
     mergeProps(
-      omitProps(props, ["as", "gutter", "columns", "dense"]),
+      omitProps(props, ["as", "gutter", "columns", "switchAt"]),
       createPropsFromAccessors({
         style,
-        "data-bedrock-columns": dense,
+        "data-bedrock-columns": () => "",
       })
     ) as DynamicProps<T>
   );
 }
-
-export interface ColumnsProps extends StackProps, ColumnsBaseProps {
-  switchAt?: number | string;
-}
-
-export const Columns: Component<ColumnsProps> = (props) => {
-  const [local, rest] = splitProps(props, ["switchAt", "columns", "dense"]);
-  const maybePx =
-    typeof local.switchAt === "string" ? toPX(local.switchAt) : local.switchAt;
-
-  /**
-   * zero is used to make the switchAt a noop
-   */
-  const widthToSwitchAt = Math.max(maybePx ?? 0, 0);
-
-  const [shouldSwitch, nodeRef] = createContainerQuery(widthToSwitchAt);
-
-  const combineRef = (ref: HTMLElement) => {
-    nodeRef(ref);
-    (rest.ref as (e: Element) => void | undefined)?.(ref);
-  };
-
-  return (
-    <Switch>
-      <Match when={shouldSwitch() === false}>
-        <ColumnsBase
-          columns={local.columns}
-          dense={local.dense}
-          {...rest}
-          ref={combineRef}
-        />
-      </Match>
-      <Match when={shouldSwitch() === true}>
-        <Stack {...rest} ref={combineRef} />
-      </Match>
-    </Switch>
-  );
-};
 
 export interface ColumnBaseProps {
   span?: number;

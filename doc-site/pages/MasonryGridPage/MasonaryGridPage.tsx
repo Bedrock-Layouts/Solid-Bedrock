@@ -22,7 +22,7 @@ export function MasonaryGridPage(): JSXElement {
   const [props, setProps] = createSignal(initialValues);
 
   return (
-    <Stack gutter="xxl">
+    <Stack gutter="size9">
       <Heading id="title">Grid</Heading>
       <PageSection title="Use Case">
         <p>

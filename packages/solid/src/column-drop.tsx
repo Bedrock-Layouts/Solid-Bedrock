@@ -2,7 +2,9 @@ import { JSX, mergeProps } from "solid-js";
 
 import {
   CSSLength,
+  SizesOptions,
   SpacingOptions,
+  getSizeValue,
   getSpacingValue,
 } from "./spacing-constants";
 import { useTheme } from "./theme-provider";
@@ -14,7 +16,14 @@ import createDynamic, {
   omitProps,
 } from "./typeUtils";
 
-type MinItemWidth = CSSLength | number;
+type MinItemWidth =
+  | CSSLength
+  | number
+  | SizesOptions
+  | "fit-content"
+  | "max-content"
+  | "min-content"
+  | "auto";
 
 export interface ColumnDropBaseProps {
   gutter?: SpacingOptions;
@@ -22,10 +31,14 @@ export interface ColumnDropBaseProps {
   noStretchedColumns?: boolean;
 }
 
-function getSafeMinItemWidth(minItemWidth?: MinItemWidth) {
-  if (minItemWidth === undefined) return "159px";
-  if (typeof minItemWidth === "number") return `${minItemWidth}px`;
-  return minItemWidth;
+function getSafeMinItemWidth(
+  theme: {
+    space?: { [key: string]: string };
+    sizes?: { [key: string]: string };
+  },
+  minItemWidth?: MinItemWidth
+) {
+  return getSizeValue(theme, minItemWidth);
 }
 
 export type ColumnDropProps<T extends ValidConstructor = "div"> =
@@ -45,10 +58,10 @@ export function ColumnDrop<T extends ValidConstructor = "div">(
         );
 
   const gutter = () =>
-    `--gutter: ${getSpacingValue(props.gutter ?? "none", theme) ?? "0px"}`;
+    `--gutter: ${getSpacingValue(theme, props.gutter ?? "size00") ?? "0px"}`;
 
   const minItemWidth = () =>
-    `--minItemWidth: ${getSafeMinItemWidth(props.minItemWidth)}`;
+    `--minItemWidth: ${getSafeMinItemWidth(theme, props.minItemWidth)}`;
 
   const noStretchedColumns = () =>
     props.noStretchedColumns === true ? "no-stretched-columns" : "";

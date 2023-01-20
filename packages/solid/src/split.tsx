@@ -1,21 +1,13 @@
-import {
-  Component,
-  JSX,
-  Match,
-  Switch,
-  mergeProps,
-  splitProps,
-} from "solid-js";
+import { JSX, mergeProps } from "solid-js";
 
-import { createContainerQuery } from "./create-container-query";
 import {
   CSSLength,
+  SizesOptions,
   SpacingOptions,
+  getSizeValue,
   getSpacingValue,
 } from "./spacing-constants";
-import { Stack, StackProps } from "./stack";
 import { useTheme } from "./theme-provider";
-import { toPX } from "./toPx";
 import createDynamic, {
   DynamicProps,
   HeadlessPropsWithRef,
@@ -47,16 +39,37 @@ const fractions: Fractions = {
   "auto-end": `fraction:auto-end`,
 };
 
+type MinItemWidth =
+  | CSSLength
+  | number
+  | SizesOptions
+  | "fit-content"
+  | "max-content"
+  | "min-content"
+  | "auto";
+
 interface SplitBase {
   gutter?: SpacingOptions;
+  minItemWidth?: MinItemWidth;
   fraction?: FractionTypes;
+  switchAt?: number | CSSLength;
 }
 
-export type SplitBaseProps<T extends ValidConstructor = "div"> =
+function getSafeMinItemWidth(
+  theme: {
+    space?: { [key: string]: string };
+    sizes?: { [key: string]: string };
+  },
+  minItemWidth?: MinItemWidth
+) {
+  return getSizeValue(theme, minItemWidth);
+}
+
+export type SplitProps<T extends ValidConstructor = "div"> =
   HeadlessPropsWithRef<T, SplitBase>;
 
-export function SplitBase<T extends ValidConstructor = "div">(
-  props: SplitBaseProps<T>
+export function Split<T extends ValidConstructor = "div">(
+  props: SplitProps<T>
 ): JSX.Element {
   const theme = useTheme();
 
@@ -68,12 +81,27 @@ export function SplitBase<T extends ValidConstructor = "div">(
           ""
         );
 
+  const switchAt = () =>
+    props.switchAt
+      ? `--switchAt: ${getSizeValue(theme, props.switchAt) ?? "0px"};`
+      : "";
+
   const gutter = () =>
-    `--gutter: ${getSpacingValue(props.gutter ?? "none", theme) ?? "0px"};`;
+    `--gutter: ${getSpacingValue(theme, props.gutter ?? "size00") ?? "0px"};`;
 
   const fraction = () => fractions[props.fraction ?? "1/2"] ?? fractions["1/2"];
 
-  const style = () => [propsStyle(), gutter()].join("; ");
+  const minItemWidth = () =>
+    props.minItemWidth
+      ? `--minItemWidth: ${
+          typeof props.minItemWidth === "string"
+            ? props.minItemWidth
+            : `${props.minItemWidth}px`
+        };`
+      : undefined;
+
+  const style = () =>
+    [propsStyle(), gutter(), switchAt(), minItemWidth()].join("; ");
 
   return createDynamic(
     () => props.as ?? ("div" as T),
@@ -86,34 +114,3 @@ export function SplitBase<T extends ValidConstructor = "div">(
     ) as DynamicProps<T>
   );
 }
-
-export interface SplitProps extends StackProps, SplitBaseProps {
-  switchAt?: number | CSSLength;
-}
-
-export const Split: Component<SplitProps> = (props) => {
-  const [local, rest] = splitProps(props, ["switchAt", "fraction"]);
-  const maybePx =
-    typeof local.switchAt === "string" ? toPX(local.switchAt) : local.switchAt;
-
-  /**
-   * zero is used to make the switchAt a noop
-   */
-  const widthToSwitchAt = Math.max(maybePx ?? 0, 0);
-
-  const [shouldSwitch, nodeRef] = createContainerQuery(
-    widthToSwitchAt,
-    props.ref as (e: Element) => void
-  );
-
-  return (
-    <Switch>
-      <Match when={shouldSwitch() === false}>
-        <SplitBase fraction={local.fraction} {...rest} ref={nodeRef} />
-      </Match>
-      <Match when={shouldSwitch() === true}>
-        <Stack {...rest} ref={nodeRef} />
-      </Match>
-    </Switch>
-  );
-};

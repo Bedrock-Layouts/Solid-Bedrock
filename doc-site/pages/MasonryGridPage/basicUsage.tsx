@@ -4,7 +4,7 @@ import { MasonryGrid } from "../../../packages/solid/src";
 
 export function BasicUsage(): JSXElement {
   return (
-    <MasonryGrid gutter="lg" minItemWidth="15rem">
+    <MasonryGrid gutter="size3" minItemWidth="15rem">
       <div>
         1. Lorem ipsum dolor sit amet consectetur adipisicing elit. Fuga
         consequuntur corrupti beatae commodi vitae, perspiciatis totam provident

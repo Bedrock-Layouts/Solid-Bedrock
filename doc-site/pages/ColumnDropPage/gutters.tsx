@@ -1,87 +1,129 @@
 import { JSXElement } from "solid-js";
 
 import { ColumnDrop } from "../../../packages/solid/src";
-import { Box } from "../../components/Box";
+import { Box as Component } from "../../components/Box";
 
 export function Gutter(): JSXElement {
   return (
     <>
-      <h3>none</h3>
-      <ColumnDrop gutter="none">
-        <Box />
-        <Box />
-        <Box />
-        <Box />
+      <h3>{"size000"}</h3>
+      <ColumnDrop gutter="size000">
+        <Component />
+        <Component />
+        <Component />
+        <Component />
       </ColumnDrop>
-      <h3>xxs</h3>
-      <ColumnDrop gutter="xxs">
-        <Box />
-        <Box />
-        <Box />
-        <Box />
+      <h3>{"size00"}</h3>
+      <ColumnDrop gutter="size00">
+        <Component />
+        <Component />
+        <Component />
+        <Component />
       </ColumnDrop>
-      <h3>xs</h3>
-      <ColumnDrop gutter="xs">
-        <Box />
-        <Box />
-        <Box />
-        <Box />
+      <h3>{"size1"}</h3>
+      <ColumnDrop gutter="size1">
+        <Component />
+        <Component />
+        <Component />
+        <Component />
       </ColumnDrop>
-      <h3>sm</h3>
-      <ColumnDrop gutter="sm">
-        <Box />
-        <Box />
-        <Box />
-        <Box />
+      <h3>{"size2"}</h3>
+      <ColumnDrop gutter="size2">
+        <Component />
+        <Component />
+        <Component />
+        <Component />
       </ColumnDrop>
-      <h3>md</h3>
-      <ColumnDrop gutter="md">
-        <Box />
-        <Box />
-        <Box />
-        <Box />
+      <h3>{"size3"}</h3>
+      <ColumnDrop gutter="size3">
+        <Component />
+        <Component />
+        <Component />
+        <Component />
       </ColumnDrop>
-      <h3>mdLg</h3>
-      <ColumnDrop gutter="mdLg">
-        <Box />
-        <Box />
-        <Box />
-        <Box />
+      <h3>{"size4"}</h3>
+      <ColumnDrop gutter="size4">
+        <Component />
+        <Component />
+        <Component />
+        <Component />
       </ColumnDrop>
-      <h3>lg</h3>
-      <ColumnDrop gutter="lg">
-        <Box />
-        <Box />
-        <Box />
-        <Box />
+      <h3>{"size5"}</h3>
+      <ColumnDrop gutter="size5">
+        <Component />
+        <Component />
+        <Component />
+        <Component />
       </ColumnDrop>
-      <h3>lgXl</h3>
-      <ColumnDrop gutter="lgXl">
-        <Box />
-        <Box />
-        <Box />
-        <Box />
+      <h3>{"size6"}</h3>
+      <ColumnDrop gutter="size6">
+        <Component />
+        <Component />
+        <Component />
+        <Component />
       </ColumnDrop>
-      <h3>xl</h3>
-      <ColumnDrop gutter="xl">
-        <Box />
-        <Box />
-        <Box />
-        <Box />
+      <h3>{"size7"}</h3>
+      <ColumnDrop gutter="size7">
+        <Component />
+        <Component />
+        <Component />
+        <Component />
       </ColumnDrop>
-      <h3>xlXXl</h3>
-      <ColumnDrop gutter="xlXXl">
-        <Box />
-        <Box />
-        <Box />
-        <Box />
+      <h3>{"size8"}</h3>
+      <ColumnDrop gutter="size8">
+        <Component />
+        <Component />
+        <Component />
+        <Component />
       </ColumnDrop>
-      <h3>xxl</h3>
-      <ColumnDrop gutter="xxl">
-        <Box />
-        <Box />
-        <Box />
-        <Box />
+      <h3>{"size9"}</h3>
+      <ColumnDrop gutter="size9">
+        <Component />
+        <Component />
+        <Component />
+        <Component />
+      </ColumnDrop>
+      <h3>{"size10"}</h3>
+      <ColumnDrop gutter="size10">
+        <Component />
+        <Component />
+        <Component />
+        <Component />
+      </ColumnDrop>
+      <h3>{"size11"}</h3>
+      <ColumnDrop gutter="size11">
+        <Component />
+        <Component />
+        <Component />
+        <Component />
+      </ColumnDrop>
+      <h3>{"size12"}</h3>
+      <ColumnDrop gutter="size12">
+        <Component />
+        <Component />
+        <Component />
+        <Component />
+      </ColumnDrop>
+      <h3>{"size13"}</h3>
+      <ColumnDrop gutter="size13">
+        <Component />
+        <Component />
+        <Component />
+        <Component />
+      </ColumnDrop>
+      <h3>{"size14"}</h3>
+      <ColumnDrop gutter="size14">
+        <Component />
+        <Component />
+        <Component />
+        <Component />
+      </ColumnDrop>
+      <h3>{"size15"}</h3>
+      <ColumnDrop gutter="size15">
+        <Component />
+        <Component />
+        <Component />
+        <Component />
       </ColumnDrop>
     </>
   );

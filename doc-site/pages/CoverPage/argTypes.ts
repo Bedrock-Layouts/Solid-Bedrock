@@ -1,25 +1,14 @@
 import { ArgType } from "doc-site/types/argType";
+import { spacing } from "../../../packages/solid/src/spacing-constants";
 
 export const argTypes: ArgType = {
   gutter: {
     description: "Sets space between each element",
     summary: "Space",
     defaultValue: "0px",
-    initialValue: "lg",
+    initialValue: "size3",
     control: "select",
-    options: [
-      "none",
-      "xxs",
-      "xs",
-      "sm",
-      "md",
-      "mdLg",
-      "lg",
-      "lgXl",
-      "xl",
-      "xlXXl",
-      "xxl",
-    ],
+    options: Object.keys(spacing),
   },
   stretchContent: {
     description: "Stretch the content of the children to fill the container",

@@ -1,4 +1,4 @@
-import { Component, JSX, JSXElement, mergeProps } from "solid-js";
+import { JSX, JSXElement, mergeProps, splitProps } from "solid-js";
 
 import {
   CSSLength,
@@ -25,9 +25,11 @@ interface CoverWrapperBaseProps {
 
 export type CoverWrapperProps<T extends ValidConstructor = "div"> =
   HeadlessPropsWithRef<T, CoverWrapperBaseProps>;
-export interface CoverProps extends CoverWrapperProps {
+
+export interface CoverProps {
   top?: JSXElement;
   bottom?: JSXElement;
+  children?: JSXElement;
 }
 
 function getSafeMinHeight(minHeight?: MinHeight) {
@@ -50,7 +52,7 @@ function CoverWrapper<T extends ValidConstructor = "div">(
         );
 
   const gutter = () =>
-    `--gutter: ${getSpacingValue(props.gutter ?? "none", theme) ?? "0px"};`;
+    `--gutter: ${getSpacingValue(theme, props.gutter ?? "size00") ?? "0px"};`;
 
   const minHeight = () => `--minHeight: ${getSafeMinHeight(props.minHeight)};`;
 
@@ -71,14 +73,16 @@ function CoverWrapper<T extends ValidConstructor = "div">(
   );
 }
 
-export const Cover: Component<CoverProps & { children?: JSXElement }> = (
-  props
-) => {
+export function Cover<T extends ValidConstructor = "div">(
+  props: CoverWrapperProps<T> & CoverProps
+): JSX.Element {
+  const [local, restProps] = splitProps(props, ["children", "top", "bottom"]);
+
   return (
-    <CoverWrapper {...props}>
-      {props.top}
-      <div data-bedrock-cover-centered>{props.children}</div>
-      {props.bottom}
+    <CoverWrapper {...restProps}>
+      {local.top}
+      <div data-bedrock-cover-centered>{local.children}</div>
+      {local.bottom}
     </CoverWrapper>
   );
-};
+}

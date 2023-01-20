@@ -2,6 +2,7 @@ import { JSX, mergeProps } from "solid-js";
 
 import {
   CSSLength,
+  SizesOptions,
   SpacingOptions,
   getSpacingValue,
 } from "./spacing-constants";
@@ -14,7 +15,15 @@ import createDynamic, {
   omitProps,
 } from "./typeUtils";
 
-type MinItemWidth = number | CSSLength;
+type MinItemWidth =
+  | CSSLength
+  | number
+  | SizesOptions
+  | "fit-content"
+  | "max-content"
+  | "min-content"
+  | "auto";
+
 export interface GridBaseProps {
   gutter?: SpacingOptions;
   minItemWidth?: MinItemWidth;
@@ -37,7 +46,7 @@ export function Grid<T extends ValidConstructor = "div">(
         );
 
   const gutter = () =>
-    `--gutter: ${getSpacingValue(props.gutter ?? "none", theme) ?? "0px"};`;
+    `--gutter: ${getSpacingValue(theme, props.gutter ?? "size00") ?? "0px"};`;
 
   const minItemWidth = () =>
     `--minItemWidth: ${

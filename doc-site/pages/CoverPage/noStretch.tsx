@@ -6,7 +6,7 @@ export function NoStretch(): JSXElement {
   return (
     <Cover
       minHeight="50vh"
-      gutter="sm"
+      gutter="size1"
       stretchContent
       top={<span>I am on top.</span>}
       bottom={<span>I am on bottom.</span>}

@@ -2,7 +2,9 @@ import { JSX, mergeProps } from "solid-js";
 
 import {
   CSSLength,
+  SizesOptions,
   SpacingOptions,
+  getSizeValue,
   getSpacingValue,
 } from "./spacing-constants";
 import { useTheme } from "./theme-provider";
@@ -15,8 +17,15 @@ import createDynamic, {
 } from "./typeUtils";
 
 type Stretch = "all" | "start" | "end" | 0 | 1 | 2 | 3 | 4;
-type SwitchAt = string | number;
-type MinItemWidth = number | CSSLength;
+
+type MinItemWidth =
+  | CSSLength
+  | number
+  | SizesOptions
+  | "fit-content"
+  | "max-content"
+  | "min-content"
+  | "auto";
 
 const justifyMap = {
   start: "justify:start",
@@ -31,21 +40,9 @@ const alignMap = {
   stretch: "align:stretch",
 } as const;
 
-function shouldUseSwitch(switchAt?: SwitchAt) {
-  if (typeof switchAt === "number" && switchAt > -1) {
-    return true;
-  }
-
-  if (typeof switchAt === "string" && typeof CSS !== undefined) {
-    return CSS.supports(`height: ${switchAt}`);
-  }
-
-  return false;
-}
-
 export interface InlineBaseProps {
   stretch?: Stretch;
-  switchAt?: SwitchAt;
+  switchAt?: number | CSSLength | SizesOptions;
   justify?: keyof typeof justifyMap;
   align?: keyof typeof alignMap;
   gutter?: SpacingOptions;
@@ -69,7 +66,7 @@ export function Inline<T extends ValidConstructor = "div">(
         );
 
   const gutter = () =>
-    `--gutter: ${getSpacingValue(props.gutter ?? "none", theme) ?? "0px"};`;
+    `--gutter: ${getSpacingValue(theme, props.gutter ?? "size00") ?? "0px"};`;
 
   const minItemWidth = () =>
     props.minItemWidth
@@ -81,13 +78,9 @@ export function Inline<T extends ValidConstructor = "div">(
       : undefined;
 
   const switchAt = () =>
-    shouldUseSwitch(props.switchAt)
-      ? `--switchAt: ${
-          typeof props.switchAt === "string"
-            ? props.switchAt
-            : `${props.switchAt}px`
-        };`
-      : undefined;
+    props.switchAt
+      ? `--switchAt: ${getSizeValue(theme, props.switchAt) ?? "0px"};`
+      : "";
 
   const justify = () =>
     props.justify !== undefined ? justifyMap[props.justify] : undefined;

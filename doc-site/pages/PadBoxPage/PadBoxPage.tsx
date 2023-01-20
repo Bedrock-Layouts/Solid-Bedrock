@@ -25,7 +25,7 @@ export function PadBoxPage(): JSXElement {
   const [props, setProps] = createSignal(initialValues);
 
   return (
-    <Stack gutter="xxl">
+    <Stack gutter="size9">
       <Heading id="title">PadBox</Heading>
       <PageSection title="Use Case">
         <p>

@@ -26,7 +26,7 @@ export function InlineClusterPage(): JSXElement {
   const [props, setProps] = createSignal(initialValues);
 
   return (
-    <Stack gutter="xxl">
+    <Stack gutter="size9">
       <Heading id="title">InlineCluster</Heading>
       <PageSection title="Use Case">
         <p>
