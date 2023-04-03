@@ -979,9 +979,9 @@
   integrity sha512-0hYQ8SB4Db5zvZB4axdMHGwEaQjkZzFjQiN9LVYvIFB2nSUHW9tYpxWriPrWDASIxiaXax83REcLxuSdnGPZtw==
 
 "@bedrock-layout/css@^2.2.4":
-  version "2.2.4"
-  resolved "https://registry.npmjs.org/@bedrock-layout/css/-/css-2.2.4.tgz#bf349bec094e3ebd778bcef8ce42875f397e68fd"
-  integrity sha512-KPbdDqLl0+c7utYkpCV7KBtTNETrUaeLQSvfujx4J0ZDfzIQjpA4vUnZISOR7HaFNAqLccUxV6axVffjtTS56w==
+  version "2.2.9"
+  resolved "https://registry.yarnpkg.com/@bedrock-layout/css/-/css-2.2.9.tgz#69bf07a64e357be96414081a42d1ab06a2b78572"
+  integrity sha512-s3uBH7ko2z5bxP4YXU7kaz082gwfRN79mXo8dAu+FNph4Jx7/3E7wAwhHxF7X8KCqX/+XrnIZ9haWJ3XPA3GZQ==
 
 "@bedrock-layout/register-resize-callback@^2.0.0":
   version "2.0.1"
