@@ -114,7 +114,7 @@
     }
   },
   "dependencies": {
-    "dedent": "^0.7.0",
+    "dedent": "^1.5.1",
     "highlight.js": "^11.5.0",
     "nx": "^14.5.10",
     "pretty-format": "^29.3.1",
