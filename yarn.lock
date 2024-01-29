@@ -7504,9 +7504,9 @@ onetime@^6.0.0:
     mimic-fn "^4.0.0"
 
 open-props@^1.3.8:
-  version "1.5.3"
-  resolved "https://registry.npmjs.org/open-props/-/open-props-1.5.3.tgz#691e4afb6b1185d1b9138de7970d45950439ca60"
-  integrity sha512-NzORO2a4Rf/MEo1DBTKxEzJ6ZNx9JswnvwjSKK9QOntg28AoxXt2LdpwfJ1dEQE4mkTdyaWkzwbtPg1yKpKFgw==
+  version "1.6.18"
+  resolved "https://registry.yarnpkg.com/open-props/-/open-props-1.6.18.tgz#7763d708b24491b903da46bf1f1d9ed22156edea"
+  integrity sha512-xhkbGo6vFdYHWR9mt81p4mlPoRLQHunA6XJAuQ2cUyvoOGKGxDj8dGgXDIbR1EMJVyHPxU1AbtfbloAIRLHWKw==
 
 open@^8.4.0:
   version "8.4.0"
